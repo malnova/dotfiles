@@ -781,13 +781,13 @@
     <!-- Activer / désactiver la veille de l'écran (screen) -->
     <keybind key="C-A-s">
       <action name="Execute">
-        <command>&scripts_path;dpms-toggle</command>
+        <command>&scripts_path;toggle-dpms</command>
       </action>
     </keybind>
     <!-- Notification du statut de dpms -->
     <keybind key="C-A-S-s">
       <action name="Execute">
-        <command>&scripts_path;dpms-toggle status</command>
+        <command>&scripts_path;toggle-dpms status</command>
       </action>
     </keybind>
     <!-- Tiling vertical / horizontal automatique sur les deux dernières fenêtres actives -->
@@ -920,13 +920,13 @@
     <!-- Activer / désactiver le WiFi -->
     <keybind key="C-A-w">
       <action name="Execute">
-        <command>&scripts_path;wifi-toggle</command>
+        <command>&scripts_path;toggle-wifi</command>
       </action>
     </keybind>
     <!-- Notification du statut du WiFi -->
     <keybind key="C-A-S-w">
       <action name="Execute">
-        <command>&scripts_path;wifi-toggle status</command>
+        <command>&scripts_path;toggle-wifi status</command>
       </action>
     </keybind>
     <!-- Activer / désactiver la veille avec xautolock -->
