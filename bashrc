@@ -31,22 +31,16 @@ fi
 # Fonctions
 # Lancer une recherche sur YouTube depuis la ligne de commande avec mpv
 function mpvs {
-    /usr/local/bin/mpv ytdl://ytsearch:"$*"
+    mpv ytdl://ytsearch:"$*"
 }
 
 # Alias
-# Penser également à vérifierdans /usr/local/bin/ si des wrappers existent
-# pour certains programmes (par ex. feh, mpv, tmux...)
+# Penser également à vérifier dans /usr/local/bin/ si des wrappers existent
+# pour certains programmes (par ex. feh, tmux...)
 alias ls='/usr/bin/ls --color=auto'
-alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile --dns=209.222.18.222 --dns=209.222.18.218 /usr/bin/thunderbird"
+alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
 alias wget="/usr/bin/wget --hsts-file=$HOME/.cache/.wget-hsts"
-# Sur ANNA
-#alias firefox="/usr/bin/firejail --profile=/etc/firejail/my_firefox.profile --dns=209.222.18.222 --dns=209.222.18.218 /usr/lib/firefox/firefox -P "default" --no-remote"
-# Sur ORDIBUREAU
-#alias firefox="/usr/bin/firejail --profile=/etc/firejail/my_firefox.profile --dns=209.222.18.222 --dns=209.222.18.218 /usr/lib/firefox/firefox -P "fix" --no-remote"
-# Sur ORDIPORTABLE
-#alias firefox="/usr/bin/firejail --profile=/etc/firejail/my_firefox.profile /usr/lib/firefox/firefox --no-remote"
 
 # Prompt bash
 PS1='[\u@\h \W]\$ '
