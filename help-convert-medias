@@ -1,0 +1,225 @@
+Conventions :
+- if = input file, fichier d'entrée (fichier à convertir)
+- of = output file, fichier de sortie (fichier après conversion)
+
+Note sur les formats de fichiers, conteneurs et codecs :
+- formats privateurs :
+   * images : JPEG
+- formats ouverts :
+   * images : BMP, GIF, PDF, PNG, SVG, WebP (cf. ci-dessous I, 1)
+   * audios : FLAC (sans perte), MP3 (auparavant soumis à licence ; avec perte), Opus (ogg, opus), Vorbis (ogg, oga ; avec perte), AC3 (Dolby Digital)
+   * vidéos : MKV, Theora (ogv, ogv), WebM (VP8, VP9)
+- codecs propriétaires : H.264, H.265 (x264 et x265 sont des implémentations libres de ces codecs propriétaires)
+
+I. Convertir et modifier des images
+-----------------------------------
+
+Pour afficher des informations sur une ou plusieurs images : feh -l ("if") ou identify "if" (ex. identify *.png) ou identify -verbose "if" (pour des informations détaillées, par ex. le niveau de compression, etc. ; permet aussi de déterminer si un fichier est incomplet ou corrompu)
+Pour afficher des informations sur les données exif d'une image : exiftool "if"
+
+Syntaxe générale (avec ImageMagick) :
+- convert (<options>) x (dossier/)y : convertir l'image x en y (ex. convert test.png images_converties/test.jpg)
+- mogrify <options> x : modifier et écraser l'image x
+- attention à mettre les options avant le nom des fichiers
+
+1. Convertir
+- en bmp : convert -background white -alpha remove -alpha off "if" BMP3:"of"
+- en ico (les fichiers icônes peuvent être visualisés avec Firefox) : convert -background transparent -resize x64 -gravity center -crop 64x64+0+0 "if" -transparent white -colors 256 "of"
+- en webp : format ouvert développé par Google, très performant même avec réduction de qualité ; vérifier que libwebp est bien installé pour que la conversion soit possible (cependant feh utilise imlib2, et ne pourra afficher les fichiers webp ; utiliser --magick-timeout # pour afficher les formats incompatibles avec imlib2, par ex. feh --magick-timeout 5 of.webp OU installer imlib2-webp disponible dans AUR), puis : convert "if" "of.webp" (par ex. convert "if" -quality 75 "of.webp")
+- en un autre format d'image (png, gif, jpg, jpeg, svg, tif, tiff...) : convert "if" "of"
+- en pdf : convert -background white -alpha remove -alpha off -density 300 "if" "of" (si on convertit d'un pdf en image, on peut préciser la qualité de lecture du pdf avec l'option -density placée avant "if", et la qualité de sortie de l'image avec l'option -quality placée avant "of", par ex. convert -density 300 "if" -quality 90 "of") ; en cas d'erreur "attempt to perform an operation not allowed by the security policy `PDF'..." (par exemple pour faire un miroir d'un pdf...), on peut commenter la ligne "<policy domain="coder" rights="none" pattern="{PS,PS2,PS3,EPS,PDF,XPS}" />" en la mettant entre <!-- et --> dans le fichier /etc/ImageMagick-7/policy.xml
+- en txt : img2txt "if" > "of"
+- en vidéo :
+   * ffmpeg -i xxx%##d.png -r <nombre_d'images_voulues_par_seconde> "of"
+   * %##d indique le nombre de chiffres dans le nom des images ; par ex. %03d signifie "3 chiffres" (3 digits) et fonctionne donc avec des images numérotées 001.png, 002.png, etc. ; il doit donc être adapté selon le nom des images : %02d avec 01, %04d avec 0001...
+   * il faut remplacer xxx par le nom de l'image ; par ex. pour des images nommées image_01.jpg, image_02.jpg, etc., on aura -i image_%02d.jpg
+   * les chiffres des images doivent se suivre ; si ce n'est pas le cas (par ex. passage de pic01.png à pic03.png), il est nécessaire de les renommer
+   * si les images ne sont pas numérotées à partir de 1, on peut ajouter -start_number # pour préciser le numéro de départ
+   * ajouter -loop # pour préciser le nombre de fois que la vidéo doit être jouée en boucle ; -1 signifie que la vidéo ne sera pas rejouée ; 0 signifie qu'elle sera jouée en boucle indéfiniment ; par exemple pour un GIF animé en boucle, ajouer -loop 0 (le loop n'est pas visible dans mpv, mais l'est dans Firefox par ex.)
+   * on peut ajouter une piste audio en ajoutant par exemple -i piste_audio.mp3, sauf pour le format GIF qui n'est pas compatible audio
+   * ex. ffmpeg -i test%01d.jpg -r 2 test.mp4
+
+2. Convertir par lots
+- pour changer le format de plusieurs images sans supprimer les images originales : convert "if" "of" (ex. convert *.png converties/images.jpg)
+- pour des conversions par lots, il faut utiliser la syntaxe for... do... done :
+   * exemple avec des .png en entrée et des .gif en sortie : for file in *.png; do convert "$file" "fichier_converti_$file.gif"; done
+   * exemple sans changer le nom de fichier, mais en remplaçant l'extension : for file in *.png; do convert "$file" "${file[@]/%png/gif}"; done
+- ou pour cibler certains fichiers ou convertir de façon récursive les fichiers présents dans le dossier actif et tous ses sous-dossiers, utiliser la commande find (ex. find -type f -name "file[0-5].png" -print0 | while read -d $'\0' file; do convert "$file" "$file.jpg"; done
+
+3. Modifier (avec convert ou mogrify)
+- préciser la qualité pour une image JPEG/MIFF/TIFF/PNG : -quality # (par défaut en jpg : qualité identique à celle de départ, si elle parvient à être déterminée, sinon 92 ; par défaut en png : 75 ; pour afficher la qualité/le niveau de compression de l'image de départ, utiliser identify -verbose "if", ou identify -verbose "if" | grep "Quality")
+- redimensionner l'image :
+   * -resize (#)x(#) : redimensionner l'image en largeurxhauteur pixels ; le ratio de départ est conservé ; il est possible de n'indiquer que l'une des deux dimensions (ex. -resize 200 pour ne définir que la largeur, ou -resize x100 pour la hauteur seule, en conservant le ratio de départ)
+   * -resize #% : redimensionner l'image selon un pourcentage de l'image de départ (ex. -resize 50%)
+   * ! : forcer les dimensions spécifiées sans tenir compte du ratio de départ (ex. -resize 200x100!)
+   * ">" : ne pas redimensionner l'image si elle est plus petite que les dimensions spécifiées (ex. -resize "600x600>" ; les guillemets sont obligatoires pour que le symbole > ne soit pas interprété par bash)
+- rotation de l'image :
+   * -rotate # : en degrès, positifs ou négatifs, sans limite (ex. -rotate -90 pour un quart de tour dans le sens inverse des aiguilles d'une montre) ; on peut utiliser des nombres décimaux ou des fractions, ex. -rotate .47, ou -rotate 1/2)
+   * la rotation ajoute un fond de couleur ; on peut préciser la couleur utilisée avec l'option -background (ex. convert -background fuchsia -rotate 20 "if" "of")
+   * recadrer automatiquement l'image suite à rotation : pour retirer le fond coloré en recadrant automatiquement l'image avec les plus grandes dimensions (rectangle) possibles, utiliser le script /usr/local/bin/autotrim (fait partie de la collection des "Fred's ImageMagick Scripts" disponible à l'adresse http://www.fmwconcepts.com/imagemagick/autotrim/) avec la syntaxe suivante : autotrim -m i "of" "of_2" ; si une partie du bord subsiste, on peut utiliser l'option -f (fuzz value) pour préciser la tolérance souhaitée (ex. autotrim -m i -f 2 "of" "of_2") (plus d'infos avec autotrim -h) ; par défaut, la couleur du coint supérieur gauche de l'image est considérée comme étant celle du bord à retirer (on peut préciser les coordonnées d'un autre point avec l'option -c)
+   * -auto-orient : corriger l'orientation automatiquement en fonction des données EXIF (ex. convert -auto-orient "if" "of")
+- miroir vertical / horizontal : -flip / -flop ; ces options peuvent se combiner
+- recadrer l'image :
+   * identifier les dimensions de l'image avec feh -l "if" ou identify "if"
+   * recadrer avec -crop lxh+x+y (ex. pour une image de 1366x768 dont on veut retirer 50 pixels de chaque côté, -crop 1266x668+50+50)
+- brouiller/flouter l'image : -blur #,# (ex. -blur 15,15) ou -resize 10% -resize 1000% (soit deux redimensionnements successifs sans changer la taille au final, ex. convert "if" -resize 10% -resize 1000% "of")
+- éclaircir, assombrir ou colorer : -fill <couleur> -colorize <intensité> (ex. convert "if" -fill white -colorize -10% "of" pour assombrir l'image de 10%, ou -fill blue -colorize 20% pour bleuter l'image...)
+- modifier la luminosité (brightness), la saturation et la teinte (hue) : -modulate #,#,# (dans cet ordre : luminosité, saturation, teinte ; mettre la valeur 100 pour conserver la valeur d'origine)
+- modifier les couleurs :
+   * convertir en niveaux de gris : -colorspace gray
+   * convertir en sépia : -sepia-tone #% (ex. -sepia-tone 90% pour un effet léger, ou -sepia-tone 65% pour un effet plus marqué)
+   * inverser les couleurs : -negate
+   * augmenter le gamma (facteur de contraste) pour un effet de légère surexposition (vieille photo) : -negate -gamma 0.5 -negate (ou 0.7 pour un effet moins marqué, ou 0.3 pour un effet plus marqué) ou -sigmoidal-contrast 7,50%
+   * définir la transparence d'une couleur (image GIF, png, etc.) : -transparent <couleur>/"#xxxxxx"/"rgb(#,#,#)" (ex. -transparent white ou -transparent "#FFFFFF" ou -transparent "rgb(255,255,255)")
+- réduire le bruit : utiliser le script /usr/local/bin/noisecleaner (fait partie de la collection des "Fred's ImageMagick Scripts") avec la syntaxe suivante : noisecleaner -n # "if" "of.tif", où # est un chiffre (5 par défaut) indiquant le nombre d'itérations à appliquer (plus d'infos avec noisecleaner -h)
+- ajouter un bord :
+   * -bordercolor <couleur>/"#xxxxxx"/"rgb(#,#,#)" -border #x# (ex. -bordercolor white -border 0x10 pour un bord blanc de 10 pixels uniquement en haut et en bas, ou -bordercolor "#DFDFDF" -border 10 pour un bord gris de 10 pixels partout)
+   * cette option peut être répétée pour ajouter plusieurs bords en même temps (ex. -bordercolor white -border 10 -bordercolor black -border 5)
+   * pour ajouter un bord uniquement sur certains côtés (l'order des options est important) : -gravity north/south/east/west/northeast... -background <couleur>/"#xxxxxx"/"rgb(#,#,#)" -splice #x# (ex. -gravity southeast -background white -splice 30x50 pour un bord droit de 30 pixels et un bord en bas de 50 pixels blancs)
+   * ces options peuvent se répéter pour avoir des bords de couleurs différentes, ex. -gravity south -background white -splice 0x50 -gravity east -background blue -splice 30x0
+- combiner plusieurs images l'une en-dessous / à côté de l'autre : -append / +append (ex. convert *.png -append output.jpg ou convert image1.jpg image2.jpg image3.jpg +append output.jpg)
+
+II. Convertir et modifier des fichier audios
+--------------------------------------------
+
+Pour afficher des informations sur un fichier audio (durée, bitrate, etc.) : ffprobe "if"
+Pour afficher des informations sur les tags d'un fichier audio : exiftool "if"
+
+Syntaxe générale (avec ffmpeg) :
+- ffmpeg -i "if" (<options>) (dossier/)"of" (ex. ffmpeg -i test.flac audio_converti/test.mp3)
+- attention à respecter l'ordre (fichier d'entrée, options vidéos, filtres, options audios, fichier de sortie)
+
+Avec ffmpeg comme avec ffprobe, on peut augmenter la taille du fragment de fichier examiné (i.e. analysé pour déterminer les informations sur les pistes, par ex. si toutes les pistes de sous-titres ne commencent pas dès le début du fichier) à l'aide des options -probesize et -analyzeduration (en ms ; ex. ffprobe -probesize 1000000000 -analyzeduration 1000000000 -i "if")
+
+1. Convertir
+- aac/flac/m4a/mp3/ogg/wav en un autre de ces formats : ffmpeg -i "if" "of"
+- si on veut préciser les codecs :
+   * aac : -c:a aac
+   * flac : -c:a flac
+   * mp3 : -c:a libmp3lame
+   * ogg : -c:a libopus ou -c:a libvorbis
+   * ac3 : -c:a ac3
+- pour ne pas changer le format (par ex. pour modifier seulement le fichier audio avec certaines options ci-dessous) : ajouter -c:a copy (ex. ffmpeg -ss 5 -t 5 -i "if" -c:a copy "of")
+- pour spécifier une qualité précise pour un mp3 (à utiliser avec -c:a libmp3lame) : ajouter -qscale:a # (de 0 - haute qualité - à 9 - mauvaise - ; de 0 à 3 pour une qualité presque parfaite, 5 pour une qualité moyenne entre 120 et 150 kbit/s ; 4 par défaut ; par ex. ffmpeg -i "if" -c:a libmp3lame -qscale:a 2 "of")
+- enregistrer l'audio (régler "PCM" suffisamment fort dans amixer pour enregistrer sans micro, ou "Mic" avec micro) : ffmpeg -f alsa -i default -c:a libmp3lame -qscale:a 5 test.mp3
+- entendre le son d'un micro dans les haut-parleurs externes : arecord | aplay
+
+2. Convertir par lots
+- convertir par lots : utiliser les mêmes syntaxes (for... do... done ou find...) que celles indiquées ci-dessus pour convertir par lots les images
+
+3. Modifier
+- convertir seulement une partie :
+   * -ss <position> (AVANT "-i") : commencer à la position indiquée, au format hh:mm:ss.frame (pour une vidéo, voir la frame en cliquant dans mpv sur l'indication de temps), ou hh:mm:ss, ou mm:ss ou ss (ex. ffmpeg -ss 5 -i "if" "of" pour commencer à la seconde 5)
+   * -t <durée> (AVANT "-i") : limiter la durée du fichier de sortie au temps spécifié (même format que -ss) (ex. ffmpeg -ss 5 -t 5 -i "if" "of")
+   * -to <position> : aller jusqu'à la position indiquée (même format que -ss)
+- concaténer (mettre à la suite) plusieurs fichiers :
+   * pour les formats supportant le protocole concat : -i "concat:file1.xxx|file2.xxx" (ex. ffmpeg -i "concat:file1.mp3|file2.mp3" -c:a copy "file3.mp3")
+   * pour les formats ne le supportant pas : créer un fichier texte (ex. liste.txt) contenant une ligne file '/chemin/fichier' (ex. file '01.mp4') par fichier à concaténer, puis ajouter -f concat -i liste.txt (ex. ffmpeg -f concat -i liste.txt -codec copy "output.mp4") -> si erreur, voir ci-dessous en III, 6, "Erreurs".
+
+III. Convertir et modifier des vidéos
+-------------------------------------
+
+Pour afficher des informations sur une vidéo (durée, bitrate, pistes vidéos/audios/sous-titres, etc.) : ffprobe "if"
+Pour afficher les métadonnées d'une vidéo : exiftool "if"
+
+Syntaxe générale (avec ffmpeg) :
+- ffmpeg -i "if" (<options>) (dossier/)"of" (ex. ffmpeg -i test.3gp videos_converties/test.mp4)
+- attention à respecter l'ordre (fichier d'entrée, options vidéos, filtres, options audios, fichier de sortie)
+
+Avec ffmpeg comme avec ffprobe, on peut augmenter la taille du fragment de fichier examiné (i.e. analysé pour déterminer les informations sur les pistes, par ex. si toutes les pistes de sous-titres ne commencent pas dès le début du fichier) à l'aide des options -probesize et -analyzeduration (en ms ; ex. ffprobe -probesize 1000000000 -analyzeduration 1000000000 -i "if")
+
+1. Utiliser youtube-dl
+- convertir en fichier audio :
+   * -x/--extract-audio : convertir la vidéo en fichier audio seul
+   * --audio-format (pas d'effet sans -x/--extract-audio) : préciser le format audio (best/aac/flac/mp3/m4a/opus/vorbis/wav) pour la conversion (déf. "best")
+   * --audio-quality : préciser la qualité audio (déf. 5 ; de 0 - élevée - à 9 - mauvaise)
+- sous-titres :
+   * --list-subs : lister tous les sous-titres disponibles pour la vidéo
+   * --sub-lang <langue> : télécharger uniquement les langues de sous-titres spécifiées (liste séparée par des virgules, ex. "fr,en")
+   * --write-sub (à utiliser avec --sub-lang) : télécharger les fichiers de sous-titres
+   * --embed-subs (à utiliser avec --sub-lang et --write-sub) : ajouter les pistes de sous-titres à la vidéo et supprimer les fichiers de sous-titres téléchargés (uniquement pour les fichiers mp4, webm et mkv) (ex. youtube-dl --sub-lang fr,en --write-sub --embed-subs -f best "if")
+
+2. Convertir un DVD ("ripper") ou un fichier ISO
+- Utiliser MakeMKV
+OU
+- Pour un fichier ISO, commencer par le monter :
+   * mkdir ISO
+   * sudo mount -o loop,dmode=0555,mode=0444,ro <nom_du_fichier.iso> ISO
+- Concaténer les fichiers .VOB du DVD à convertir : cat VTS_xx_xx.VOB VS_xx_xx.VOB ... > intermediate.VOB
+- utiliser ensuite ffmpeg pour convertir le fichier obtenu ; pour convertir sans perte de qualité : ffmpeg -i intermediate.VOB -q 0 output.mkv
+- Pour un fichier ISO, le démonter : sudo umount ISO
+
+3. Convertir (voir la page "ffmpeg" du wiki pour d'autres exemples)
+- résolutions principales :
+   * 240p : 426x240
+   * 360p : 640x360
+   * 480p (format des séries avec audio aac) : 854x480, 720×480, 704×480, 640×480... (en 16/9 ou 4/3)
+   * 720p (ou "HD Ready") : 1280x720 (en 16/9)
+   * 1080p (ou "full HD") : 1920x1080 (en 16/9)
+   * formats 4/3 : 320x240, 640x480, 800x600, 1024x768, 1600x1200
+- cibler une ou plusieurs piste(s) en particulier :
+   * identifier les pistes souhaitées en les listant avec ffprobe "if"
+   * par défaut, ffmpeg inclut seulement 1 piste de chaque type (vidéo, audio, sous-titres) en choisissant la meilleure qualité pour chaque, ou, à qualités équivalentes, la première de la liste
+   * désactiver un type de pistes : -vn pour désactiver les pistes vidéos, -an pour les pistes audios, -sn pour les sous-titres (ex. ffmpeg -i "if" -codec: copy -sn "of" pour copier la vidéo sans les sous-titres)
+   * spécifier les pistes en ajoutant -map #(:#) (peut être répété) (ex. ffmpeg -i "if" -map 0 "of" pour toutes les pistes en 0, i.e. 0:1, 0:2, 0:3, etc. ou ffmpeg -i "if" -map 0:0 -map 0:1 -map 1:0 "of", généralement, pour une piste vidéo, une piste audio et une piste de sous-titres)
+   * il est possible de donner des informations sur les différentes pistes (permettant de mieux les identifier dans le lecteur en passant de l'une à l'autre), en ajoutant -metadata:s:x:# où "x" peut être "v" pour une piste vidéo, "a" pour une piste audio ou "s" pour une piste de sous-titres, et # est le numéro de la piste dans le fichier de sortie (par ex. -metadata:s:a:0 language=eng pour préciser que la première piste audio est en anglais, ou -metadata:s:s:1 title="English" pour donner un titre à la deuxième piste de sous-titres)
+- spécifier un codec à utiliser :
+   * -codec: copy / -codec copy / -c copy : copier toutes les pistes sans les réencoder, par ex. pour un simple changement de format de conteneur ou de métadonnées
+   * -codec:v / -vcodec / -c:v : spécifier le codec pour les pistes vidéos (ex. -c:v copy ou -c:v libx264...)
+   * -codec:a / -acodec / -c:a : spécifier le codec pour les pistes audios (ex. -c:a copy ou -c:a libmp3lame pour du mp3 (cf. la conversion de fichiers audios pour choisir la qualité), ou -c:a aac pour du aac, moins gourmand en taille à qualité équivalente, ou -c:a libopus, -c:a libvorbis, etc.)
+   * -codec:s / -scodec / -c:s : spécifier le codec pour les pistes de sous-titres
+- pour spécifier une qualité précise : -crf # (entre 0 et 51 ; en H.264, 23 par défaut ; en H.265, 28 par défaut, correspondant au 23 en H.264 ; en H.265, -crf 23 donne une qualité presque semblable à celle avant compression ; ex. ffmpeg -i "if" -c:v libx265 -preset slow -crf 23 -c:a copy "of")
+- en H.264 (formats mp4, mkv, etc.) sans perte : ffmpeg -i "if" -c:v libx264 -preset <preset> -c:a copy "of" (preset : ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow, placebo ; "medium" par défaut ; privilégier "faster" pour la rapidité ou "slow" pour la qualité ; ex. ffmpeg -i "if" -c:v libx264 -preset slow -c:a aac "of")
+- en H.265 : ffmpeg -i "if" -c:v libx265 -preset slow "of" (il est possible de devoir spécifier le ratio en ajoutant -aspect <largeur:hauteur>, par ex. -c:v libx265 -aspect 1280:720)
+- en webm : -c:v libvpx-vp9 (ou libvpx pour utiliser VP8, mais plus volumineux et de moins bonne qualité ; par défaut le codec audio est libopus, on peut aussi utiliser libvorbis ; pour augmenter la qualité, ajouter "-crf 30 -b:v 0", mais la taille augmente beaucoup ; ex. ffmpeg -i "if" -c:v libvpx-vp9 -c:a libopus "of")
+- en AV1 (format mkv ; taux de compression de 30% supérieur au VP9 ou H.265) : -c:v libaom-av1 -strict experimental (avec codec audio libopus ou libvorbis)
+- en gif : ffmpeg -i "if" "of"
+- en mov, avi, etc. : ffmpeg -i "if" -codec copy "of"
+- en images (à partir d'un fichier gif animé) : convert "if" "of" (ex. convert test.gif cible.png pour créer les images cible0.png, cible1.png, etc.)
+- en audio :
+   * repérer la piste audio souhaitée et son format : ffprobe "if" (souvent piste 0:1 pour la première piste audio)
+   * extraire la piste audio souhaitée : ffmpeg -i "if" -map #:# -c:a copy -vn xxx.format (ex. ffmpeg -i "if" -map 0:1 -c:a copy -vn ma_piste.ac3)
+   * pour convertir directement la vidéo en audio : extraire la piste comme ci-dessus tout en appliquant les mêmes méthodes que pour convertir un fichier audio d'un format à l'autre
+- sous-titres :
+   * convertir un fichier de sous-titres : ffmpeg -i "if" "of" (ex. ffmpeg -i file.srt file.vtt)
+   * inspecter le fichier pour déterminer s'il contient des pistes de sous-titres et leur format : ffprobe "if" (par ex. une piste au format ssa)
+   * extraire les pistes de sous-titres avec ffmpeg -i "if" xxx.format (ex. ma_piste.ssa, ou ma_piste.srt)
+   * pour extraire une ou plusieurs piste(s) en particulier : ffmpeg -i "if" -map #:# xxx.format (ex. ffmpeg -i "test.mkv" -map 1:0 ma_piste.ssa)
+   * pour extraire une piste au format VobSub :
+      * repérer le numéro de la piste selon mkvinfo : mkvinfo "if" (elle est notée après "track ID for mkvmerge & mkvextract:")
+      * utiliser mkvextract pour obtenir les fichiers .idx et .sub (malgré l'instruction, la ligne suivante NE CRÉE PAS de fichier .srt ; remplacer # par le numéro repéré précédemment) : mkvextract tracks "if" #:piste_1.srt (on peut en ajouter d'autres si nécessaire : #:piste_2.srt, etc.)
+   * pour convertir des pistes au format .idx et .sub en .srt : service en ligne à l'adresse https://subtitletools.com/convert-sub-idx-to-srt-online
+   * ajouter des fichiers externes comme pistes de sous-titres (penser à vérifier si l'encodage est bien utf-8 avec "file -i xxx.srt" par exemple ; au besoin, convertir avec iconv) : -i "sous-titres.srt" -map 1:0 (ex. ffmpeg -i "if" -i "sous-titres.srt" -map 0:0 -map 0:1 -map 1:0 "of")
+- enregistrer l'écran et l'audio : ffmpeg -f x11grab -video_size 1366x768 -framerate 30 -i $DISPLAY -f alsa -i default -r 30 -s 640x480 -c:v libx264 -preset:v veryfast -b:v 2000k -c:a libopus -b:a 128k test.mkv (-video_size indique la résolution de l'écran à enregistrer, -s indique la résolution de la vidéo en sortie)
+- enregistrer à partir d'un périphérique de capture (ex. webcam) :
+   * vérifier si le périphérique est bien reconnu sous /dev/video# : ls /dev/video*
+   * pour un périphérique reconnu sous /dev/video0 : ffmpeg -f v4l2 -video_size 640x480 -i /dev/video0 output.mkv
+   * pour ajouter l'audio : ffmpeg -f v4l2 -video_size 640x480 -i /dev/video0 -f alsa -i default output.mkv
+   * pour une meilleure qualité : ffmpeg -f v4l2 -video_size 640x480 -i /dev/video0 -f alsa -i default -c:v libx264 -c:a flac output.mkv
+
+4. Convertir par lots
+- convertir par lots : utiliser les mêmes syntaxes (for... do... done ou find...) que celles indiquées ci-dessus pour convertir par lots les images
+
+5. Modifier
+- les mêmes options que pour les fichiers audios peuvent être appliquées
+- utiliser des filtres vidéos :
+   * syntaxe générale : -vf/filter:v <filtre(,filtre...)> (guillemets conseillées ; ex. -vf "scale=300:100,transpose=1")
+   * désentrelacer la vidéo (retirer l'effet de "peigne") : -vf yadif
+   * modifier la résolution : -vf "scale=largeur:hauteur" (ex. ffmpeg -i "if" -vf "scale=-2:480" "of" pour redimensionner en 480p) (-1 ou -2 permet de conserver le ratio d'après l'autre dimension spécifiée)
+   * étendre la vidéo sans la redimensionner (= en ajoutant des bandes sur les côtés ; remplacer les # par les dimensions voulues) : -vf "pad=width=#:height=#:x=#:y=#:color=black" ("width" et "height" sont les dimensions voulues de la vidéo en sortie ; "x" et "y" sont les coordonnées du point supérieur gauche où placer la vidéo d'origine ; "color" est optionnel et détermine la couleur des bandes ; le format "color=0xff00ff" est aussi possible)
+   * rotation de la vidéo :
+      * ffmpeg opère automatiquement la rotation des vidéos en fonction des métadonnées existantes, donc une simple conversion peut suffire : ffmpeg -i "if" -c:a copy "of" (ce comportement peut être désactivé en ajoutant -noautorotate)
+      * -metadata:s:v rotate="#" : changement de la métadonnée concernant l'orientation de la vidéo (cela peut suffire si le lecteur la prend en charge, sans avoir besoin de réencoder la vidéo, associée à -map_metadata 0 pour conserver les autres métadonnées comme la date, etc.) (ex. ffmpeg -i "if" -map_metadata 0 -metadata:s:v rotate="90" -codec copy "of" ou rotate="0")
+      * -vf "transpose=#" : rotation de la vidéo, de 0 à 7 (déf. 0 ; 1 = -90° ; 2 = 90°) ; ce filtre, comme les précédents, peut être répété, par ex. pour une rotation de 180° -vf "transpose=2,transpose=2"
+      * -vf "rotate=#' : rotation d'un angle libre (ex. pour un angle de 3° dans le sens contraire des aiguilles d'une montre : -vf "rotate=-3*PI/180")
+   * miroir horizontal / vertical : -vf "hflip" / "vflip" ; ces filtres, comme les précédents, peuvent se combiner, par ex. pour une rotation de 180° -vf "hflip,vflip"
+   * recadrer la vidéo : -vf "crop=l:h:x:y" soit largeur, hauteur, position x de départ (déf. 0 soit à gauche), position y de départ (déf. 0 soit en haut)
+   * convertir en niveaux de gris : -vf "format=gray"
+   * convertir en sépia / effet vieux film : -filter_complex "[0:v]colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131[colorchannelmixed];[colorchannelmixed]eq=1.0:0:1.3:2.4:1.0:1.0:1.0:1.0[color_effect]" -map [color_effect]
+- modifier le nombre d'images par seconde (par ex. pour créer un gif animé) : -r # (ex. -r 10 pour 10 images par seconde)
+
+6. Erreurs
+- si des problèmes d'encodage apparaissent (par ex. avec les filtres vidéos), on peut ajouter -pix_fmt yuv420p (liste des formats possibles avec ffmpeg -pix_fmts)
+- si toutes les infos sur les pistes ne sont pas trouvées (par ex. si toutes les pistes de sous-titres ne commencent pas dès le début du fichier) : ajouter les options -probesize et -analyzeduration (en ms ; ex. ffmpeg -probesize 1000000000 -analyzeduration 1000000000 -i "if" "of")
+- Too many packets buffered for output stream... : ajouter l'option -max_muxing_queue_size (ex. ffmpeg -i "if" -max_muxing_queue_size 1024 "of" ; on peut essayer avec différentes valeurs au lieu de 1024, par ex. 200, 300, 400, 700... Si ça ne fonctionne pas, il faut augmenter la valeur : 2048, 4096, voire plus)
+- Unsafe file name (avec "concat") : ajouter -safe 0 avant -i

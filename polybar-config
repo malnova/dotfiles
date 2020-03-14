@@ -1,0 +1,139 @@
+[colors]
+background = #251D1F21
+foreground = #EEE
+background-light = #25DDDDDD
+foreground-light = #BBB
+red = #F45C59
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[bar/mainbar]
+locale=fr_FR.UTF-8
+width = 100%
+height = 26
+background = ${colors.background}
+foreground = ${colors.foreground}
+fixed-center = false
+font-0 = Sans:pixelsize=10;2
+font-1 = Sans:pixelsize=10:weight=bold;2
+; police pour les icônes de volume et de batterie
+font-2 = FontAwesome:size=11;2
+; police pour les icônes de connexion
+font-3 = MaterialIcons-Regular:size=13;4
+modules-left = ewmh windows
+modules-center = 
+; ORDIPORTABLE : volume connection-icon wireless-network battery date
+; ORDIBUREAU : volume connection-icon date
+modules-right = volume connection-icon wireless-network battery date
+click-left = 
+click-middle = 
+click-right = sleep 0.1; xdotool key Super_L
+scroll-up = 
+scroll-down = 
+double-click-left = 
+double-click-middle = 
+double-click-right = 
+
+[module/ewmh]
+type = internal/xworkspaces
+pin-workspaces = true
+enable-click = true
+enable-scroll = false
+format-margin = 2
+label-monitor = "  %index%  "
+label-active = "  %{T2}%index%%{T-}  "
+label-active-background = ${colors.background-light}
+label-urgent = "  %index%!  "
+label-urgent-foreground = ${colors.red}
+label-occupied = "  %index%  "
+label-empty = "  %index%  "
+label-empty-foreground = ${colors.foreground-light}
+
+[module/windows]
+type = custom/script
+exec = /usr/local/bin/windows-bar
+tail = true
+format = <label>
+format-margin = 5
+label = %output%
+
+[module/volume]
+type = internal/volume
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+; Vérifier les contrôles disponibles avec la commande :
+; amixer scontrols | sed -nr "s/.*'([[:alnum:]]+)'.*/\1/p"
+; Les commenter ou les modifier en conséquence
+; ORDIBUREAU : commenter speaker-mixer = Speaker
+master-mixer = Master
+speaker-mixer = Speaker
+headphone-mixer = Headphone
+headphone-id = 18
+format-volume = %{A3:urxvt -e alsamixer &:}<ramp-volume> <label-volume>%{A}
+format-muted = <label-muted>
+format-volume-margin = 6
+format-muted-margin = 6
+label-volume = %percentage%%
+label-muted = %{A3:urxvt -e alsamixer &:}%{A}
+label-muted-foreground = ${colors.foreground-light}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
+ramp-headphones-1 = 
+
+[module/connection-icon]
+type = custom/script
+exec = /usr/local/bin/connection-icon
+tail = true
+format = <label>
+label = %{A1:urxvt -e nmtui connect &:}%{A3:nm-connection-editor &:}%output%%{A}%{A}
+
+[module/wireless-network]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-connected = %{A1:urxvt -e nmtui connect &:}%{A3:nm-connection-editor &:} %signal%%%{A}%{A}
+label-disconnected = 
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ACAD
+poll-interval = 5
+format-charging = <label-charging>
+format-charging-prefix = " "
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+format-charging-margin = 6
+format-discharging-margin = 6
+format-full-margin = 6
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = %percentage%%
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = "%a %d %b "
+time = %H:%M
+; Si `date-alt` ou `time-alt` sont définis, cliquer sur le module
+; passera d'un format à l'autre
+date-alt = "%a %d %b "
+time-alt = %H:%M:%S
+format = <label>
+format-margin = 3
+label = %{A3:gsimplecal &:}%date%%time%%{A}

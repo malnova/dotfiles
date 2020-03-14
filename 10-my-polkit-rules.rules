@@ -1,0 +1,21 @@
+// Pour plus d'informations : man polkit
+// Pour afficher la liste des actions possibles : pkaction
+// (ou pkaction | grep ...)
+
+// Pas d'authentification pour la mise en veille
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.login1.suspend" ||
+        action.id == "org.freedesktop.login1.suspend-multiple-sessions"
+    {
+        return polkit.Result.YES;
+    }
+});
+
+// Désactiver l'hibernation
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.login1.hibernate" ||
+        action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
+    {
+        return polkit.Result.NO;
+    }
+});

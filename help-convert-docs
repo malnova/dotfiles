@@ -1,0 +1,44 @@
+Conventions :
+- if = input file, fichier d'entrée (fichier à convertir)
+- of = output file, fichier de sortie (fichier après conversion)
+- tf = temporary file, fichier temporaire intermédiaire nécessaire pour certaines conversions
+
+I. Encodage
+-----------
+
+- connaître l'encodage d'un fichier : file -i "if"
+- convertir l'encodage d'un fichier : iconv -f format_de_départ -t format_d_arrivée "if" -o "of"
+
+II. Types de fichiers
+--------------------------
+
+Syntaxe générale et options de pandoc :
+- pandoc -s (<autres options>) "if" -o "of" (l'option -s permet de produire des documents avec un header et un footer appropriés, par ex. pour obtenir un fichier HTML, LaTeX ou RTF complet au lieu d'un fragment ; elle permet aussi de préserver les métadonnées)
+- il est possible de préciser le format de départ avec -f "format" et le format de destination avec -t "format" (si le format de destination est spécifié, on peut alors éviter de préciser un nom de fichier de sortie : -o "of" est inutile)
+- par défaut, la langue du document de sortie est l'anglais ; on peut préciser une autre langue avec l'option "-V lang=xxx" : pandoc -s -V lang=fr "if" -o "of" (ou de, en, es, grc, la, ou en-GB...)
+
+1. Conversion de pdf
+- en txt : pdftotext -nopgbrk "if" "of"
+- en htm ou html : pdftohtml -c -i -p -s "if" "of"
+- en doc, docx ou odt :
+   * créer un fichier txt ou html comme ci-dessus
+   * si fichier txt : pandoc -s -t "doc, docx ou odt" "tf" -o "of"
+     OU si fichier html : pandoc -s -f "html" -t "odc, docx ou odt" "tf" -o "of"
+   * rm tf
+- en image (ex. jpg) : convert -background white -alpha remove -alpha off -density 250 "if" -quality 90 "of" (cf. le I, 1 section "en pdf" du fichier /usr/local/bin/help-convert-medias pour plus d'infos, y compris l'ordre des options et la gestion des erreurs possibles)
+
+2. Conversion de doc, docx, odt :
+- en un autre de ces formats : pandoc -s "if" -o "of"
+- en pdf : libreoffice --headless --convert-to pdf "if" OU soffice --headless --convert-to-pdf "if" (si on veut préciser un dossier de sortie : ajouter l'option --outdir, par ex. soffice --headless --convert-to-pdf --outdir /home/user *.doc) (voir soffice -h)
+- en epub : soffice --headless --convert-to epub "if"
+- en html : soffice --headless --convert-to ""html:XHTML Writer File:UTF8" "if"
+- en txt : soffice --headless --convert-to "txt:Text (encoded):UTF8" "if"
+
+3. Conversion de markdown, mediawiki, html, json, epub, opml, latex...
+- en un autre de ces formats : pandoc -s "if" -o "of"
+- en odt :
+   * sans fichier de référence : pandoc -s -f "markdown, mediawiki..." "if" -o "of"
+   * avec fichier de référence : ajouter --reference-doc="/usr/local/bin/reference.odt"
+- en doc, docx ou pdf :
+   * créer un fichier odt comme ci-dessus
+   * voir la conversion de fichiers odt en doc, docx ou pdf

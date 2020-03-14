@@ -1,0 +1,52 @@
+Voir la page "General troubleshooting" du wiki.
+
+Afficher d'éventuelles erreurs des fichiers log de /var/log et les erreurs de priorité élevée du journal de systemd :
+sudo journalctl -p 3 -xb (pour le boot courant, ou -x -b # pour le boot n°# ; afficher la liste des boots possibles avec sudo journalctl --list-boots) (sudo journalctl -p err est également possible)
+OU juste après avoir inséré le périphérique, afficher les messages du noyau :
+dmesg | tail -n10 OU journalctl -k | tail -n10
+
+On peut aussi écouter et afficher en continu les événements (branchement, montage, etc.) du gestionnaire de périphériques udev :
+udevadm monitor
+udev ajoute les périphériques dans /dev/ ("devices").
+Le montage des périphériques de stockage/amovibles est quant à lui géré par udisks (il en existe 2 versions : celle utilisée est udisks2) (udisks utilise donc lui-même udev, udisks ne s'occupant plus précisément que des périphériques de stockage) ; il y a donc un démon/service udisks2.service, démarré automatiquement (qui ne devrait donc pas être démarré explicitement).
+L'automatisation des montages est gérée quant à elle par udiskie (qui utilise la commande udisksctl de udisks2 pour effectuer les montages et démontages).
+(On peut aussi utiliser "udisksctl monitor" à la place de "udevadm monitor", mais les résultats affichés sont très verbeux.)
+
+Vérifier les problèmes éventuels des services de systemd :
+systemctl --failed
+On peut aussi afficher une unité particulière (une unité = un fichier de configuration, i.e. un service, un target, un montage, un socket...) :
+systemctl list-units | grep <unité>
+Par exemple pour vérifier si un service est bien actif :
+systemctl list-units | grep -i networkmanager
+
+Pour savoir si un périphérique (ou une partition) a été monté et à quel endroit (/dev/sda ou sdb...) : mount OU lsblk OU sudo fdisk -l OU df
+Au besoin, monter le périphérique, par ex. : sudo mkdir /mnt/sdcard; sudo mount /dev/sdc /mnt/sdcard
+
+Pour afficher le type de système de fichiers utilisé : df -Th OU mount OU lsblk -f
+Pour afficher aussi les UUID : sudo blkid
+
+S'il s'agit d'un périphérique USB : lsusb
+S'il s'agit d'un périphérique PCI : lspci
+S'il s'agit d'un périphérique PCMCIA : lspcmcia
+(lsscsi peut être installé pour les périphériques SCSI)
+
+Vérifier quels modules (drivers pour les périphériques) du noyau Linux sont chargés :
+lsmod
+-> vérifier que les modules pour un périphérique donné sont chargés (par exemple pour l'usb : le module usb_storage, comme affiché dans Menu > Accessoires > Informations sur le système > Matériel > USB) :
+lsmod | grep usb_storage
+
+Pour charger le module s'il ne l'est pas :
+modprobe
+Par exemple pour l'USB :
+modprobe usb_storage
+Vérifier que l'opération a bien fonctionné en affichant le journal du noyau (-k pour le kernel) :
+journalctl -k | tail -n10
+
+
+Vérifier des problèmes de disque dur : la plupart des disques durs intègrent l'utilitaire S.M.A.R.T. (Self-Monitoring, Analysis, and Reporting Technology) ; il permet de connaître facilement l'état du disque dur et de repérer d'éventuelles erreurs. Pour l'utiliser :
+1. Installer le paquet smartmontools
+2. On peut utiliser le démon smartd pour vérifier l'état en continu et être prévenu en cas d'erreur (voir la page SMART du wiki).
+3. Afficher des infos sur le disque : sudo smartctl -i /dev/<disque> (par ex. /dev/sda ; voir le pipemenu Informations sur le système > Matériel > Disques pour connaître l'identifiant du disque à vérifier)
+4. Pour fonctionner, il faut que SMART soit disponible ("Available") ET activé ("Enabled") ; le vérifier avec sudo smartctl -i /dev/<disque> | grep "SMART support". S'il est disponible mais désactivé, on peut l'activer avec : sudo smartctl --smart=on /dev/<disque>
+5. Pour afficher l'état du disque : sudo smartctl -H /dev/<disque>
+6. On peut avoir un aperçu des tests possibles sur le disque et des temps approximatifs nécessaires avec sudo smartctl -c /dev/<disque> (short [qui devrait détecter la très grande majorité des problèmes], extended, ou conveyance [pour identifier des dommages subis lors d'un transport du disque]). Pour effectuer un test : sudo smartctl -t short_ou_long_ou_conveyance /dev/<disque> À l'issue du test, et après le temps indiqué, afficher les résultats avec l'option -H expliquée ci-dessus.

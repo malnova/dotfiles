@@ -1,0 +1,57 @@
+Les dispositions disponibles pour la console virtuelle (fournies par la paquet kbd) sont dans le dossier /usr/share/kbd/keymaps/ en particulier dans le dossier /usr/share/kbd/keymaps/i386/azerty/.
+
+!!! Certains caractères de la disposition choisie peuvent ne pas être affichés selon la police de caractères sélectionnée ! Les polices (également fournies par le paquet kbd) sont dans le dossier /usr/share/kbd/consolefonts/
+
+Le choix de la disposition ET le choix de la police de caractères pour la console sont définis dans le fichier /etc/vconsole.conf (cf. man vconsole.conf)
+Pour changer temporairement (localectl status n'indiquera donc pas de changement) de disposition dans la console :
+sudo loadkeys <keymap>
+Par exemple : sudo loadkeys us
+
+Pour afficher la liste complète des dispositions possibles :
+find /usr/share/kbd/keymaps/ -type f
+ou
+localectl list-keymaps
+
+Pour vérifier la disposition sélectionnée (pour la console OU pour X) :
+localectl status
+
+Pour personnaliser la keymap sélectionnée dans /etc/vconsole.conf on peut créer une nouvelle keymap personnelle (pour éviter que les personnalisations ne soient effacées lors d'une mise à jour du paquet kbd).
+Pour créer la keymap personnalisée :
+sudo mkdir -p /usr/local/share/kbd/keymaps
+PUIS 2 possibilités :
+1. SOIT on veut éditer la totalité d'une keymap existante :
+sudo aunpack /usr/share/kbd/keymaps/i386/azerty/<keymap_souhaitée> -X /usr/local/share/kbd/keymaps/<keymap_personnalisée>
+Par exemple :
+sudo aunpack /usr/share/kbd/keymaps/i386/azerty/fr-latin9.map.gz -X /usr/local/share/kbd/keymaps/personal.map
+2. SOIT on veut réutiliser une keymap existante et ne modifier que quelques touches (il est en effet possible d'inclure (include) la keymap par défaut dans la keymap personnalisée, de façon à ne modifier que les touches souhaitées) :
+sudo vim /usr/local/share/kbd/keymaps/personal.map
+Et ajouter en première ligne du fichier : 
+include "/usr/share/kbd/keymaps/<keymap_par_défaut>"
+Par exemple :
+include "/usr/share/kbd/keymaps/i386/azerty/fr-latin9.map.gz"
+
+La syntaxe pour la keymap personnalisée est identique à celle des keymaps par défaut, soit :
+keycode <num_keycode> = <keysym>
+Par exemple :
+keycode 16 = a
+La plupart des keysyms sont intuitifs ("Escape", "ampersand", etc.) mais on peut obtenir leur liste par la commande suivante :
+sudo dumpkeys -l
+Utiliser xev pour trouver le keycode voulu.
+
+Pour appliquer immédiatement, mais temporairement, les changements :
+sudo loadkeys <chemin_complet_de_la_keymap_personnalisée>
+Par exemple :
+sudo loadkeys /usr/local/share/kbd/keymaps/personal.map
+Pour appliquer définitivement les changements, spécifier le chemin complet de la keymap personnalisée pour la variable KEYMAP du fichier /etc/vconsole.conf
+Par exemple :
+KEYMAP=/usr/local/share/kbd/keymaps/personal.map
+(Penser à tester la compatibilité des personnalisations effectuées avec la police choisie ; au besoin choisir une police différente à l'aide de la variable FONT=... Par exemple : FONT=eurlatgr)
+
+Exemple complet de keymap personnalisée :
+vim /etc/vconsole.conf
+KEYMAP=/usr/local/share/kbd/keymaps/personal.map
+FONT=eurlatgr
+vim /usr/local/share/kbd/keymaps/personal.map
+include "/usr/share/kbd/keymaps/i386/azerty/fr-latin9.map.gz"
+shift altgr keycode 16 = AE
+compose 'A' 'E' to 'Æ'

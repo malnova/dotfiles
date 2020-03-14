@@ -1,0 +1,82 @@
+Remarque : pacman distingue les paquets en 2 groupes : ceux explicitement installés, et ceux qui sont des dépendances des paquets explicitement installés.
+
+1. Ressources
+La sortie de pacman est conservée dans le fichier /var/log/pacman.log
+Fichier de configuration de pacman (également utilisé par PACAUR) (pour exclure certains paquets des mises à jour, activer ou désactiver certains dépôts, etc.) : /etc/pacman.conf
+Répertoire du cache de pacman : /var/cache/pacman/pkg/
+Équivalences entre pacman et les autres gestionnaires de paquets (comme apt) : https://wiki.archlinux.org/index.php/Pacman/Rosetta
+
+2. Divers
+Liste des fichiers d'un paquet installé (par exemple pour savoir comment se nomme l'exécutable) : pacman -Ql <paquet>
+Savoir à quel paquet appartient un fichier du système : pacman -Qo <fichier>
+Afficher des informations précises sur un paquet, notamment les dépendances : pacman -Si <paquet>
+Afficher des informations précises sur un paquet installé : pacman -Qi <paquet>
+Télécharger un paquet sans l'installer (le paquet est téléchargé dans le dossier /var/cache/pacman/pkg/) : pacman -Sw <paquet>
+Afficher l'URL d'un paquet (téléchargeable ensuite avec wget par exemple ; installable avec pacman -U <URL_OU_paquet_téléchargé>) (-p, --print) : pacman -Sp <paquet>
+Afficher les vulnérabilités : installer arch-audit (ou pacaudit dans AUR)
+Afficher le changelog d'un paquet installé (si disponible) (-c, --changelog) : pacman -Qc <paquet>
+Afficher la date d'installation du système (si le journal de pacman n'a pas été supprimé) : head -n1 /var/log/pacman.log
+
+3. Listage de paquets
+Liste des dépendances d'un paquet : pacman -Si <paquet>
+Liste des paquets dont <paquet> est une dépendance / liste des paquets requis par un paquet (reverse dependencies / dépendances inversées) : pacman -Sii <paquet>
+Liste des paquets installés : pacman -Q
+Liste des paquets installés explicitement (-e, --explicit) : pacman -Qe
+Nombre de paquets installés : pacman -Q | wc -l
+Liste des paquets orphelins : pacman -Qtdq
+Liste des derniers paquets installés ou mis à jour : cat /var/log/pacman.log | grep -iE 'installed|upgraded'
+
+4. Installation de paquets (aide : pacman -S --help)
+Installer un ou plusieurs paquet(s) / groupe(s) : pacman -S <paquets>
+Afficher la liste des paquets d'un groupe : pacman -Sg <groupe>
+Si le paquet existe dans plusieurs dépôts, on peut préciser le dépôt souhaité, par exemple : pacman -S extra/<paquet>
+Pour installer une liste de paquets à partir d'un fichier texte : pacman -S - < pkglist.txt
+
+5. Mise à jour de paquets (aide : pacman -S --help)
+Lire si une intervention manuelle est requise avant ou pendant la mise à jour sur https://archlinux.org OU en utilisant le script "news"
+Synchroniser (-y, --refresh) et mettre à jour (-u, --sysupgrade) les paquets : pacman -Syu
+Forcer la mise à jour des dépôts : pacman -Syyu
+Pour exclure temporairement certains paquets des mises à jour : pacman -Syu --ignore <liste_des_paquets_à_ignorer_séparés_par_des_virgules>
+Pour exclure systématiquement certains paquets / groupes des mises à jour : modifier le fichier /etc/pacman.conf, en ajoutant les paquets à ignorer à la variable "IgnorePkg=" (liste de paquets séparés par des espaces, ou recopier plusieurs fois IgnorePkg=<paquet>), ou les groupes à ignorer à la variable "IgnoreGroup="
+
+6. Autres mises à jour
+Pour mettre à jour les dépôts : repos-update OU reflector --country "France -- latest 50 --age 6 [en nombre d'heures, pour avoir des dépôts contenant bien les dernières mises à jour de paquets] --sort rate -- save /etc/pacman.d/mirrorlist
+Pour mettre à jour les plugins de vim avec Pathogen : vim-update
+Pour mettre à jour les taux de change de units (définis, comme les autres unités de conversion, dans /usr/share/units/definitions.units) : sudo units_cur
+
+7. Suppression de paquets (aide : pacman -R --help)
+Supprimer un ou plusieurs paquet(s) / groupe(s) : pacman -R <paquets>
+Supprimer un paquet et ses dépendances (-s, --recursive) : pacman -Rs <paquet> (ne supprime pas les dépendances requises par d'autres paquets, ni celles installées explicitement par l'utilisateur)
+Supprimer un paquet et ses dépendances, ainsi que les paquets qui dépendent du paquet supprimé -c, (--cascade) : pacman -Rcs <paquet>
+!!! Opération récursive, qui peut potentiellement supprimer des paquets nécessaires -> comparer la liste des paquets supprimés avec celle donnée par pacman -Rs <paquet> !
+Supprimer également les fichiers de backup (-n, --nosave) (pacman enregistre les fichiers de configuration modifiés sous l'extension .pacsave, utiles par exemple en vue d'une réinstallation) : pacman -Rcns <paquet>
+Supprimer un paquet, requis par un autre, sans supprimer le paquet dont il dépend : pacman -Rdd <paquet>
+Note : les répertoires personnels ne sont jamais modifiés par pacman. À l'utilisateur d'y supprimer les éventuels fichiers ou dossiers inutiles.
+
+8. Recherche de paquets (aide : pacman -S --help && pacman -Q --help)
+Recherche d'un paquet dans les dépôts (recherche dans le nom ET la description) : pacman -Ss <paquet>
+Recherche d'un paquet dans les dépôts officiels ET dans AUR : pacaur -Ss <paquet>
+Recherche d'un paquet parmi les paquets installés : pacman -Qs <paquet>
+Recherche d'un paquet contenant un fichier spécifique : synchroniser la base de données des fichiers avec "pacman -Fy", puis : pacman -Fs <fichier>
+
+9. Nettoyage
+Nettoyer le cache en supprimant toutes les versions des paquets qui ne sont plus installés : pacman -ruk0
+Nettoyer le cache des paquets (-c, --clean) en supprimant toutes les versions des paquets qui ne sont plus installés, ainsi que les anciennes versions des paquets installés (downgrade impossible) : pacman -Sc
+Nettoyer tous les paquets du cache, y compris ceux qui sont installés : pacman -Scc
+Nettoyer le cache en ne conservant que les trois versions les plus récentes de chaque paquet (voir paccache -h pour plus d'options) : paccache -r
+Nettoyer le cache en conservant x versions des paquets installés : paccache -rk x
+Supprimer les paquets orphelins : pacman -Rns $(pacman -Qtdq)
+
+10. Rétrograder des paquets
+Revenir à la version précédente d'un paquet :
+a). En utilisant le cache de pacman (cf. https://wiki.archlinux.org/index.php/downgrading_packages)
+Le cache se situe dans le répertoire /var/cache/pacman/pkg/
+Pour avoir la liste des versions disponibles du paquet souhaité :
+ls /var/cache/pacman/pkg/<paquet_souhaité>.*
+Pour installer l'ancienne version :
+pacman -U /var/cache/pacman/pkg/<paquet_souhaité_vieille_version>.pkg.tar.xz
+b). En utilisant ALA (Arch Linux Archive) (cf. https://wiki.archlinux.org/index.php/Arch_Linux_Archive)
+Les dépôts se trouvent à l'adresse https://archive.archlinux.org
+Rechercher la version du paquet souhaitée dans les sous-dossiers, classés par ordre alphabétique de noms de paquets, du dossier "packages".
+Pour installer l'ancienne version :
+pacman -U https://archive.archlinux.org/packages/<...paquet_souhaité_vieille_version>.pkg.tar.xz

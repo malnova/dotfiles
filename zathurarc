@@ -1,0 +1,43 @@
+# man zathurarc pour voir l'ensemble des commandes
+set guioptions ""
+set page-padding 2
+set selection-clipboard clipboard
+set database null
+unmap [normal] <C-r>
+unmap [fullscreen] <C-r>
+map [normal] c set recolor
+map [fullscreen] c set recolor
+unmap [normal] <F11>
+unmap [fullscreen] <F11>
+map [normal] f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+map [normal] = zoom in
+map [fullscreen] = zoom in
+map [normal] * zoom 0.0
+map [fullscreen] * zoom 0.0
+unmap [normal] <C-n>
+unmap [fullscreen] <C-n>
+map [normal] i toggle_statusbar
+map [fullscreen] i toggle_statusbar
+map [normal] n navigate next
+map [fullscreen] n navigate next
+map [normal] p navigate previous
+map [fullscreen] p navigate previous
+map [normal] N search forward
+map [fullscreen] N search forward
+map [normal] P search backward
+map [fullscreen] P search backward
+map [normal] R rotate rotate-cw
+map [fullscreen] R rotate rotate-cw
+map [normal] L rotate rotate-ccw
+map [fullscreen] L rotate rotate-ccw
+map [normal] r reload
+map [fullscreen] r reload
+unmap [normal] a
+unmap [fullscreen] a
+unmap [normal] s
+unmap [fullscreen] s
+map [normal] H adjust_window best-fit
+map [fullscreen] H adjust_window best-fit
+map [normal] W adjust_window width
+map [fullscreen] W adjust_window width

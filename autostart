@@ -1,0 +1,114 @@
+## Rétablir le fond d'écran
+feh --no-fehbg --bg-scale /usr/share/wallpapers/wallpaper.png &
+
+## Compositeur X
+picom --config /home/sanfix/.config/picom.conf &
+
+## Demandes d'authentification (mots de passe) de Polkit
+# Agent d'authentification lxpolkit fourni par le paquet lxsession
+# Indispensable : gère aussi les demandes de mots de passe de gparted, etc.
+# anciennement gérées par gksu (deprecated)
+/usr/bin/lxpolkit &
+
+## Polybar
+(sleep 1; polybar -q mainbar) &
+
+## Conky
+#(sleep 2; conky -q) &
+
+## Paramètres pour les montages et démontages des périphériques amovibles
+# udiskie utilise udisks2 pour effectuer les montages et démontages
+udiskie --automount --notify --no-tray --no-file-manager --no-password-cache &
+
+## Hot corners
+#(sleep 2; xdotool behave_screen_edge --delay 1000 bottom-left key Super_L &&
+#xdotool behave_screen_edge --delay 1000 bottom-right key ctrl+alt+Super_L) &
+
+## Daemon / service (optionnel) de l'émulateur de terminal rxvt-unicode
+#urxvtd -q -o -f &
+
+## Réglage automatique de la couleur de la température de l'écran
+# en fonction de l'endroit et de l'heure
+redshift &
+
+## PARAMÈTRES POUR LES SOURIS (ou pointage), CLAVIERS ET TOUCHPADS
+#
+# Pour voir les paramètres actuels : xset q
+#
+## !!! Les paramètres définis ci-dessous doivent être manuellement retapés
+# dans un terminal pour être pris en compte par un nouveau périphérique USB !!!
+# DONC pour définir les paramètres par défaut, il faut utiliser
+# le fichier /etc/X11/xorg.conf.d/00-keyboard.conf
+# (cf. la ligne Option "AutoRepeat"...) pour le clavier,
+# ou le fichier /etc/X11/xorg.conf.d/50-mouse.conf pour la souris,
+# ou le fichier /etc/X11/xorg.conf.d/70-touchpad.conf pour le touchpad
+# (voir "man xorg.conf" pour plus de détails)
+#
+# Pour désactiver un périphérique, récupérer son id ou son nom par un
+# "xinput list", puis le désactiver grâce à la commande
+# "xinput --disable <id_OU_nom>".
+# Exemples :
+# xinput --disable 10 OU xinput --disable "SynPS/2 Synaptics TouchPad"
+# Pour le réactiver : "xinput --enable <id_OU_nom>"
+#
+## Paramètres de la souris / de tous les périphériques de pointage
+# Syntaxe : xset mouse <accélération> <sensibilité>
+# OU xset m <accélération> <sensibilité>
+# Revenir aux paramètres par défaut : xset m default & (= xset m 2/1 4)
+# Accélération : de 1 (lente) à 10 (rapide) (fractions possibles : 3/2...)
+# Sensibilité (= nombre de pixels traversés avant accélération) : de 100 (faible) à 1 (forte)
+# OPTIONNEL, puisque l'accélération par défaut pour tous les périphériques
+# de type souris est déjà définie dans le fichier
+# /etc/X11/xorg.conf.d/50-mouse.conf !
+#xset m 3 2 &
+#
+## Paramètres du clavier
+# Pour vérifier les dispositions définies pour la console OU pour X :
+# localectl status
+#
+# La disposition et les paramètres pour X, ainsi que le choix de la touche
+# Compose sont définis dans le fichier
+# /etc/X11/xorg.conf.d/00-keyboard.conf
+# Les combinaisons par défaut pour la touche Compose sont définies par un
+# include dans le fichier .XCompose
+# Les combinaisons personnalisées pour la touche Compose sont définies
+# dans le fichier .XCompose
+#
+# Le choix de la disposition pour la console est défini dans le fichier
+# /etc/vconsole.conf
+#
+# Les paramètres suivants s'appliquent à X :
+# Désactiver l'autorepeat : xset r off
+# Désactiver l'autorepeat pour une touche particulière :
+# xset -r <keycode_de_0_à_255>
+# (ex. xset -r 24 = désactiver l'autorepeat pour la touche "a")
+# Pour activer de nouveau l'autorepeat : xset r <keycode>
+# Les keycodes peuvent être obtenus avec xev (ou xev -event keyboard) MAIS
+# ils ne doivent pas être occupés par openbox ou autre chose, donc il faut
+# penser à commenter temporairement les raccourcis claviers dans rc.xml).
+# xset r rate <délai> <répétitions>
+# <délai> = délai avant répétition (de 100 - court - à 1000 - long, en ms)
+# <répétitions> = nombre de répétitions par seconde
+#
+# Ce qui suit est OBLIGATOIRE, puisque l'option "AutoRepeat" a été supprimée
+# du driver à partir de la version 1.4.0, et ne peut donc plus être définie
+# dans le fichier /etc/X11/xorg.conf.d/00-keyboard.conf :
+xset r rate 200 40 &
+#
+## Paramètres du touchpad
+# Voir "man libinput" pour plus d'infos.
+# OPTIONNEL, puisque les paramètres par défaut pour tous les périphériques
+# de type touchpad sont déjà définis dans le fichier
+# /etc/X11/xorg.conf.d/70-touchpad.conf !
+# !!! synclient fait partie du driver synaptics, remplacé par libinput !
+# Activer le scrolling vertical, le scrolling horizontal, et le clic par
+# tap sur le touchpad :
+#synclient VertEdgeScroll=1 HorizEdgeScroll=1 TapButton1=1 2>/dev/null &
+# Détection de toucher pendant la frappe
+#synclient PalmDetect=1 PalmMinWith=4 PalmMinZ=40 &
+
+## Beep système off
+xset b off &
+
+## Options d'alimentation
+(sleep 2 && /usr/local/bin/power_management start notification_off) &

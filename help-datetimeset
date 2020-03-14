@@ -1,0 +1,65 @@
+RAPPEL : il existe 2 horloges (visibles avec timedatectl status) :
+    Local time / system clock / heure logicielle : heure système (dépend de la timezone)
+    RTC time / Real Time Clock / CMOS clock / hardware clock : heure matérielle
+
+Le format d'affichage de l'heure dépend la plupart du temps de la langue (locale), définie dans la variable d'environnement "LC_TIME" (mais "date" utilise ses propres paramètres, etc.) Cette variable peut être définie dans le fichier /etc/locale.conf. Pour voir sa valeur actuelle, utiliser la commande "locale". Voir la page "locale" d'ArchWiki et "man locale" pour plus d'infos.
+
+ATTENTION si Windows et Linux sont en dual boot ! Windows fixe l'heure RTC sur l'heure locale, alors que macOS et Linux (sauf Ubuntu) fixent l'heure RTC sur l'heure UTC ! En dual boot, chaque système dérive l'heure locale de l'heure matérielle. Il est donc important de choisir si l'heure matérielle est en heure locale ou en heure UTC -> cf ci-dessous.
+
+[1] Voir la configuration actuelle de date, heure, timezone, NTP... :
+    timedatectl status
+    CET / Central European Time : nom du fuseau horaire UTC+1
+    CEST / CEntral European Summer Time : heure d'été d'Europe centrale (UTC+2)
+    UTC / Universal Coordinated Time : Temps Universel Coordonné (indépendant de la timezone)
+
+[2] Régler la date et l'heure (heure système ET heure matérielle !) :
+    sudo timedatectl set-time "yyyy-MM-dd" (remet l'heure à 00:00:00 !)
+    sudo timedatectl set-time "hh:mm:ss" (conserve le jour actuel)
+    sudo timedatectl set-time "yyyy-MM-dd hh:mm:ss"
+
+[3] Voir la liste des timezones :
+    timedatectl list-timezones
+    (revient à "ls /usr/share/zoneinfo/")
+
+[4] Sélectionner la timezone :
+    sudo timedatectl set-timezone "Continent/Ville"
+    (crée le lien symbolique /etc/localtime pointant vers le fichier de la timezone dans le dossier /usr/share/zoneinfo/ -> est donc équivalent à la commande "ln -sf /usr/share/zoneinfo/Continent/Ville /etc/localtime"; c'est cette commande qui est d'ailleurs utilisée lors de l'installation d'Arch !)
+    OU on peut choisir interactivement la timezone en lançant le script bash tzselect par la commande "tzselect"
+
+[5] Ajuster l'heure manuellement ou automatiquement :
+    1. Activer et lancer immédiatement le démon systemd-timesyncd de systemd :
+       timedatectl set-ntp true PUIS entrer le mot de passe root
+       Attention au firewall ! NTP utilise le port 123 ! (sudo ufw allow out 123)
+       La synchronisation peut prendre quelques dizaines de secondes.
+       Cela active et démarre le service systemd-timesyncd.service, et est donc équivalent à la commande "sudo systemctl enable --now systemd-timesyncd.service"
+       ("timedatectl status" indiquera désormais "Network time on: yes").
+       Si un service ntpd.service est actif, il sera désactivé !
+       Il est possible de modifier ou ajouter des serveurs de temps dans le fichier /etc/systemd/timesyncd.conf
+       Pour arrêter et désactiver le démon : sudo timedatectl set-ntp false (équivaut à la commande "systemctl disable --now systemd-timesyncd.service").
+       Debugging :
+          - il semble nécessaire de supprimer le fichier /etc/systemd/timesyncd.conf pour que ça marche ?
+          - un décalage de quelques minutes ne semble pas suffisant pour que la synchronisation se lance (donc on peut faire un sudo timedatectl set-time "hh:mm:ss" en revenant en arrière de plus d'une heure avant de lancer la synchronisation)
+          - il peut être nécessaire de réinstaller tzdata (sudo pacman -S tzdata)
+    2. OU installer NTP (Network Time Protocol) (donne de meilleurs résultats que l'option 1) :
+       sudo pacman -S ntp
+       Attention au firewall ! NTP utilise le port 123 ! (sudo ufw allow out 123)
+       Le fichier de configuration (liste des serveurs de temps...) est /etc/ntp.conf
+       Pour une synchronisation ponctuelle immédiate : sudo ntpd -qg (la synchronisation prend une dizaine de secondes ; vérifier avec "timedatectl status", et penser ensuite à caler l'heure matérielle sur l'heure système - cf ci-dessous)
+       Pour synchroniser à chaque redémarrage, il faut activer le service ntpd : sudo systemctl enable ntpd.service
+    3. OU en cas de dérive de l'heure (aucune horloge n'étant parfaite, l'horloge matérielle peut dériver par rapport au temps exact ; cette dérive est appelée "time skew") :
+        sudo hwclock --adjust
+        Cette commande calcule le décalage subit par l'horloge matérielle par rapport à l'horloge système -> utiliser cette commande régulièrement (ou avec une tâche cron) permet de minimiser ce décalage.
+    4. OU autres possibilités : openntpd, chrony, etc. (voir la page "Time" d'ArchWiki)
+
+[6] Caler l'heure matérielle sur l'heure système :
+    sudo hwclock --systohc
+
+[7] Caler l'heure système sur l'heure matérielle :
+    sudo hwclock --hctosys
+
+[8] Choisir si l'heure RTC est en heure locale ou en heure UTC (par défaut) :
+    Pour voir la configuration actuelle, regarder la ligne "RTC in local TZ" renvoyée par la commande "timedatectl status".
+    Le réglage est déterminé dans le fichier /etc/adjtime. Si ce fichier n'existe pas, Linux considère que l'heure RTC est en UTC.
+    Ce fichier est correctement généré par les instructions suivantes :
+        - pour basculer l'heure RTC en heure locale : sudo timedatectl set-local-rtc 1 (= "timedatectl status" renvoie "RTC in local TZ: yes")
+        - pour revenir à l'heure RTC en UTC : sudo timedatectl set-local-rtc 0 (= "RTC in local TZ: no")

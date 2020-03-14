@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -e "/usr/bin/sensors" ]; then
+   # Requiert l'installation du paquet lm-sensors
+   IFS=$' '
+   while read -d $'\xBF' line; do
+      fan=$(echo $line | grep -i 'FAN Speed')
+      if [ ! -z "$fan" ]; then
+	 echo -e "\n\n\${color}Ventilateurs\${alignr}Vitesse"
+	 while read -r detail; do
+	    unset fan_speed
+	    fan_device=$(echo $detail | cut -d ':' -f1)
+	    fan_speed=$(echo $detail | cut -d ':' -f2 | grep -Eo '[0-9]+' | head -1)
+	    if [ ! -z "$fan_device" ] && [ ! -z "$fan_speed" ]; then
+	       echo " \${color}$fan_device\${alignr}\${color0}$fan_speed RPM"
+	    fi
+	 done <<< "$fan"
+      fi
+   done < <(/usr/bin/sensors | awk -v RS='\n\n' '{printf "%s\xBF", $0}')
+   unset IFS
+fi
+
+exit 0

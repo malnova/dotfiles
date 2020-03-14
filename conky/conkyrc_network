@@ -1,0 +1,189 @@
+# Commands above TEXT :
+# http://conky.sourceforge.net/config_settings.html
+#
+# Commands below TEXT :
+# http://conky.sourceforge.net/variables.html
+
+
+###  Window Settings  #####################
+own_window yes
+# If own_window is yes, you may specify type normal, desktop, dock, panel or override (default: normal).
+# Desktop windows are special windows that have no window decorations, are always visible on your desktop,
+# do not appear in your pager or taskbar, and are sticky across all workspaces.
+# Panel windows reserve space along a desktop edge, just like panels and taskbars,
+# preventing maximized windows from overlapping them.
+# The edge is chosen based on the alignment option.
+# Override windows are not under the control of the window manager. Hints are ignored.
+# This type of window can be useful for certain situations.
+own_window_type desktop
+own_window_transparent no
+own_window_hints undecorated,below,skip_taskbar,skip_pager,sticky
+own_window_colour 000000
+own_window_class Conky
+own_window_title Bunsen Labs Default Conky
+
+# ARGB transparency
+own_window_argb_visual yes
+### When ARGB visuals are enabled, this use this to modify the alpha value
+### Use: own_window_type normal
+### Use: own_window_transparent no
+### Valid range is 0-255, where 0 is 0% opacity, and 255 is 100% opacity.
+own_window_argb_value 0
+
+minimum_size 280 0  ### width | height
+maximum_width 280
+
+gap_x 300    ### left | right
+gap_y 50    ### up | down
+
+alignment tr
+
+
+###  Font Settings  #############################
+# Use Xft (anti-aliased font and stuff)
+use_xft yes
+xftfont Monospace:size=10
+#xftfont Liberation Sans:bold:size=9
+
+# Alpha of Xft font. Must be a value at or between 1 and 0 ###
+xftalpha 1
+# Force UTF8? requires XFT ###
+override_utf8_locale yes
+
+uppercase no
+
+
+###  Colour Settings  ###########################
+draw_shades no #yes
+default_shade_color 000000
+
+draw_outline no # amplifies text if yes
+default_outline_color 000000
+
+#default_color 656667 # Waldorf original colour
+#default_color 7a7a7a # Flame  & Bunsen Grey
+#default_color 929292 # Labs Grey
+#default_color C0C0C0 # Silver
+#default_color B5B5B5
+default_color grey90
+#color0 B0E0E6 # PowderBlue
+color0 grey70
+#color1 778899 # LightSlateGray
+color1 grey35
+#color2 D8BFD8 # Thistle
+color2 FFA07A
+#color3 9ACD32 # YellowGreen
+color3 DDAA00
+color4 FFA07A # LightSalmon
+color5 FFDEAD # NavajoWhite
+color6 00BFFF # DeepSkyBlue
+color7 5F9EA0 # CadetBlue
+color8 BDB76B # DarkKhaki
+color9 CD5C5C # IndianRed
+
+
+###  Borders Section  ###########################
+draw_borders no
+# Stippled borders?
+stippled_borders 5
+# border margins
+border_inner_margin 5
+border_outer_margin 0
+# border width
+border_width 2
+# graph borders
+draw_graph_borders yes
+#default_graph_size 15 40
+
+
+###  Miscellaneous Section  #####################
+# Boolean value, if true, Conky will be forked to background when started.
+background yes
+
+# Adds spaces around certain objects to stop them from moving other things
+# around, this only helps if you are using a mono font
+# Options: right, left or none
+use_spacer none
+
+# Default and Minimum size is 256 - needs more for single commands that
+# "call" a lot of text IE: bash scripts
+text_buffer_size 6144
+
+# Subtract (file system) buffers from used memory?
+no_buffers yes
+
+# change GiB to G and MiB to M
+short_units yes
+
+# Like it says, ot pads the decimals on % values
+# doesn't seem to work since v1.7.1
+pad_percents 2
+
+# Imlib2 image cache size, in bytes. Default 4MiB Increase this value if you use
+# $image lots. Set to 0 to disable the image cache.
+imlib_cache_size 0
+
+# Use the Xdbe extension? (eliminates flicker)
+# It is highly recommended to use own window with this one
+# so double buffer won't be so big.
+double_buffer yes
+
+#   Maximum size of user text buffer, i.e. layout below TEXT line in config file
+#  (default is 16384 bytes)
+# max_user_text 16384
+
+# Desired output unit of all objects displaying a temperature. Parameters are
+# either "fahrenheit" or "celsius". The default unit is degree Celsius.
+# temperature_unit Fahrenheit
+
+# Width for $top name value (defaults to 15 characters)
+top_name_width 14
+
+#max_text_width 0
+
+update_interval 1
+
+
+TEXT
+${if_up wlp2s0}${color}ESSID${alignr}${color0}${wireless_essid wlp2s0}
+${color}Signal${alignr}${color0}${wireless_link_qual wlp2s0} dB
+${color}Signal maximum${alignr}${color0}${wireless_link_qual_max wlp2s0} dB
+${color}Qualité du signal${alignr}${color0}${wireless_link_qual_perc wlp2s0}%
+
+${color}IP locale${alignr}${color0}${addr wlp2s0}${endif}\
+${if_up eth0}${color}IP locale${alignr}${color0}${addr eth0}${endif}
+
+${color}Connexions
+ ${color}entrantes : ${color0}${tcp_portmon 1 32767 count}
+ ${color}sortantes : ${color0}${tcp_portmon 32768 61000 count}
+ ${color}totales :   ${color0}${tcp_portmon 1 65535 count}
+
+${alignr}${color}Débit
+${if_up wlp2s0}${color}Téléchargement${alignr}${color0}${downspeedf wlp2s0} kb/s
+${color1}${downspeedgraph wlp2s0 18 8434A4 A672CF}
+${color}Téléversement${alignr}${color0}${upspeedf wlp2s0} kb/s
+${color1}${upspeedgraph wlp2s0 18 8434A4 A672CF}
+
+${color}Téléchargement total${alignr}${color0}${totaldown wlp2s0}
+${color}Téléversement total${alignr}${color0}${totalup wlp2s0}${endif}\
+${if_up eth0}${color}Téléchargement${alignr}${color0}${downspeedf eth0} kb/s
+${color1}${downspeedgraph eth0 18 8434A4 A672CF}
+${color}Téléversement${alignr}${color0}${upspeedf eth0} kb/s
+${color1}${upspeedgraph eth0 18 8434A4 A672CF}
+
+${color}Téléchargement total${alignr}${color0}${totaldown eth0}
+${color}Téléversement total${alignr}${color0}${totalup eth0}${endif}
+
+${color}Connexions entrantes
+ ${color}${tcp_portmon 1 32767 rhost 0}${alignr}${color0}${tcp_portmon 1 32767 lservice 0}
+ ${color}${tcp_portmon 1 32767 rhost 1}${alignr}${color0}${tcp_portmon 1 32767 lservice 1}
+ ${color}${tcp_portmon 1 32767 rhost 2}${alignr}${color0}${tcp_portmon 1 32767 lservice 2}
+ ${color}${tcp_portmon 1 32767 rhost 3}${alignr}${color0}${tcp_portmon 1 32767 lservice 3}
+ ${color}${tcp_portmon 1 32767 rhost 4}${alignr}${color0}${tcp_portmon 1 32767 lservice 4}
+
+${color}Connexions sortantes
+ ${color}${tcp_portmon 32768 61000 rhost 0}${alignr}${color0}${tcp_portmon 32768 61000 rservice 0}
+ ${color}${tcp_portmon 32768 61000 rhost 1}${alignr}${color0}${tcp_portmon 32768 61000 rservice 1}
+ ${color}${tcp_portmon 32768 61000 rhost 2}${alignr}${color0}${tcp_portmon 32768 61000 rservice 2}
+ ${color}${tcp_portmon 32768 61000 rhost 3}${alignr}${color0}${tcp_portmon 32768 61000 rservice 3}
+ ${color}${tcp_portmon 32768 61000 rhost 4}${alignr}${color0}${tcp_portmon 32768 61000 rservice 4}
