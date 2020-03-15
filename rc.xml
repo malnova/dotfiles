@@ -929,16 +929,16 @@
         <command>&scripts_path;toggle-wifi status</command>
       </action>
     </keybind>
-    <!-- Activer / désactiver la veille avec xautolock -->
+    <!-- Activer / désactiver la mise en veille -->
     <keybind key="C-A-x">
       <action name="Execute">
-        <command>&scripts_path;suspend_script toggle</command>
+        <command>&scripts_path;power_management toggle</command>
       </action>
     </keybind>
-    <!-- Notification du statut de xautolock -->
+    <!-- Notification du statut de la mise en veille -->
     <keybind key="C-A-S-x">
       <action name="Execute">
-        <command>&scripts_path;suspend_script status</command>
+        <command>&scripts_path;power_management status</command>
       </action>
     </keybind>
     <!-- Zoomer une partie de l'écran -->
