@@ -2,7 +2,7 @@
 feh --no-fehbg --bg-scale /usr/share/wallpapers/wallpaper.png &
 
 ## Compositeur X
-picom --config /home/sanfix/.config/picom.conf &
+picom --config ~/.config/picom.conf &
 
 ## Demandes d'authentification (mots de passe) de Polkit
 # Agent d'authentification lxpolkit fourni par le paquet lxsession
