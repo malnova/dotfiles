@@ -29,7 +29,7 @@ udiskie --automount --notify --no-tray --no-file-manager --no-password-cache &
 
 ## Réglage automatique de la couleur de la température de l'écran
 # en fonction de l'endroit et de l'heure
-redshift &
+redshift &>/dev/null &
 
 ## PARAMÈTRES POUR LES SOURIS (ou pointage), CLAVIERS ET TOUCHPADS
 #
