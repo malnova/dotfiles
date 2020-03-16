@@ -56,7 +56,7 @@ label-empty-foreground = ${colors.foreground-light}
 
 [module/windows]
 type = custom/script
-exec = /usr/local/bin/polybar/windows-bar
+exec = /usr/local/bin/windows-bar
 tail = true
 format = <label>
 format-margin = 5
@@ -90,7 +90,7 @@ ramp-headphones-1 = 
 
 [module/connection-icon]
 type = custom/script
-exec = /usr/local/bin/polybar/connection-icon
+exec = /usr/local/bin/connection-icon
 tail = true
 format = <label>
 label = %{A1:urxvt -e nmtui connect &:}%{A3:nm-connection-editor &:}%output%%{A}%{A}
