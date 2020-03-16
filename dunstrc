@@ -1,4 +1,5 @@
 [global]
+    # Fichier par défaut : /usr/share/dunst/dunstrc
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
@@ -175,7 +176,7 @@
     sticky_history = yes
 
     # Maximum amount of notifications kept in history
-    history_length = 10
+    history_length = 20
 
     ### Misc/Advanced ###
 
