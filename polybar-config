@@ -29,7 +29,7 @@ modules-left = ewmh windows
 modules-center = 
 ; ORDIPORTABLE : volume connection-icon wireless-network battery date
 ; ORDIBUREAU : volume connection-icon date
-modules-right = volume connection-icon wireless-network battery date
+modules-right = volume connection-icon date
 click-left = 
 click-middle = 
 click-right = sleep 0.1; xdotool key Super_L
@@ -56,7 +56,7 @@ label-empty-foreground = ${colors.foreground-light}
 
 [module/windows]
 type = custom/script
-exec = /usr/local/bin/windows-bar
+exec = /usr/local/bin/polybar/windows-bar
 tail = true
 format = <label>
 format-margin = 5
@@ -72,7 +72,7 @@ headphone-soundcard = default
 ; Les commenter ou les modifier en conséquence
 ; ORDIBUREAU : commenter speaker-mixer = Speaker
 master-mixer = Master
-speaker-mixer = Speaker
+;speaker-mixer = Speaker
 headphone-mixer = Headphone
 headphone-id = 18
 format-volume = %{A3:urxvt -e alsamixer &:}<ramp-volume> <label-volume>%{A}
@@ -90,7 +90,7 @@ ramp-headphones-1 = 
 
 [module/connection-icon]
 type = custom/script
-exec = /usr/local/bin/connection-icon
+exec = /usr/local/bin/polybar/connection-icon
 tail = true
 format = <label>
 label = %{A1:urxvt -e nmtui connect &:}%{A3:nm-connection-editor &:}%output%%{A}%{A}
