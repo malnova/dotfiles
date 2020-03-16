@@ -1,5 +1,5 @@
 [global]
-    # Fichier par défaut : /usr/share/dunst/dunstrc
+    # Fichier de configuration par défaut : /usr/share/dunst/dunstrc
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
