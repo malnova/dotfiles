@@ -16,7 +16,8 @@ export QUOTING_STYLE=literal
 
 # Respecter la spécification XDG pour certaines applications
 # (voir aussi ~/.xinitrc)
-export VIMINIT=":source $HOME"/.config/vim/vimrc
+export XDG_CONFIG_HOME="$HOME/.config"
+export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
 
 # Ne rien faire si le mode n'est pas interactif
 [[ $- != *i* ]] && return
