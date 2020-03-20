@@ -440,7 +440,7 @@ C-A-o                     Mode _opacité (keychain)
   o                         Activer / désactiver la transparence
   + / -                     Augmenter / diminuer l'opacité
   Esc                      Quitter la keychain
-C-A-r                      Configuration d'écran par défaut avec x_randr
+C-A-r                      Configuration auto. des écrans avec x_randr
 C-A-s (Maj=statut)  Activer / désactiver la veille de l'écran (_screen)
 C-A-w (Maj=statut) Activer / désactiver le _wifi
 C-A-x (Maj=statut)  Activer / désactiver la mise en veille

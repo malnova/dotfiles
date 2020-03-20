@@ -772,7 +772,7 @@
         <width>50%</width>
       </action>
     </keybind>
-    <!-- Configuration par défaut des écrans avec xrandr -->
+    <!-- Configuration auto. des écrans avec xrandr -->
     <keybind key="C-A-r">
       <action name="Execute">
         <command>&default_path;xrandr --auto</command>
