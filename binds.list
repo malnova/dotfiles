@@ -443,7 +443,7 @@ C-A-o                     Mode _opacité (keychain)
 C-A-r                      Configuration d'écran par défaut avec x_randr
 C-A-s (Maj=statut)  Activer / désactiver la veille de l'écran (_screen)
 C-A-w (Maj=statut) Activer / désactiver le _wifi
-C-A-x (Maj=statut)  Activer / désactiver la veille avec _xautolock
+C-A-x (Maj=statut)  Activer / désactiver la mise en veille
 C-A-z                      _Zoomer une partie de l'écran (zone avec clic
                                centre, puis clic g. pour couleur ; man xmag)
 separator=Déplacements
