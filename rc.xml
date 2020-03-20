@@ -772,10 +772,10 @@
         <width>50%</width>
       </action>
     </keybind>
-    <!-- Configuration d'écran par défaut avec xrandr -->
+    <!-- Configuration par défaut des écrans avec xrandr -->
     <keybind key="C-A-r">
       <action name="Execute">
-        <command>&scripts_path;xrandr-back-to-default</command>
+        <command>&default_path;xrandr --auto</command>
       </action>
     </keybind>
     <!-- Activer / désactiver la veille de l'écran (screen) -->
