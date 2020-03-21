@@ -1,3 +1,4 @@
+# man zathura pour voir les raccourcis claviers par défaut
 # man zathurarc pour voir l'ensemble des commandes
 set guioptions ""
 set page-padding 2
