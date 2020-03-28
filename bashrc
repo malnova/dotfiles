@@ -29,11 +29,9 @@ if [[ $DISPLAY ]]; then
     fi
 fi
 
-# Fonctions
-# Lancer une recherche sur YouTube depuis la ligne de commande avec mpv
-function mpvs {
-    mpv ytdl://ytsearch:"$*"
-}
+# Reparamétrer C-w pour le même comportement que dans vi (ou Vim) :
+# les caractères spéciaux servent de séparateur en plus de l'espace
+set -o vi
 
 # Alias
 # Penser également à vérifier dans /usr/local/bin/ si des wrappers existent
