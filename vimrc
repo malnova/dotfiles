@@ -132,12 +132,13 @@ syntax off
 endif
 
 "------------------------------------------------------------
-" Fichiers temporaires en cache
-set undodir=~/.cache
-set directory=~/.cache
-set backupdir=~/.cache
-set viminfo+=n~/.cache/viminfo
-let g:netrw_home='~/.cache'
+" Respect des spécifications XDG : fichiers temporaires en cache, etc.
+set directory=$HOME/.cache,/tmp
+set backupdir=$HOME/.cache,/tmp
+set undodir=$HOME/.cache,/tmp
+set viminfo+='1000,n$HOME/.cache/viminfo
+set runtimepath=$HOME/.config/vim,$VIMRUNTIME,$HOME/.config/vim/after
+let g:netrw_home='$HOME/.cache'
 
 "------------------------------------------------------------
 " Enregistrer avec W pour les fichiers en lecture seule
