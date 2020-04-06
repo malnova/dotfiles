@@ -17,7 +17,6 @@ export QUOTING_STYLE=literal
 # Respecter la spécification XDG pour certaines applications
 # (voir aussi ~/.xinitrc)
 export XDG_CONFIG_HOME="$HOME/.config"
-export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
 
 # Ne rien faire si le mode n'est pas interactif
 [[ $- != *i* ]] && return
@@ -36,9 +35,10 @@ set -o vi
 # Alias
 # Penser également à vérifier dans /usr/local/bin/ si des wrappers existent
 # pour certains programmes (par ex. feh, tmux...)
-alias ls='/usr/bin/ls --color=auto'
+alias ls="/usr/bin/ls --color=auto"
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
+alias vim="/usr/bin/nvim"
 alias wget="/usr/bin/wget --hsts-file=$HOME/.cache/.wget-hsts"
 
 # Prompt bash
