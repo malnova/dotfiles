@@ -4,11 +4,38 @@
 " Reset / désactiver les options par défaut de Vi
 set nocompatible
 
-" Plugin Pathogen pour installer facilement les plugins
-if !empty(glob("~/.config/vim/autoload/pathogen.vim"))
-source ~/.config/vim/autoload/pathogen.vim
-execute pathogen#infect('bundle/{}', '~/.config/vim/bundle/{}')
+" Plugin vim-plug (https://github.com/junegunn/vim-plug) pour
+" installer facilement les plugins
+" Commandes :
+" :PlugInstall : installer les plugins
+" :PlugUpgrade : mettre à jour vim-plug
+" :PlugStatus : vérifier si des mises à jour des plugins sont disponibles
+" :PlugUpdate : mettre à jour les plugins
+if empty(glob('~/.config/vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync
 endif
+source ~/.config/vim/autoload/plug.vim
+
+" Liste des plugins à installer automatiquement avec vim-plug
+call plug#begin('~/.config/vim/bundle')
+" Plugin Buftabline, pour afficher la liste des buffers (fichiers)
+" ouverts dans la tabline (par défaut, il n'est pas visible du tout
+" si plusieurs fichiers sont ouverts dans vim) :
+Plug 'https://github.com/ap/vim-buftabline.git'
+" Plugin Searchant, pour mettre en surbrillance de couleur différente
+" le résultat de recherche actif/sous lequel se trouve le curseur
+" (par défaut, tous les résultats de recherche sont surlignés de la même
+" couleur) (la couleur du paramètre SearchCurrent est définie plus bas) :
+Plug 'https://github.com/timakro/vim-searchant.git'
+" Plugin Goyo, pour écrire sans distraction (en masquant les différentes
+" barres, horizontales et verticales, de vim et de tmux) :
+Plug 'https://github.com/junegunn/goyo.vim.git'
+" Plugin VIM Table Mode, pour aligner automatiquement les colonnes
+" des tableaux, y compris en Markdown :
+Plug 'https://github.com/dhruvasagar/vim-table-mode.git'
+call plug#end()
 
 " Activer les plugins et l'indentation selon le type de fichier
 filetype indent plugin on
@@ -137,7 +164,6 @@ set directory=$HOME/.cache,/tmp
 set backupdir=$HOME/.cache,/tmp
 set undodir=$HOME/.cache,/tmp
 set viminfo+='1000,n$HOME/.cache/viminfo
-set runtimepath=$HOME/.config/vim,$VIMRUNTIME,$HOME/.config/vim/after
 let g:netrw_home='$HOME/.cache'
 
 "------------------------------------------------------------
