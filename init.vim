@@ -292,6 +292,8 @@ hi Search ctermfg=black
 
 "------------------------------------------------------------
 " Couleurs de la barre de statut
+hi StatusLineNC ctermfg=5 ctermbg=black cterm=none
+
 function SetWindowFocused()
 hi clear StatusLine
 hi StatusLine ctermfg=black ctermbg=5 cterm=bold
