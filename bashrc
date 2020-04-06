@@ -39,6 +39,7 @@ alias ls="/usr/bin/ls --color=auto"
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
 alias vim="/usr/bin/nvim"
+alias vimdiff="/usr/bin/nvim -d"
 alias wget="/usr/bin/wget --hsts-file=$HOME/.cache/.wget-hsts"
 
 # Prompt bash
