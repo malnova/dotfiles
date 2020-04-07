@@ -31,6 +31,9 @@ Plug 'https://github.com/junegunn/goyo.vim.git'
 " Plugin VIM Table Mode, pour aligner automatiquement les colonnes
 " des tableaux, y compris en Markdown :
 Plug 'https://github.com/dhruvasagar/vim-table-mode.git'
+" Plugin Vim Tmux Navigator, pour pouvoir utiliser les mêmes raccourcis
+" pour passer d'un split à l'autre dans vim et dans Tmux
+Plug 'https://github.com/christoomey/vim-tmux-navigator'
 call plug#end()
 
 "------------------------------------------------------------
@@ -374,6 +377,14 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 autocmd VimLeave * call <SID>goyo_leave()
 endif
+
+"------------------------------------------------------------
+" Plugin Vim Tmux Navigator
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 
 "------------------------------------------------------------
 " Undo / redo intelligents
