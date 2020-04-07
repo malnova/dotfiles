@@ -1,8 +1,5 @@
 "------------------------------------------------------------
-" Options de base
-
-" Reset / désactiver les options par défaut de Vi
-set nocompatible
+" Plugins
 
 " Plugin vim-plug (https://github.com/junegunn/vim-plug) pour
 " installer facilement les plugins et les thèmes
@@ -17,7 +14,7 @@ autocmd VimEnter * PlugInstall --sync
 endif
 source ~/.config/nvim/autoload/plug.vim
 
-" Liste des plugins et thèmes à installer automatiquement avec vim-plug
+" Liste des plugins à installer automatiquement avec vim-plug
 call plug#begin('~/.config/nvim/bundle')
 " Plugin Buftabline, pour afficher la liste des buffers (fichiers)
 " ouverts dans la tabline (par défaut, il n'est pas visible du tout
@@ -35,6 +32,20 @@ Plug 'https://github.com/junegunn/goyo.vim.git'
 " des tableaux, y compris en Markdown :
 Plug 'https://github.com/dhruvasagar/vim-table-mode.git'
 call plug#end()
+
+"------------------------------------------------------------
+" Choix du thème
+" On peut voir et appliquer les thèmes déjà installés en tapant
+" :colo puis <Tab> jusqu'au thème voulu et <Entrée>
+" Les thèmes par défaut (ceux installés en même temps que neovim)
+" se trouvent dans /usr/share/nvim/runtime/colors/
+colorscheme peachpuff
+
+"------------------------------------------------------------
+" Options de base
+
+" Reset / désactiver les options par défaut de Vi
+set nocompatible
 
 " Permettre de changer de buffer sans demander systématiquement
 " à sauvegarder au préalable en cas de modification effectuée
@@ -67,6 +78,7 @@ set shiftwidth=4 " Largeur de l'indentation (<< ou >> en modes normal et visuel)
 set breakindent breakindentopt=shift:1,sbr " Décalage des lignes en cas de wrap
 set linebreak " Ne pas revenir à la ligne au milieu d'un mot
 set scrolloff=2 " Minimum de 2 lignes autour du curseur en cas de scroll
+set noincsearch " Pas de recherche pendant la frappe
 set noerrorbells " Empêche vim de beeper
 
 "------------------------------------------------------------
@@ -255,20 +267,9 @@ endif
 nnoremap <Space> i<Space><Right><ESC>
 
 "------------------------------------------------------------
-" Choix du thème par défaut
-" On peut voir et appliquer les thèmes déjà installés en tapant
-" :colo puis <Tab> jusqu'au thème voulu et <Entrée>
-" Les thèmes par défaut se trouvent dans /usr/share/nvim/runtime/colors/
-colorscheme peachpuff
-
-"------------------------------------------------------------
-" Fonction pour les changements de couleurs
-function! s:highlighting()
-
-"------------------------------------------------------------
 " Couleurs différentes pour vimdiff
 hi DiffChange ctermfg=white ctermbg=none
-hi DiffText ctermfg=blue ctermbg=none cterm=underline,bold 
+hi DiffText ctermfg=darkblue ctermbg=none cterm=underline,bold 
 hi DiffAdd ctermfg=darkgreen ctermbg=none cterm=bold
 hi DiffDelete ctermfg=red ctermbg=none
 
@@ -287,8 +288,10 @@ endif
 
 "------------------------------------------------------------
 " Couleurs différentes pour la recherche
-set noincsearch " Pas de recherche pendant la frappe
 hi Search ctermfg=black
+if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
+hi SearchCurrent ctermfg=black ctermbg=red cterm=bold
+endif
 
 "------------------------------------------------------------
 " Couleurs de la barre de statut
@@ -311,23 +314,20 @@ autocmd FocusLost * call SetWindowUnfocused()
 augroup END
 
 "------------------------------------------------------------
-" Couleurs pour la syntaxe Markdown
-hi htmlBold cterm=bold
-hi htmlItalic cterm=italic
-hi htmlBoldItalic cterm=bold,italic
-hi Title ctermfg=blue
-
-"------------------------------------------------------------
-" Couleurs pour les plugins
-if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
-hi SearchCurrent ctermfg=black ctermbg=red
-endif
+" Couleurs de la tabline (plugin Buftabline)
 if !empty(glob("~/.config/nvim/bundle/vim-buftabline"))
 hi BufTabLineCurrent ctermfg=white ctermbg=black cterm=underline,bold
 hi BufTabLineActive ctermfg=white ctermbg=black cterm=bold
 hi BufTabLineHidden ctermfg=5 ctermbg=black cterm=none
 hi BufTabLineFill ctermbg=0
 endif
+
+"------------------------------------------------------------
+" Couleurs pour la syntaxe Markdown
+hi htmlBold cterm=bold
+hi htmlItalic cterm=italic
+hi htmlBoldItalic cterm=bold,italic
+hi Title ctermfg=blue
 
 "------------------------------------------------------------
 " Autres changements de couleurs
@@ -345,11 +345,6 @@ hi FoldColumn ctermfg=white ctermbg=black cterm=bold
 hi Folded ctermfg=black ctermbg=green cterm=bold
 hi ModeMsg ctermfg=white
 hi ColorColumn ctermfg=black
-
-"------------------------------------------------------------
-" Fin de la fonction pour les changements de couleurs
-endfunc
-call s:highlighting()
 
 "------------------------------------------------------------
 " Plugin Goyo
