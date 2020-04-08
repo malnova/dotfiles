@@ -29,7 +29,7 @@ Syntaxe générale et options de pandoc :
 
 2. Conversion de doc, docx, odt :
 - en un autre de ces formats : pandoc -s "if" -o "of"
-- en pdf : libreoffice --headless --convert-to pdf "if" OU soffice --headless --convert-to-pdf "if" (si on veut préciser un dossier de sortie : ajouter l'option --outdir, par ex. soffice --headless --convert-to-pdf --outdir /home/user *.doc) (voir soffice -h)
+- en pdf : libreoffice --headless --convert-to pdf "if" OU soffice --headless --convert-to pdf "if" (si on veut préciser un dossier de sortie : ajouter l'option --outdir, par ex. soffice --headless --convert-to pdf --outdir /home/user *.doc) (voir soffice -h)
 - en epub : soffice --headless --convert-to epub "if"
 - en html : soffice --headless --convert-to ""html:XHTML Writer File:UTF8" "if"
 - en txt : soffice --headless --convert-to "txt:Text (encoded):UTF8" "if"
