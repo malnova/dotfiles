@@ -31,7 +31,7 @@ URxvt.letterSpace: -1
 ! Window size and position
 !URxvt*geometry: 60x22+50+100
 ! Window size, let the Window Manager position it
-URxvt.geometry: 85x26
+URxvt.geometry: 80x27
 
 ! Copier / coller
 ! Par défaut : "URxvt.selectToClipboard: true" permet le copier/coller

@@ -718,8 +718,8 @@
           <action name="MoveResizeTo">
             <!-- dimensions de la fenêtre normale obtenues par la commande
                  "xdotool getactivewindow getwindowgeometry" -->
-            <width>684</width>
-            <height>498</height>
+            <width>724</width>
+            <height>517</height>
             <x>center</x>
             <y>center</y>
           </action>
@@ -869,8 +869,8 @@
           <action name="MoveResizeTo">
             <!-- dimensions de la fenêtre normale obtenues par la commande
                  "xdotool getactivewindow getwindowgeometry" -->
-            <width>684</width>
-            <height>498</height>
+            <width>724</width>
+            <height>517</height>
             <x>center</x>
             <y>center</y>
           </action>
@@ -898,8 +898,8 @@
               <action name="MoveResizeTo">
                 <!-- dimensions de la fenêtre normale obtenues par la commande
                     "xdotool getactivewindow getwindowgeometry" -->
-                <width>684</width>
-                <height>498</height>
+                <width>724</width>
+                <height>517</height>
                 <x>center</x>
                 <y>center</y>
               </action>
