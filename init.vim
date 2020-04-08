@@ -32,8 +32,10 @@ Plug 'https://github.com/junegunn/goyo.vim.git'
 " des tableaux, y compris en Markdown :
 Plug 'https://github.com/dhruvasagar/vim-table-mode.git'
 " Plugin Vim Tmux Navigator, pour pouvoir utiliser les mêmes raccourcis
-" pour passer d'un split à l'autre dans vim et dans Tmux
+" pour passer d'un panneau (split) à l'autre dans vim et dans Tmux
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
+" Plugin suda pour travailler sur des fichiers en lecture seule
+Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 "------------------------------------------------------------
@@ -117,12 +119,6 @@ au VimEnter,BufWinEnter * syn match ErrorMsg " "
 if &diff
 syntax off
 endif
-
-"------------------------------------------------------------
-" Enregistrer avec W pour les fichiers en lecture seule
-au BufEnter * set noro " Ne pas avertir
-command W :execute ':silent w !sudo /usr/bin/tee % > /dev/null' | :edit!
-command Wq :execute ':silent w !sudo /usr/bin/tee % > /dev/null' | :edit! | :q
 
 "------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne en cas de wrap)
@@ -385,6 +381,17 @@ nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
 nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
 nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+
+"------------------------------------------------------------
+" Plugin suda
+" Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
+" préfixes sont possibles : let g:suda#prefix = 'suda://' OU
+" let g:suda#prefix = ['suda://', 'sudo://', '_://']
+" Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
+" ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
+let g:suda#prefix = 'sudo:'
+" Smart edit : un fichier protégé en écriture s'ouvre automatiquement avec sudo
+let g:suda_smart_edit = 1
 
 "------------------------------------------------------------
 " Undo / redo intelligents
