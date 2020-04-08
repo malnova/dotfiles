@@ -1,5 +1,8 @@
-! Reload the file when changes are made :
+! Recharger le fichier en cas de modifications avec la commande :
 ! xrdb -load .Xresources
+!
+! Les noms des polices de caractères à utiliser peuvent être
+! affichés avec la commande : fc-list
 
 ! Font settings -----------------------------------
 
