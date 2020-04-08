@@ -80,3 +80,6 @@ Les dépôts se trouvent à l'adresse https://archive.archlinux.org
 Rechercher la version du paquet souhaitée dans les sous-dossiers, classés par ordre alphabétique de noms de paquets, du dossier "packages".
 Pour installer l'ancienne version :
 pacman -U https://archive.archlinux.org/packages/<...paquet_souhaité_vieille_version>.pkg.tar.xz
+
+11. Erreurs
+Verrouillage de la base de données impossible (unable to lock database) : sudo rm /var/lib/pacman/db.lck
