@@ -384,6 +384,7 @@ nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 
 "------------------------------------------------------------
 " Plugin suda
+let g:suda#prompt = 'Mot de passe : '
 " Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
 " préfixes sont possibles : let g:suda#prefix = 'suda://' OU
 " let g:suda#prefix = ['suda://', 'sudo://', '_://']
@@ -430,7 +431,7 @@ inoremap , ,<C-g>u
 " Options pour les fichiers markdown
 
 " Correcteur d'orthographe
-autocmd BufEnter *.md set spell spelllang=fr
+"autocmd BufEnter *.md set spell spelllang=fr
 
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md set conceallevel=2
@@ -439,3 +440,9 @@ autocmd BufEnter *.md set conceallevel=2
 "let g:markdown_folding = 1
 "set foldlevelstart=1
 "set nofoldenable
+
+command ConvertToOdt !pandoc -s % -f markdown -t odt -o %:r.odt
+command ConvertToPdf !pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt | soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt
+"autocmd BufReadPost *.docx :%!pandoc -f docx -t markdown
+"autocmd BufReadPost *.odt :%!pandoc -f odt -t markdown
+"autocmd BufReadPost *.pdf :%!pandoc -f pdf -t markdown
