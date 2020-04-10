@@ -40,7 +40,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'https://github.com/christoomey/vim-tmux-navigator'
 
     " Plugin suda pour travailler sur des fichiers en lecture seule
-    "Plug 'https://github.com/lambdalisue/suda.vim'
+    Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 "------------------------------------------------------------
