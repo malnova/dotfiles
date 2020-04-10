@@ -40,7 +40,7 @@ call plug#begin('~/.config/nvim/bundle')
     Plug 'https://github.com/christoomey/vim-tmux-navigator'
 
     " Plugin suda pour travailler sur des fichiers en lecture seule
-    Plug 'https://github.com/lambdalisue/suda.vim'
+    "Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 "------------------------------------------------------------
@@ -457,20 +457,17 @@ autocmd BufEnter *.md set conceallevel=2
 "set nofoldenable
 
 function! s:convert_to_odt()
-    :!pandoc -s % -f markdown -t odt -o %:r.odt
+    ! pandoc -s % -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_Convodt_log.txt 2>&1
 endfunction
-
 function! s:convert_to_pdf()
-    :!pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt
-    :!soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt
+    ! pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Convpdf_log.txt 2>&1
+    ! soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Convpdf_log.txt 2>&1
 endfunction
-
 function! s:pdf_preview()
-    :!pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt
-    :!soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt
-    :!zathura ~/.cache/%:t:r.pdf
+    ! pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
+    ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
+    ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
 endfunction
-
 " Les noms de commandes doivent commencer par une majuscule
 command Convodt call s:convert_to_odt()
 command Convpdf call s:convert_to_pdf()
