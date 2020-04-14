@@ -46,9 +46,9 @@ call plug#end()
 "------------------------------------------------------------
 " Choix du thème
 " On peut voir et appliquer les thèmes déjà installés en tapant
-" :colo puis <Tab> jusqu'au thème voulu et <Entrée>
+" :colo (ou :colorscheme) puis <Tab> jusqu'au thème voulu et <Entrée>
 " Les thèmes par défaut (ceux installés en même temps que neovim)
-" se trouvent dans /usr/share/nvim/runtime/colors/
+" se trouvent dans $VIMRUNTIME/colors/
 colorscheme peachpuff
 
 "------------------------------------------------------------
@@ -72,10 +72,6 @@ set confirm
 " Avertissement visuel au lieu de beep en cas de problème
 set visualbell
 
-" <F11> en mode insertion pour activer / désactiver le collage de texte
-" en respectant l'indentation correcte
-set pastetoggle=<F11>
-
 "------------------------------------------------------------
 " Options d'indentation
 set tabstop=4 " Largeur d'une tabulation
@@ -93,7 +89,7 @@ set noerrorbells " Empêche vim de beeper
 
 "------------------------------------------------------------
 " Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
-" au lieu de copier la ligne entière par défaut.
+" au lieu de copier la ligne entière par défaut
 map Y y$
 
 "------------------------------------------------------------
@@ -272,7 +268,12 @@ nnoremap <Space> i<Space><Right><ESC>
 
 "------------------------------------------------------------
 " Fonction pour les changements de couleurs
-" Nécessaire pour être appelée en quittant le mode de Goyo
+" L'utilisation d'une fonction est nécessaire, pour que cette fonction
+" puisse être appelée de nouveau en quittant le mode de Goyo
+" Pour afficher la liste des numéros et noms de couleurs disponibles,
+" utiliser la commande :h cterm-colors
+" Pour afficher la liste des arguments disponibles pour cterm, utiliser
+" la commande :h highlight-args
 function! s:highlighting()
 
 "------------------------------------------------------------
@@ -333,10 +334,30 @@ endif
 
 "------------------------------------------------------------
 " Couleurs pour la syntaxe Markdown
-hi htmlBold cterm=bold
-hi htmlItalic cterm=italic
-hi htmlBoldItalic cterm=bold,italic
-hi Title ctermfg=blue
+" Voir $VIMRUNTIME/syntax/markdown.vim pour la liste des groupes
+hi markdownH1 ctermfg=3 cterm=bold
+hi markdownH2 ctermfg=3 cterm=bold
+hi markdownH3 ctermfg=3 cterm=bold
+hi markdownH4 ctermfg=3 cterm=bold
+hi markdownH5 ctermfg=3 cterm=bold
+hi markdownH6 ctermfg=3 cterm=bold
+hi markdownHeadingDelimiter ctermfg=2
+hi markdownBlockquote ctermfg=3
+
+hi markdownFootnote ctermfg=red
+hi markdownFootnoteDefinition ctermfg=red
+
+hi markdownLink ctermfg=darkblue
+hi markdownLinkDelimiter ctermfg=darkblue
+hi markdownLinkTextDelimiter ctermfg=darkblue
+hi markdownLinkText ctermfg=darkblue
+hi markdownAutomaticLink ctermfg=darkblue
+hi markdownUrl ctermfg=darkblue
+hi markdownUrlTitle ctermfg=darkblue
+hi markdownUrlDelimiter ctermfg=darkblue
+hi markdownUrlTitleDelimiter ctermfg=darkblue
+
+hi markdownError ctermfg=black ctermbg=red cterm=bold
 
 "------------------------------------------------------------
 " Autres changements de couleurs
@@ -348,9 +369,9 @@ hi Error ctermfg=black ctermbg=red cterm=bold
 hi ErrorMsg ctermfg=black ctermbg=red cterm=bold
 hi LineNr ctermfg=5 ctermbg=black cterm=none
 hi CursorLineNr ctermfg=white ctermbg=black cterm=bold
+hi FoldColumn ctermfg=white ctermbg=black cterm=bold
 hi VertSplit ctermfg=black ctermbg=none cterm=none
 set fillchars+=vert:\ 
-hi FoldColumn ctermfg=white ctermbg=black cterm=bold
 hi Folded ctermfg=black ctermbg=green cterm=bold
 hi ModeMsg ctermfg=white
 hi ColorColumn ctermfg=black
@@ -399,7 +420,7 @@ nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 
 "------------------------------------------------------------
 " Plugin suda
-let g:suda#prompt = 'Mot de passe : '
+let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
 " Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
 " préfixes sont possibles : let g:suda#prefix = 'suda://' OU
 " let g:suda#prefix = ['suda://', 'sudo://', '_://']
@@ -456,21 +477,38 @@ autocmd BufEnter *.md set conceallevel=2
 "set foldlevelstart=1
 "set nofoldenable
 
+function! s:convert_to_doc()
+    " La conversion en doc directement avec Pandoc n'est pas possible ;
+    " Pandoc ne gère que le docx
+    ! pandoc % -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+    ! soffice --headless --convert-to doc --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+endfunction
+function! s:convert_to_docx()
+    ! pandoc % -s -f markdown -t docx -o %:r.docx > ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
+endfunction
 function! s:convert_to_odt()
-    ! pandoc -s % -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_Convodt_log.txt 2>&1
+    ! pandoc % -s -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
 endfunction
 function! s:convert_to_pdf()
-    ! pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Convpdf_log.txt 2>&1
-    ! soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Convpdf_log.txt 2>&1
+    " La conversion en pdf directement avec Pandoc nécessiterait
+    " d'installer un processeur LaTeX
+    ! pandoc % -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
+    ! soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
 endfunction
 function! s:pdf_preview()
-    ! pandoc -s % -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
+    write! ~/.cache/%:t:r.md
+    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
 endfunction
 " Les noms de commandes doivent commencer par une majuscule
-command Convodt call s:convert_to_odt()
-command Convpdf call s:convert_to_pdf()
+command ConvDoc call s:convert_to_doc()
+command ConvDocx call s:convert_to_docx()
+command ConvOdt call s:convert_to_odt()
+command ConvPdf call s:convert_to_pdf()
 command Prev call s:pdf_preview()
 
 " Pour convertir automatiquement certains formats de fichiers
