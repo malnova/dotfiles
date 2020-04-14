@@ -23,8 +23,9 @@ call plug#begin('~/.config/nvim/bundle')
 
     " Plugin Searchant, pour mettre en surbrillance de couleur différente
     " le résultat de recherche actif/sous lequel se trouve le curseur
-    " (par défaut, tous les résultats de recherche sont surlignés de la même
-    " couleur) (la couleur du paramètre SearchCurrent est définie plus bas) :
+    " (par défaut, tous les résultats de recherche sont surlignés de la
+    " même couleur) (la couleur du paramètre SearchCurrent est définie
+    " plus bas) :
     Plug 'https://github.com/timakro/vim-searchant.git'
 
     " Plugin Goyo, pour écrire sans distraction (en masquant les différentes
@@ -122,7 +123,8 @@ if &diff
 endif
 
 "------------------------------------------------------------
-" Comportement normal des touches de direction (ligne par ligne en cas de wrap)
+" Comportement normal des touches de direction (ligne par ligne
+" en cas de wrap)
 inoremap <silent> <Down> <C-o>gj
 inoremap <silent> <Up> <C-o>gk
 nnoremap <silent> <Down> gj
@@ -274,6 +276,13 @@ nnoremap <Space> i<Space><Right><ESC>
 " utiliser la commande :h cterm-colors
 " Pour afficher la liste des arguments disponibles pour cterm, utiliser
 " la commande :h highlight-args
+" Pour afficher la liste des groupes (highlighting groups) disponibles
+" par défaut, utiliser la commande :h highlight-groups
+" Pour afficher la liste de tous les groupes actuellement définis
+" dans leur configuration présente, utiliser la commande :highlight
+" Pour afficher le nom du fichier de syntaxe appliqué dans le fichier
+" actuel, utiliser la commande :setlocal syntax?
+" Ces fichiers de syntaxe se situent dans le dossier $VIMRUNTIME/syntax/
 function! s:highlighting()
 
 "------------------------------------------------------------
@@ -427,9 +436,10 @@ let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
 " Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
 " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
 let g:suda#prefix = 'sudo:'
-" Smart edit : un fichier protégé en écriture s'ouvre automatiquement avec sudo
+" Smart edit : un fichier protégé en écriture s'ouvre automatiquement
+" avec sudo
 "let g:suda_smart_edit = 1
-" Enregistrer avec W
+" Enregistrer les fichiers protégés en écriture avec W et Wq
 au BufEnter * set noro " Ne pas avertir
 command W :execute ':w '.g:suda#prefix.'%'
 command Wq :execute ':w '.g:suda#prefix.'%' | :q
