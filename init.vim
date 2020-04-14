@@ -428,7 +428,11 @@ let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
 " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
 let g:suda#prefix = 'sudo:'
 " Smart edit : un fichier protégé en écriture s'ouvre automatiquement avec sudo
-let g:suda_smart_edit = 1
+"let g:suda_smart_edit = 1
+" Enregistrer avec W
+au BufEnter * set noro " Ne pas avertir
+command W :execute ':w '.g:suda#prefix.'%'
+command Wq :execute ':w '.g:suda#prefix.'%' | :q
 
 "------------------------------------------------------------
 " Undo / redo intelligents
