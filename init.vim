@@ -307,6 +307,18 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
 "------------------------------------------------------------
+" Redimensionner les fenêtres en continu avec <C-w> puis <S-flèches>
+nmap <C-w><S-Up> <C-w>+<SID>ws
+nmap <C-w><S-Down> <C-w>-<SID>ws
+nmap <C-w><S-Left> <C-w>><SID>ws
+nmap <C-w><S-Right> <C-w><<SID>ws
+nn <script> <SID>ws<S-Up> <C-w>+<SID>ws
+nn <script> <SID>ws<S-Down> <C-w>-<SID>ws
+nn <script> <SID>ws<S-Left> <C-w>><SID>ws
+nn <script> <SID>ws<S-Right> <C-w><<SID>ws
+nmap <SID>ws <Nop>
+
+"------------------------------------------------------------
 " Fonction pour les changements de couleurs
 " L'utilisation d'une fonction est nécessaire, pour que cette fonction
 " puisse être appelée de nouveau en quittant le mode de Goyo
