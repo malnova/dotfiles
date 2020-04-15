@@ -89,17 +89,18 @@ set noincsearch " Pas de recherche pendant la frappe
 set noerrorbells " Empêche vim de beeper
 
 "------------------------------------------------------------
-" Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
-" au lieu de copier la ligne entière par défaut
-map Y y$
-
-"------------------------------------------------------------
 " Ne pas rechercher dans tous les fichiers pour l'autocomplétion
 set complete-=i
 
 "------------------------------------------------------------
-" Activer / désactiver le correcteur d'orthographe avec zs
-nnoremap <silent> zs :setlocal spell! spell?<Return>
+" Pas de coloration syntaxique en mode diff
+if &diff
+    syntax off
+endif
+
+"------------------------------------------------------------
+" Surlignement des espaces insécables
+au VimEnter,BufWinEnter * syn match ErrorMsg " "
 
 "------------------------------------------------------------
 " Format de la barre de statut
@@ -113,14 +114,35 @@ set statusline+=%c " colonne actuelle
 set statusline+=\ [%p%%] " [pourcentage du fichier]
 
 "------------------------------------------------------------
-" Surlignement des espaces insécables
-au VimEnter,BufWinEnter * syn match ErrorMsg " "
+" Numéros de lignes relatifs
+set number
+set relativenumber
 
 "------------------------------------------------------------
-" Pas de coloration syntaxique en mode diff
-if &diff
-    syntax off
+" Ouvrir les splits en bas et à droite par défaut
+set splitright
+set splitbelow
+
+"------------------------------------------------------------
+" Redimensionnement automatique des splits
+autocmd VimResized * wincmd =
+autocmd VimResized * exe "normal \<c-w>="
+
+"------------------------------------------------------------
+" Commande DiffOrig pour afficher les différences entre le fichier modifié
+" et le fichier d'origine sur le disque
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
+
+"------------------------------------------------------------
+" Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
+" au lieu de copier la ligne entière par défaut
+map Y y$
+
+"------------------------------------------------------------
+" Activer / désactiver le correcteur d'orthographe avec zs
+nnoremap <silent> zs :setlocal spell! spell?<Return>
 
 "------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne
@@ -243,30 +265,46 @@ vnoremap <silent> <C-PageUp> {
 vnoremap <silent> <C-PageDown> }
 
 "------------------------------------------------------------
-" Numéros de lignes relatifs
-set number
-set relativenumber
-
-"------------------------------------------------------------
-" Ouvrir les splits en bas et à droite par défaut
-set splitright
-set splitbelow
-
-"------------------------------------------------------------
-" Redimensionnement automatique des splits
-autocmd VimResized * wincmd =
-autocmd VimResized * exe "normal \<c-w>="
-
-"------------------------------------------------------------
-" Commande DiffOrig pour afficher les différences entre le fichier modifié
-" et le fichier d'origine sur le disque
-if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-endif
-
-"------------------------------------------------------------
 " Insérer une espace avec la barre d'espace en mode normal
 nnoremap <Space> i<Space><Right><ESC>
+
+"------------------------------------------------------------
+" Undo / redo intelligents
+function! s:start_delete(key)
+    let l:result = a:key
+    if !s:deleting
+        let l:result = "\<C-G>u".l:result
+    endif
+    let s:deleting = 1
+    return l:result
+endfunction
+function! s:check_undo_break(char)
+    if s:deleting
+        let s:deleting = 0
+        call feedkeys("\<BS>\<C-G>u".a:char, 'n')
+    endif
+endfunction
+augroup smartundo
+    autocmd!
+    autocmd InsertEnter * let s:deleting = 0
+    autocmd InsertCharPre * call s:check_undo_break(v:char)
+augroup END
+inoremap <expr> <BS> <SID>start_delete("\<BS>")
+inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
+inoremap <expr> <C-w> <SID>start_delete("\<C-w>")
+inoremap <expr> <C-u> <SID>start_delete("\<C-u>")
+inoremap <CR> <C-g>u<CR>
+inoremap . .<C-g>u
+inoremap ! !<C-g>u
+inoremap ? ?<C-g>u
+inoremap : :<C-g>u
+inoremap ; ;<C-g>u
+inoremap , ,<C-g>u
+
+"------------------------------------------------------------
+" Naviguer entre les buffers avec la touche <Tab>
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
 
 "------------------------------------------------------------
 " Fonction pour les changements de couleurs
@@ -352,6 +390,8 @@ hi markdownH5 ctermfg=3 cterm=bold
 hi markdownH6 ctermfg=3 cterm=bold
 hi markdownHeadingDelimiter ctermfg=2
 hi markdownBlockquote ctermfg=3
+hi markdownCode ctermfg=white ctermbg=black
+hi markdownCodeDelimiter ctermfg=white ctermbg=black
 
 hi markdownFootnote ctermfg=red
 hi markdownFootnoteDefinition ctermfg=red
@@ -367,6 +407,21 @@ hi markdownUrlDelimiter ctermfg=darkblue
 hi markdownUrlTitleDelimiter ctermfg=darkblue
 
 hi markdownError ctermfg=black ctermbg=red cterm=bold
+
+" Ajout de groupes pour les formules mathématiques, les indices
+" et les exposants
+function! OtherMarkdownGroups()
+    syn region markdownMath start=/\$\$/ end=/\$\$/
+    syn match markdownMathBlock '\$[^$].\{-}\$'
+    " Repris de https://github.com/vim-pandoc/vim-pandoc-syntax/blob/master/syntax/pandoc.vim
+    syn region markdownSubscript start=/\~\(\([[:graph:]]\(\\ \)\=\)\{-}\~\)\@=/ end=/\~/ keepend
+    syn region markdownSuperscript start=/\^\(\([[:graph:]]\(\\ \)\=\)\{-}\^\)\@=/ skip=/\\ / end=/\^/ keepend
+    hi link markdownMath markdownCode
+    hi link markdownMathBlock markdownCode
+    hi markdownSubscript ctermfg=blue
+    hi markdownSuperscript ctermfg=blue
+endfunction
+autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.markdown call OtherMarkdownGroups()
 
 "------------------------------------------------------------
 " Autres changements de couleurs
@@ -445,46 +500,13 @@ command W :execute ':w '.g:suda#prefix.'%'
 command Wq :execute ':w '.g:suda#prefix.'%' | :q
 
 "------------------------------------------------------------
-" Undo / redo intelligents
-function! s:start_delete(key)
-    let l:result = a:key
-    if !s:deleting
-        let l:result = "\<C-G>u".l:result
-    endif
-    let s:deleting = 1
-    return l:result
-endfunction
-function! s:check_undo_break(char)
-    if s:deleting
-        let s:deleting = 0
-        call feedkeys("\<BS>\<C-G>u".a:char, 'n')
-    endif
-endfunction
-augroup smartundo
-    autocmd!
-    autocmd InsertEnter * let s:deleting = 0
-    autocmd InsertCharPre * call s:check_undo_break(v:char)
-augroup END
-inoremap <expr> <BS> <SID>start_delete("\<BS>")
-inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
-inoremap <expr> <C-w> <SID>start_delete("\<C-w>")
-inoremap <expr> <C-u> <SID>start_delete("\<C-u>")
-inoremap <CR> <C-g>u<CR>
-inoremap . .<C-g>u
-inoremap ! !<C-g>u
-inoremap ? ?<C-g>u
-inoremap : :<C-g>u
-inoremap ; ;<C-g>u
-inoremap , ,<C-g>u
-
-"------------------------------------------------------------
 " Options pour les fichiers markdown
 
 " Correcteur d'orthographe
-"autocmd BufEnter *.md set spell spelllang=fr
+"autocmd BufEnter *.md,*.mkd,*.markdown set spell spelllang=fr
 
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
-autocmd BufEnter *.md set conceallevel=2
+autocmd BufEnter *.md,*.mkd,*.markdown set conceallevel=2
 
 " Repli dans les fichiers en markdown -> trop lent
 "let g:markdown_folding = 1
@@ -512,8 +534,8 @@ function! s:convert_to_pdf()
     ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
 endfunction
 function! s:pdf_preview()
-    write! ~/.cache/%:t:r.md
-    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
+    write! ~/.cache/%:t:r.md > ~/.cache/%:t:r_Prev_log.txt 2>&1
+    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
