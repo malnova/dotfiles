@@ -423,6 +423,144 @@ o / O                                   _Ouvrir un fichier
 q                                        _Quitter
 r                                         _Recharger le fichier
 W / H                                  Largeur / hauteur en pleine page
+separator:nvim / vim / vimdiff
+Syntaxe générale        Opérateur [Quantificateur] [mouvement]
+separator=Opérateurs et commandes
+d / D                                  Effacer / effacer la fin de la ligne
+df&lt;caractère&gt;                   Effacer jusqu'au caractère indiqué
+y / Y                                   Copier / copier la fin de la ligne
+cw / cc / C                          _Changer 1 mot / ligne / fin de la ligne
+                                            (= effacer + mode insertion)
+~ / g~(#)w / g~(#)~        Casse inversée : lettre/mot(s)/ligne(s)
+P / p                                  Coller avant / après le curseur
+r                                        Remplacer sous le curseur
+x / suppr                            Effacer sous le curseur
+[quant.] dd / yy                 Supprimer / copier [quant.] ligne(s)
+.                                        Répéter la commande précédente
+separator=Recherches
+* / #                                  Rechercher av./arr. mot sous curseur
+/ / ? &lt;motif&gt;                      Rechercher en avant / en arrière
+  N / n                                Occurrence précédente / suivante
+:noh / C-c                           Supprimer le surlignement
+:vimgrep /motif/ fichier(s) Rechercher dans le(s) fichier(s)
+  :cp / :cn                           Résultat précédent / suivant
+separator=Substitutions
+:s/ancien/nouveau/             Substituer la première occurence
+:s/ancien/nouveau/g           Substituer _globalement sur la ligne
+:s/ancien/nouveau/(g)c       Substitution avec confirmation
+:s/ancien/nouveau/(g)i        Substitution insensible à la casse
+:#,#s/ancien/nouveau/g     Substituer entre deux n° de lignes
+:%s/ancien/nouveau/g         Substituer toutes les occurrences
+separator=Mouvements
+b/B / w/W                            Début du mot précédent / suivant
+ge / e                                  Fin du mot précédent / suivant
+0/^ / $                                Début / fin de la ligne
+gg / G                                 Début / fin du fichier
+( / )                                     Phrase précédente / suivante
+{ / }                                   Paragraphe précédent / suivant
+&lt;#&gt;G / :&lt;#&gt;                     Aller à la ligne n°#
+F / f&lt;caractère&gt;                 Occurrence précédente / suivante
+%                                       Déplacement sur ( ) [ ] { }
+C-o / C-i                              Position précédente / suivante
+&lt;&lt; / &gt;&gt;                            + ou - d'indentation en mode normal
+&lt; / &gt;                                 + ou - d'indentation en mode visuel
+separator=Modes
+i                                         Insertion de texte
+a / A                                   Ajout de texte / ajout en fin de ligne
+O / o                                   Ligne vierge avant/après + insertion
+R                                        _Remplacement de texte
+v                                        Sélectionner (mode _visuel)
+C-v                                     Sélectionner un bloc 
+C-v...Maj-i&lt;caract.&gt;Esc       Ajout avant le curseur à chaque ligne
+C-v...Maj-a&lt;caract.&gt;Esc      Ajout après le curseur à chaque ligne
+Esc                                    Mode interactif / normal
+separator=Autres
+k / j / l / h                           Haut / bas / droite / gauche 
+:qall / :qa / :qa!                  Quitter tout avec / sans confirmation
+:q(!)                                   Quitter (sans enregistrer)
+:wq                                    Enregistrer et quitter
+:w &lt;fichier&gt;                      Enregistrer sous
+:W(q)(a)(!)                         Enregistrer un fichier protégé
+:!                                       Exécuter une commande
+&lt;#&gt;u / C-r                        Annuler / rétablir # fois
+C-g                                    Afficher la position du curseur
+za / zo / zc                         Ouvrir / fermer le repli
+zR / zM                              Ouvrir / fermer tous les replis
+:digraphs                          Afficher la liste des digraphes
+C-k &lt;caractères&gt;              Taper un digraphe
+C-p / C-n                            Menu d'autocomplétion
+C-y                                    Quitter l'autocomplétion
+C-e                                    Quitter et annuler l'autocomplétion
+:Ex(plore)                          Ouvrir l'explorateur de fichiers
+:Sex / :Vex                         Ouvrir l'explorateur dans une fenêtre
+:set wrap                           Retour si lignes longues (soft wrap)
+:set nowrap                       Lignes longues entières sans retour
+:set textwidth=#               Retour après # caractères (hard wrap)
+:set expandtab                  Espaces à la place des tabulations
+:set noexpandtab              Tabulations à la place des espaces
+:retab!                               Modifie le fichier en fonction de
+                                            set expandtab ou set noexpandtab
+separator=Marques
+m&lt;caractère&gt;                   Mettre une marque
+' / ` &lt;caractère&gt;                Aller au début de / à la marque
+:delmarks &lt;caractère(s)&gt;   Effacer la / les marque(s)
+'. / `.                                  Retourner au dernier endroit modifié
+'&quot;                                       Retourner à l'endroit quitté
+:marks                               Liste des marques
+separator=Fenêtres et buffers (tampons)
+vim -o / -O &lt;fichiers&gt;        Fichiers dans des fenêtres horiz. / vert.
+:sp / :split / :vs(p) / :vsplit   Diviser la fenêtre horiz. / vert.
+  (&lt;fichier&gt;)                         (et y ouvrir le fichier)
+C-w s/C-w - / C-w v/C-w |     Diviser la fenêtre horiz. / vert.
+C-w o                                 Laisser une seule fenêtre ouverte
+C-w q / :hide                      Fermer la fenêtre actuelle
+:only                                 Fermer les autres fenêtres
+C-w r                                 Inverser l'ordre des fenêtres
+C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
+   ou S-flèches
+&lt;nombre&gt;C-w +/-/&lt;/&gt;      Redimensionner la fenêtre
+   ou C-w S-flèches
+C-w =                                Tailles de fenêtres identiques
+:enew / :ene                      Ouvrir un nouveau buffer
+:edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
+:bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
+:bp / :bn / Tab / S-Tab         Buffer précédent / suivant
+:b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom
+:(vertical )sb &lt;#/fichier&gt;   Nouvelle fenêtre avec buffer existant
+:ls / :buffers / :files             Liste des buffers
+separator=Registres
+&quot;&lt;caractère&gt;y / d...          Spécifier le registre pour copie, etc.
+&quot;&lt;CARACTÈRE&gt;y / d...       Ajouter au buffer spécifié
+&quot;&lt;caractère&gt;p                  Coller le registre spécifié
+C-r &lt;caractère&gt;                Coller le registre en mode insertion
+:reg                                   Liste des registres
+&quot;+                                     Registre système
+&quot;0                                      Registre du dernier texte copié
+separator=Correcteur d'orthographe
+zs                                      Activer / désactiver le correcteur
+z=                                     Afficher les suggestions
+[s / ]s                                Erreur précédente / suivante
+[S / ]S                               Précént / suivant : SpellBad seules
+zg / zw                              Ajouter un mot bon / mauvais au dict.
+zug / zuw                          Retirer un mot ajouté au dictionnaire
+zG / zW / zuG / zuW           Ajouter / retirer dans un dict. temp.
+separator=Vimdiff
+dp                                     Mettre le changement dans l'autre
+do                                     _Obtenir le changement de l'autre
+:(windo) diffthis                 Diff (sur toutes les fenêtres visibles)
+:(windo) diffoff (!)              Quitter le mode diff (toutes fenêtres)
+separator=Plugin Goyo
+:Goyo / :Goyo!                    Activer / désactiver goyo
+:Goyo #(%)x#(%)               Redimensionner largeurxhauteur
+:Goyo #+/-#x#+/-#           Redimensionner avec offset
+separator=Plugin VIM Table Mode
+:TableModeToggle / \tm       Activer / désactiver le mode Tableau
+||                                       Insérer les lignes de délimitation sous
+                                            les cellules de titres (PAS en début /
+                                            fin de tabl. si on tape en Markdown)
+:Tableize/|                          Formater un tableau préexistant avec
+                                            | comme délimiteur (sélectionner de
+                                            la ligne précédente à la l. suivante)
 separator:Openbox
 Menu / Win            Menu d'Openbox
 C-A-Menu / Win      Clic droit
@@ -554,143 +692,6 @@ separator:Touche Compose
   or oR Or OR                           ®
   tm TM                                   ™
   ga / gb / gc...                         Lettres _grecques
-separator:vim / vimdiff
-Syntaxe générale        Opérateur [Quantificateur] [mouvement]
-separator=Opérateurs et commandes
-d / D                                  Effacer / effacer la fin de la ligne
-df&lt;caractère&gt;                   Effacer jusqu'au caractère indiqué
-y / Y                                   Copier / copier la fin de la ligne
-cw / cc / C                          _Changer 1 mot / ligne / fin de la ligne
-                                            (= effacer + mode insertion)
-~ / g~(#)w / g~(#)~        Casse inversée : lettre/mot(s)/ligne(s)
-P / p                                  Coller avant / après le curseur
-r                                        Remplacer sous le curseur
-x / suppr                            Effacer sous le curseur
-[quant.] dd / yy                 Supprimer / copier [quant.] ligne(s)
-.                                        Répéter la commande précédente
-separator=Recherches
-* / #                                  Rechercher av./arr. mot sous curseur
-/ / ? &lt;motif&gt;                      Rechercher en avant / en arrière
-  N / n                                Occurrence précédente / suivante
-:noh / C-c                           Supprimer le surlignement
-:vimgrep /motif/ fichier(s) Rechercher dans le(s) fichier(s)
-  :cp / :cn                           Résultat précédent / suivant
-separator=Substitutions
-:s/ancien/nouveau/             Substituer la première occurence
-:s/ancien/nouveau/g           Substituer _globalement sur la ligne
-:s/ancien/nouveau/(g)c       Substitution avec confirmation
-:s/ancien/nouveau/(g)i        Substitution insensible à la casse
-:#,#s/ancien/nouveau/g     Substituer entre deux n° de lignes
-:%s/ancien/nouveau/g         Substituer toutes les occurrences
-separator=Mouvements
-b/B / w/W                            Début du mot précédent / suivant
-ge / e                                  Fin du mot précédent / suivant
-0/^ / $                                Début / fin de la ligne
-gg / G                                 Début / fin du fichier
-( / )                                     Phrase précédente / suivante
-{ / }                                   Paragraphe précédent / suivant
-&lt;#&gt;G / :&lt;#&gt;                     Aller à la ligne n°#
-F / f&lt;caractère&gt;                 Occurrence précédente / suivante
-%                                       Déplacement sur ( ) [ ] { }
-C-o / C-i                              Position précédente / suivante
-&lt;&lt; / &gt;&gt;                            + ou - d'indentation en mode normal
-&lt; / &gt;                                 + ou - d'indentation en mode visuel
-separator=Modes
-i                                         Insertion de texte
-a / A                                   Ajout de texte / ajout en fin de ligne
-O / o                                   Ligne vierge avant/après + insertion
-R                                        _Remplacement de texte
-v                                        Sélectionner (mode _visuel)
-C-v                                     Sélectionner un bloc 
-C-v...Maj-i&lt;caract.&gt;Esc       Ajout avant le curseur à chaque ligne
-C-v...Maj-a&lt;caract.&gt;Esc      Ajout après le curseur à chaque ligne
-Esc                                    Mode interactif / normal
-separator=Autres
-k / j / l / h                           Haut / bas / droite / gauche 
-:qall / :qa / :qa!                  Quitter tout avec / sans confirmation
-:q(!)                                   Quitter (sans enregistrer)
-:wq                                    Enregistrer et quitter
-:w &lt;fichier&gt;                      Enregistrer sous
-:W(q)(a)(!)                         Enregistrer un fichier protégé
-:!                                       Exécuter une commande
-&lt;#&gt;u / C-r                        Annuler / rétablir # fois
-C-g                                    Afficher la position du curseur
-za / zo / zc                         Ouvrir / fermer le repli
-zR / zM                              Ouvrir / fermer tous les replis
-:digraphs                          Afficher la liste des digraphes
-C-k &lt;caractères&gt;              Taper un digraphe
-C-p / C-n                            Menu d'autocomplétion
-C-y                                    Quitter l'autocomplétion
-C-e                                    Quitter et annuler l'autocomplétion
-:Ex(plore)                          Ouvrir l'explorateur de fichiers
-:Sex / :Vex                         Ouvrir l'explorateur dans une fenêtre
-:set wrap                           Retour si lignes longues (soft wrap)
-:set nowrap                       Lignes longues entières sans retour
-:set textwidth=#               Retour après # caractères (hard wrap)
-:set expandtab                  Espaces à la place des tabulations
-:set noexpandtab              Tabulations à la place des espaces
-:retab!                               Modifie le fichier en fonction de
-                                            set expandtab ou set noexpandtab
-separator=Marques
-m&lt;caractère&gt;                   Mettre une marque
-' / ` &lt;caractère&gt;                Aller au début de / à la marque
-:delmarks &lt;caractère(s)&gt;   Effacer la / les marque(s)
-'. / `.                                  Retourner au dernier endroit modifié
-'&quot;                                       Retourner à l'endroit quitté
-:marks                               Liste des marques
-separator=Fenêtres et buffers (tampons)
-vim -o / -O &lt;fichiers&gt;         Fichiers dans des fenêtres horiz. / vert.
-:sp / :split / :vs(p) / :vsplit   Diviser la fenêtre horiz. / vert.
-  (&lt;fichier&gt;)                         (et y ouvrir le fichier)
-C-w s / C-w v                      Diviser la fenêtre horiz. / vert.
-C-w o                                 Laisser une seule fenêtre ouverte
-C-w q / :hide                      Fermer la fenêtre actuelle
-:only                                 Fermer les autres fenêtres
-C-w r                                 Inverser l'ordre des fenêtres
-C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
-   ou S-flèches
-C-w =                                Tailles de fenêtres identiques
-&lt;nombre&gt;C-w +/-/&lt;/&gt;      Élargir / réduire la fenêtre
-:enew / :ene                      Ouvrir un nouveau buffer
-:edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
-:bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
-:bp / :bn / Tab / S-Tab         Buffer précédent / suivant
-:b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom
-:(vertical )sb &lt;#/fichier&gt;   Nouvelle fenêtre avec buffer existant
-:ls / :buffers / :files             Liste des buffers
-separator=Registres
-&quot;&lt;caractère&gt;y / d...          Spécifier le registre pour copie, etc.
-&quot;&lt;CARACTÈRE&gt;y / d...       Ajouter au buffer spécifié
-&quot;&lt;caractère&gt;p                  Coller le registre spécifié
-C-r &lt;caractère&gt;                Coller le registre en mode insertion
-:reg                                   Liste des registres
-&quot;+                                     Registre système
-&quot;0                                      Registre du dernier texte copié
-separator=Correcteur d'orthographe
-zs                                      Activer / désactiver le correcteur
-z=                                     Afficher les suggestions
-[s / ]s                                Erreur précédente / suivante
-[S / ]S                               Précént / suivant : SpellBad seules
-zg / zw                              Ajouter un mot bon / mauvais au dict.
-zug / zuw                          Retirer un mot ajouté au dictionnaire
-zG / zW / zuG / zuW           Ajouter / retirer dans un dict. temp.
-separator=Vimdiff
-dp                                     Mettre le changement dans l'autre
-do                                     _Obtenir le changement de l'autre
-:(windo) diffthis                 Diff (sur toutes les fenêtres visibles)
-:(windo) diffoff (!)              Quitter le mode diff (toutes fenêtres)
-separator=Plugin Goyo
-:Goyo / :Goyo!                    Activer / désactiver goyo
-:Goyo #(%)x#(%)               Redimensionner largeurxhauteur
-:Goyo #+/-#x#+/-#           Redimensionner avec offset
-separator=Plugin VIM Table Mode
-:TableModeToggle / \tm       Activer / désactiver le mode Tableau
-||                                       Insérer les lignes de délimitation sous
-                                            les cellules de titres (PAS en début /
-                                            fin de tabl. si on tape en Markdown)
-:Tableize/|                          Formater un tableau préexistant avec
-                                            | comme délimiteur (sélectionner de
-                                            la ligne précédente à la l. suivante)
 separator:zathura
 Flèches / h, j, k, l                 Déplacement sur la page
 Home / End                         Aller en début / fin de fichier
