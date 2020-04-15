@@ -2,9 +2,6 @@
 # ~/.bashrc
 #
 
-# Transparence de la fenêtre
-sleep .05; transset-df -a 0.85 > /dev/null 2>&1
-
 # Ne pas activer le gel de OUTPUT avec Ctrl-S (sortie possible avec Ctrl-Q)
 stty -ixon
 
@@ -24,7 +21,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # tmux
 if [[ $DISPLAY ]]; then
     if /usr/bin/which tmux >/dev/null 2>&1; then
-        test -z "$TMUX" && exec /usr/local/bin/tmux
+        if [ -z "$TMUX" ]; then
+            # Transparence de la fenêtre (uniquement dans une nouvelle
+            # fenêtre ; ne pas réactiver la transparence dans un split)
+            sleep .05; transset-df -a 0.85 > /dev/null 2>&1
+            exec /usr/local/bin/tmux
+        fi
     fi
 fi
 
