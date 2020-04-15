@@ -554,7 +554,7 @@ separator:Touche Compose
   or oR Or OR                           ®
   tm TM                                   ™
   ga / gb / gc...                         Lettres _grecques
-separator:Vim / gVim / Vimdiff
+separator:vim / vimdiff
 Syntaxe générale        Opérateur [Quantificateur] [mouvement]
 separator=Opérateurs et commandes
 d / D                                  Effacer / effacer la fin de la ligne
@@ -648,12 +648,13 @@ C-w q / :hide                      Fermer la fenêtre actuelle
 :only                                 Fermer les autres fenêtres
 C-w r                                 Inverser l'ordre des fenêtres
 C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
+   ou S-flèches
 C-w =                                Tailles de fenêtres identiques
 &lt;nombre&gt;C-w +/-/&lt;/&gt;      Élargir / réduire la fenêtre
 :enew / :ene                      Ouvrir un nouveau buffer
 :edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
 :bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
-:bp / :bn                            Buffer précédent / suivant
+:bp / :bn / Tab / S-Tab         Buffer précédent / suivant
 :b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom
 :(vertical )sb &lt;#/fichier&gt;   Nouvelle fenêtre avec buffer existant
 :ls / :buffers / :files             Liste des buffers
