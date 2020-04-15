@@ -524,7 +524,7 @@ C-w =                                Tailles de fenêtres identiques
 :enew / :ene                      Ouvrir un nouveau buffer
 :edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
 :bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
-:bp / :bn / Tab / S-Tab         Buffer précédent / suivant
+:bp/S-Tab / :bn/Tab             Buffer précédent / suivant
 :b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom
 :(vertical )sb &lt;#/fichier&gt;   Nouvelle fenêtre avec buffer existant
 :ls / :buffers / :files             Liste des buffers
