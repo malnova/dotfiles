@@ -518,7 +518,7 @@ C-w q / :hide                      Fermer la fenêtre actuelle
 C-w r                                 Inverser l'ordre des fenêtres
 C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
    ou S-flèches
-&lt;nombre&gt;C-w +/-/&lt;/&gt;      Redimensionner la fenêtre
+&lt;nombre&gt;C-w +/&lt;/&gt;        Redimensionner la fenêtre
    ou C-w S-flèches
 C-w =                                Tailles de fenêtres identiques
 :enew / :ene                      Ouvrir un nouveau buffer
