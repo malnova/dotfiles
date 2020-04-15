@@ -307,7 +307,14 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
 "------------------------------------------------------------
+" Diviser les fenêtres horizontalement et verticalement
+" Imite les raccourcis de tmux
+nnoremap <C-w>- <C-w>s
+nnoremap <C-w>\| <C-w>v
+
+"------------------------------------------------------------
 " Redimensionner les fenêtres en continu avec <C-w> puis <S-flèches>
+" Imite les raccourcis de tmux
 nmap <C-w><S-Up> <C-w>+<SID>ws
 nmap <C-w><S-Down> <C-w>-<SID>ws
 nmap <C-w><S-Left> <C-w>><SID>ws
