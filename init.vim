@@ -190,26 +190,37 @@ vnoremap <silent> <C-Up> <C-y>
 nmap <silent> <Home> :call SmartHome("n")<CR>
 imap <silent> <Home> <C-r>=SmartHome("i")<CR>
 vmap <silent> <Home> <Esc>:call SmartHome("v")<CR>
-function SmartHome(mode)
+function! SaveMark(...)
+    let l:name = a:0 ? a:1 : 'm'
+    let s:save_mark = getpos("'" . l:name)
+endfunction
+function! RestoreMark(...)
+    let l:name = a:0 ? a:1 : 'm'
+    call setpos("'" . l:name, s:save_mark)
+endfunction
+function! SmartHome(mode)
     let curcol = col(".")
     if curcol > indent(".") + 2
         call cursor(0, curcol - 1)
     endif
-    if curcol == 1 || curcol != indent(".") + 1
+    if curcol == 1 || curcol > indent(".") + 1
         if &wrap
-            normal g^
+            normal! g^
         else
-            normal ^
+            normal! ^
         endif
     else
         if &wrap
-            normal g0
+            normal! g0
         else
-            normal 0
+            normal! 0
         endif
     endif
     if a:mode == "v"
-        normal msgv`s
+        call SaveMark('m')
+        call setpos("'m", getpos('.'))
+        normal! gv`m
+        call RestoreMark('m')
     endif
     return ""
 endfunction
@@ -219,26 +230,47 @@ endfunction
 nmap <silent> <End> :call SmartEnd("n")<CR>
 imap <silent> <End> <C-r>=SmartEnd("i")<CR>
 vmap <silent> <End> <Esc>:call SmartEnd("v")<CR>
-function SmartEnd(mode)
+function! SaveReg(...)
+    let l:name = a:0 ? a:1 : v:register
+    let s:save_reg = [getreg(l:name), getregtype(l:name)]
+endfunction
+function! RestoreReg(...)
+    let l:name = a:0 ? a:1 : v:register
+    if exists('s:save_reg')
+        call setreg(l:name, s:save_reg[0], s:save_reg[1])
+    endif
+endfunction
+function! SmartEnd(mode)
     let curcol = col(".")
     let lastcol = a:mode == "i" ? col("$") : col("$") - 1
     if curcol < lastcol - 1
-        call cursor(0, curcol + 1)
+        call SaveReg()
+        normal! yl
+        let l:charlen = byteidx(getreg(), 1)
+        call cursor(0, curcol + l:charlen)
+        call RestoreReg()
     endif
     if curcol < lastcol
         if &wrap
-            normal g$
+            normal! g$
         else
-            normal $
+            normal! $
         endif
     else
-        normal g_
+        normal! g_
     endif
     if a:mode == "i"
-        call cursor(0, col(".") + 1)
+        call SaveReg()
+        normal! yl
+        let l:charlen = byteidx(getreg(), 1)
+        call cursor(0, col(".") + l:charlen)
+        call RestoreReg()
     endif
     if a:mode == "v"
-        normal msgv`s
+        call SaveMark('m')
+        call setpos("'m", getpos('.'))
+        normal! gv`m
+        call RestoreMark('m')
     endif
     return ""
 endfunction
@@ -338,7 +370,7 @@ function! s:highlighting()
 "------------------------------------------------------------
 " Couleurs différentes pour vimdiff
 hi DiffChange ctermfg=white ctermbg=none
-hi DiffText ctermfg=darkblue ctermbg=none cterm=underline,bold 
+hi DiffText ctermfg=darkblue ctermbg=none cterm=underline,bold
 hi DiffAdd ctermfg=darkgreen ctermbg=none cterm=bold
 hi DiffDelete ctermfg=red ctermbg=none
 
@@ -361,6 +393,11 @@ hi Search ctermfg=black
 if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
     hi SearchCurrent ctermfg=black ctermbg=red cterm=bold
 endif
+
+"------------------------------------------------------------
+" Mettre en surbrillance les espaces surnuméraires en fin de ligne
+:hi ExtraWhitespace ctermbg=red
+:match ExtraWhitespace /\s\+$/
 
 "------------------------------------------------------------
 " Couleurs de la barre de statut
