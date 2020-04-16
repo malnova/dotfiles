@@ -476,11 +476,11 @@ C-q...Maj-a&lt;caract.&gt;Esc      Ajout après le curseur à chaque ligne
 Esc                                    Mode interactif / normal
 separator=Autres
 k / j / l / h                           Haut / bas / droite / gauche 
-:qall / :qa / :qa!                  Quitter tout avec / sans confirmation
-:q(!)                                   Quitter (sans enregistrer)
+:q(all)(!) / :q(a)(!)               Quitter (tout) (sans enregistrer)
 :wq                                    Enregistrer et quitter
 :w &lt;fichier&gt;                      Enregistrer sous
-:W(q)(a)(!)                         Enregistrer un fichier protégé
+:wa                                    Enregistrer tous les fichiers
+:W(q)                                 Enreg. un fichier protégé (et quitter)
 :!                                       Exécuter une commande
 (#)u / (#)C-r                      Annuler / rétablir (# fois)
 C-g                                    Afficher la position du curseur
@@ -550,7 +550,7 @@ do                                     _Obtenir le changement de l'autre
 :(windo )diffthis                 Diff (sur toutes les fenêtres visibles)
 :(windo )diffoff(!)               Quitter le mode diff (toutes fenêtres)
 separator=Plugin Goyo
-:Goyo / :Goyo!                    Activer / désactiver goyo
+:Goyo / :q/:Goyo!                Activer / désactiver goyo
 :Goyo #(%)x#(%)               Redimensionner largeurxhauteur
 :Goyo #+/-#x#+/-#           Redimensionner avec offset
 separator=Plugin VIM Table Mode
