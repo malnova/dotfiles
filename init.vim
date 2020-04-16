@@ -142,7 +142,12 @@ map Y y$
 
 "------------------------------------------------------------
 " Activer / désactiver le correcteur d'orthographe avec zs
-nnoremap <silent> zs :setlocal spell! spell?<Return>
+" Créer le dossier spell/ dans le dossier .config permet que le
+" téléchargement automatique des fichiers de langue se fasse dans ce dossier
+if !isdirectory($HOME."/.config/nvim/spell")
+    call mkdir($HOME."/.config/nvim/spell", "p", 0755)
+endif
+nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<Return>
 
 "------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne
@@ -218,9 +223,7 @@ function SmartEnd(mode)
     let curcol = col(".")
     let lastcol = a:mode == "i" ? col("$") : col("$") - 1
     if curcol < lastcol - 1
-        normal yl
-        let l:charlen = byteidx(getreg(), 1)
-        call cursor(0, curcol + l:charlen)
+        call cursor(0, curcol + 1)
     endif
     if curcol < lastcol
         if &wrap
@@ -232,9 +235,7 @@ function SmartEnd(mode)
         normal g_
     endif
     if a:mode == "i"
-        normal yl
-        let l:charlen = byteidx(getreg(), 1)
-        call cursor(0, col(".") + l:charlen)
+        call cursor(0, col(".") + 1)
     endif
     if a:mode == "v"
         normal msgv`s
@@ -243,15 +244,7 @@ function SmartEnd(mode)
 endfunction
 
 "------------------------------------------------------------
-" Ctrl-Home et gg devraient aussi amener en début de ligne
-inoremap <silent> <C-Home> <C-o>gg<C-o>0
-nnoremap <silent> <C-Home> gg0
-vnoremap <silent> <C-Home> gg0
-nmap <silent> gg gg0
-vmap <silent> gg gg0
-
-"------------------------------------------------------------
-" PageUp et PageDown correctes
+" PageUp et PageDown sans changer la position du curseur sur la page
 map <silent> <PageUp> :set scroll=0<CR>:set scroll^=2<CR>:set scroll-=1<CR><C-U>:set scroll=0<CR>
 map <silent> <PageDown> :set scroll=0<CR>:set scroll^=2<CR>:set scroll-=1<CR><C-D>:set scroll=0<CR>
 
@@ -372,21 +365,18 @@ endif
 "------------------------------------------------------------
 " Couleurs de la barre de statut
 hi StatusLineNC ctermfg=5 ctermbg=black cterm=none
-
 function! SetWindowFocused()
     hi clear StatusLine
     hi StatusLine ctermfg=black ctermbg=5 cterm=bold
 endfunction
-
 function! SetWindowUnfocused()
     hi clear StatusLine
     hi StatusLine ctermfg=5 ctermbg=black cterm=none
 endfunction
-
 augroup BgHighlight
-autocmd!
-autocmd FocusGained * call SetWindowFocused()
-autocmd FocusLost * call SetWindowUnfocused()
+    autocmd!
+    autocmd FocusGained * call SetWindowFocused()
+    autocmd FocusLost * call SetWindowUnfocused()
 augroup END
 
 "------------------------------------------------------------
@@ -401,35 +391,31 @@ endif
 "------------------------------------------------------------
 " Couleurs pour la syntaxe Markdown
 " Voir $VIMRUNTIME/syntax/markdown.vim pour la liste des groupes
-hi markdownH1 ctermfg=3 cterm=bold
-hi markdownH2 ctermfg=3 cterm=bold
-hi markdownH3 ctermfg=3 cterm=bold
-hi markdownH4 ctermfg=3 cterm=bold
-hi markdownH5 ctermfg=3 cterm=bold
-hi markdownH6 ctermfg=3 cterm=bold
-hi markdownHeadingDelimiter ctermfg=2
-hi markdownBlockquote ctermfg=3
-hi markdownCode ctermfg=white ctermbg=black
-hi markdownCodeDelimiter ctermfg=white ctermbg=black
-
-hi markdownFootnote ctermfg=red
-hi markdownFootnoteDefinition ctermfg=red
-
-hi markdownLink ctermfg=darkblue
-hi markdownLinkDelimiter ctermfg=darkblue
-hi markdownLinkTextDelimiter ctermfg=darkblue
-hi markdownLinkText ctermfg=darkblue
-hi markdownAutomaticLink ctermfg=darkblue
-hi markdownUrl ctermfg=darkblue
-hi markdownUrlTitle ctermfg=darkblue
-hi markdownUrlDelimiter ctermfg=darkblue
-hi markdownUrlTitleDelimiter ctermfg=darkblue
-
-hi markdownError ctermfg=black ctermbg=red cterm=bold
-
-" Ajout de groupes pour les formules mathématiques, les indices
-" et les exposants
-function! OtherMarkdownGroups()
+function! MarkdownGroups()
+    hi markdownH1 ctermfg=3 cterm=bold
+    hi markdownH2 ctermfg=3 cterm=bold
+    hi markdownH3 ctermfg=3 cterm=bold
+    hi markdownH4 ctermfg=3 cterm=bold
+    hi markdownH5 ctermfg=3 cterm=bold
+    hi markdownH6 ctermfg=3 cterm=bold
+    hi markdownHeadingDelimiter ctermfg=2
+    hi markdownBlockquote ctermfg=3
+    hi markdownCode ctermfg=white ctermbg=black
+    hi markdownCodeDelimiter ctermfg=white ctermbg=black
+    hi markdownFootnote ctermfg=red
+    hi markdownFootnoteDefinition ctermfg=red
+    hi markdownLink ctermfg=darkblue
+    hi markdownLinkDelimiter ctermfg=darkblue
+    hi markdownLinkTextDelimiter ctermfg=darkblue
+    hi markdownLinkText ctermfg=darkblue
+    hi markdownAutomaticLink ctermfg=darkblue
+    hi markdownUrl ctermfg=darkblue
+    hi markdownUrlTitle ctermfg=darkblue
+    hi markdownUrlDelimiter ctermfg=darkblue
+    hi markdownUrlTitleDelimiter ctermfg=darkblue
+    hi markdownError ctermfg=black ctermbg=red cterm=bold
+    " Ajout de groupes pour les formules mathématiques, les indices
+    " et les exposants
     syn region markdownMath start=/\$\$/ end=/\$\$/
     syn match markdownMathBlock '\$[^$].\{-}\$'
     " Repris de https://github.com/vim-pandoc/vim-pandoc-syntax/blob/master/syntax/pandoc.vim
@@ -440,7 +426,7 @@ function! OtherMarkdownGroups()
     hi markdownSubscript ctermfg=blue
     hi markdownSuperscript ctermfg=blue
 endfunction
-autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.markdown call OtherMarkdownGroups()
+autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.mkdwn,*.markdown call MarkdownGroups()
 
 "------------------------------------------------------------
 " Autres changements de couleurs
@@ -510,9 +496,6 @@ let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
 " Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
 " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
 let g:suda#prefix = 'sudo:'
-" Smart edit : un fichier protégé en écriture s'ouvre automatiquement
-" avec sudo
-"let g:suda_smart_edit = 1
 " Enregistrer les fichiers protégés en écriture avec W et Wq
 au BufEnter * set noro " Ne pas avertir
 command W :execute ':w '.g:suda#prefix.'%'
@@ -522,15 +505,10 @@ command Wq :execute ':w '.g:suda#prefix.'%' | :q
 " Options pour les fichiers markdown
 
 " Correcteur d'orthographe
-"autocmd BufEnter *.md,*.mkd,*.markdown set spell spelllang=fr
+autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set spell spelllang=fr
 
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
-autocmd BufEnter *.md,*.mkd,*.markdown set conceallevel=2
-
-" Repli dans les fichiers en markdown -> trop lent
-"let g:markdown_folding = 1
-"set foldlevelstart=1
-"set nofoldenable
+autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
 function! s:convert_to_doc()
     " La conversion en doc directement avec Pandoc n'est pas possible ;
@@ -565,9 +543,3 @@ command ConvDocx call s:convert_to_docx()
 command ConvOdt call s:convert_to_odt()
 command ConvPdf call s:convert_to_pdf()
 command Prev call s:pdf_preview()
-
-" Pour convertir automatiquement certains formats de fichiers
-" en markdown au moment de l'ouverture dans vim :
-"autocmd BufReadPost *.docx :%!pandoc -f docx -t markdown
-"autocmd BufReadPost *.odt :%!pandoc -f odt -t markdown
-"autocmd BufReadPost *.pdf :%!pandoc -f pdf -t markdown
