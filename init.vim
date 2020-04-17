@@ -93,16 +93,6 @@ set noerrorbells " Empêche vim de beeper
 set complete-=i
 
 "------------------------------------------------------------
-" Pas de coloration syntaxique en mode diff
-if &diff
-    syntax off
-endif
-
-"------------------------------------------------------------
-" Surlignement des espaces insécables
-au VimEnter,BufWinEnter * syn match ErrorMsg " "
-
-"------------------------------------------------------------
 " Format de la barre de statut
 set statusline=%F " chemin complet et nom du fichier
 set statusline+=\ [%{strlen(&fenc)?&fenc:'none'}] " encodage du fichier
@@ -395,9 +385,8 @@ if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
 endif
 
 "------------------------------------------------------------
-" Mettre en surbrillance les espaces surnuméraires en fin de ligne
-:hi ExtraWhitespace ctermbg=red
-:match ExtraWhitespace /\s\+$/
+" Couleurs pours les espaces surnuméraires en fin de ligne
+hi ExtraWhitespace ctermbg=red
 
 "------------------------------------------------------------
 " Couleurs de la barre de statut
@@ -488,6 +477,24 @@ endfunction
 call s:highlighting()
 
 "------------------------------------------------------------
+" Pas de coloration syntaxique en mode diff
+if &diff
+    syntax off
+endif
+
+"------------------------------------------------------------
+" Surlignement des espaces insécables
+autocmd VimEnter,BufWinEnter * syn match ErrorMsg " "
+
+"------------------------------------------------------------
+" Mettre en surbrillance les espaces surnuméraires en fin de ligne
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+"------------------------------------------------------------
 " Plugin Goyo
 function! s:goyo_enter()
     if exists('$TMUX')
@@ -534,7 +541,7 @@ let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
 " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
 let g:suda#prefix = 'sudo:'
 " Enregistrer les fichiers protégés en écriture avec W et Wq
-au BufEnter * set noro " Ne pas avertir
+autocmd BufEnter * set noro " Ne pas avertir
 command W :execute ':w '.g:suda#prefix.'%'
 command Wq :execute ':w '.g:suda#prefix.'%' | :q
 
