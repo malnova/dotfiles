@@ -116,7 +116,7 @@ set splitbelow
 "------------------------------------------------------------
 " Redimensionnement automatique des splits
 autocmd VimResized * wincmd =
-autocmd VimResized * exe "normal \<c-w>="
+autocmd VimResized * exe "normal! \<c-w>="
 
 "------------------------------------------------------------
 " Commande DiffOrig pour afficher les différences entre le fichier modifié
@@ -284,6 +284,10 @@ vnoremap <silent> <C-PageDown> }
 nnoremap <Space> i<Space><Right><ESC>
 
 "------------------------------------------------------------
+" Remplacer le délimiteur de fenêtre (split) verticale par une espace
+set fillchars+=vert:\ 
+
+"------------------------------------------------------------
 " Undo / redo intelligents
 function! s:start_delete(key)
     let l:result = a:key
@@ -339,6 +343,12 @@ nn <script> <SID>ws<S-Down> <C-w>-<SID>ws
 nn <script> <SID>ws<S-Left> <C-w>><SID>ws
 nn <script> <SID>ws<S-Right> <C-w><<SID>ws
 nmap <SID>ws <Nop>
+
+"------------------------------------------------------------
+" Pas de coloration syntaxique en mode diff
+if &diff
+    syntax off
+endif
 
 "------------------------------------------------------------
 " Fonction pour les changements de couleurs
@@ -452,7 +462,9 @@ function! MarkdownGroups()
     hi markdownSubscript ctermfg=blue
     hi markdownSuperscript ctermfg=blue
 endfunction
-autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.mkdwn,*.markdown call MarkdownGroups()
+if exists("g:syntax_on")
+    autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.mkdwn,*.markdown call MarkdownGroups()
+endif
 
 "------------------------------------------------------------
 " Autres changements de couleurs
@@ -466,7 +478,6 @@ hi LineNr ctermfg=5 ctermbg=black cterm=none
 hi CursorLineNr ctermfg=white ctermbg=black cterm=bold
 hi FoldColumn ctermfg=white ctermbg=black cterm=bold
 hi VertSplit ctermfg=black ctermbg=none cterm=none
-set fillchars+=vert:\ 
 hi Folded ctermfg=black ctermbg=green cterm=bold
 hi ModeMsg ctermfg=white
 hi ColorColumn ctermfg=black
@@ -477,22 +488,24 @@ endfunction
 call s:highlighting()
 
 "------------------------------------------------------------
-" Pas de coloration syntaxique en mode diff
-if &diff
-    syntax off
+" Surlignement des espaces insécables
+if exists("g:syntax_on")
+    autocmd VimEnter,BufWinEnter * syn match ErrorMsg " "
 endif
 
 "------------------------------------------------------------
-" Surlignement des espaces insécables
-autocmd VimEnter,BufWinEnter * syn match ErrorMsg " "
-
-"------------------------------------------------------------
 " Mettre en surbrillance les espaces surnuméraires en fin de ligne
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" Fonction appelée aussi en entrant et sortant du mode de Goyo
+function! s:ExtraWhitespace()
+    match ExtraWhitespace /\s\+$/
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+    autocmd BufWinLeave * call clearmatches()
+endfunction
+if exists("g:syntax_on")
+    call s:ExtraWhitespace()
+endif
 
 "------------------------------------------------------------
 " Plugin Goyo
@@ -505,7 +518,10 @@ function! s:goyo_enter()
     set noshowcmd
     set scrolloff=999
     set showtabline=0
-    exe "normal \<c-w>="
+    exe "normal! \<c-w>="
+    if exists("g:syntax_on")
+        call s:ExtraWhitespace()
+    endif
 endfunction
 function! s:goyo_leave()
     if exists('$TMUX')
@@ -516,6 +532,9 @@ function! s:goyo_leave()
     set showcmd
     set scrolloff=3
     call s:highlighting()
+    if exists("g:syntax_on")
+        call s:ExtraWhitespace()
+    endif
 endfunction
 if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
     autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -549,7 +568,9 @@ command Wq :execute ':w '.g:suda#prefix.'%' | :q
 " Options pour les fichiers markdown
 
 " Correcteur d'orthographe
-autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set spell spelllang=fr
+if !&diff
+    autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set spell spelllang=fr
+endif
 
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
