@@ -50,7 +50,11 @@ call plug#end()
 " :colo (ou :colorscheme) puis <Tab> jusqu'au thème voulu et <Entrée>
 " Les thèmes par défaut (ceux installés en même temps que neovim)
 " se trouvent dans $VIMRUNTIME/colors/
-colorscheme peachpuff
+if filereadable( expand("$HOME/.config/nvim/colors/mytheme.vim") )
+    colorscheme mytheme
+else
+    colorscheme peachpuff
+endif
 
 "------------------------------------------------------------
 " Options de base
@@ -132,11 +136,6 @@ map Y y$
 
 "------------------------------------------------------------
 " Activer / désactiver le correcteur d'orthographe avec zs
-" Créer le dossier spell/ dans le dossier .config permet que le
-" téléchargement automatique des fichiers de langue se fasse dans ce dossier
-if !isdirectory($HOME."/.config/nvim/spell")
-    call mkdir($HOME."/.config/nvim/spell", "p", 0755)
-endif
 nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<Return>
 
 "------------------------------------------------------------
@@ -280,7 +279,7 @@ vnoremap <silent> <C-PageUp> {
 vnoremap <silent> <C-PageDown> }
 
 "------------------------------------------------------------
-" Insérer une espace avec la barre d'espace en mode normal
+" Pouvoir insérer une espace avec la barre d'espace en mode normal
 nnoremap <Space> i<Space><Right><ESC>
 
 "------------------------------------------------------------
@@ -351,163 +350,6 @@ if &diff
 endif
 
 "------------------------------------------------------------
-" Fonction pour les changements de couleurs
-" L'utilisation d'une fonction est nécessaire, pour que cette fonction
-" puisse être appelée de nouveau en quittant le mode de Goyo
-" Pour afficher la liste des numéros et noms de couleurs disponibles,
-" utiliser la commande :h cterm-colors
-" Pour afficher la liste des arguments disponibles pour cterm, utiliser
-" la commande :h highlight-args
-" Pour afficher la liste des groupes (highlighting groups) disponibles
-" par défaut, utiliser la commande :h highlight-groups
-" Pour afficher la liste de tous les groupes actuellement définis
-" dans leur configuration présente, utiliser la commande :highlight
-" Pour afficher le nom du fichier de syntaxe appliqué dans le fichier
-" actuel, utiliser la commande :setlocal syntax?
-" Ces fichiers de syntaxe se situent dans le dossier $VIMRUNTIME/syntax/
-function! s:highlighting()
-
-"------------------------------------------------------------
-" Couleurs différentes pour vimdiff
-hi DiffChange ctermfg=white ctermbg=none
-hi DiffText ctermfg=darkblue ctermbg=none cterm=underline,bold
-hi DiffAdd ctermfg=darkgreen ctermbg=none cterm=bold
-hi DiffDelete ctermfg=red ctermbg=none
-
-"------------------------------------------------------------
-" Couleurs différentes pour le correcteur d'orthographe
-if has('spell')
-    hi clear SpellBad
-    hi SpellBad ctermfg=red cterm=underline
-    hi clear SpellCap
-    hi SpellCap ctermfg=white cterm=underline
-    hi clear SpellRare
-    hi SpellRare ctermfg=5 cterm=underline
-    hi clear SpellLocal
-    hi SpellLocal ctermfg=5 cterm=underline
-endif
-
-"------------------------------------------------------------
-" Couleurs différentes pour la recherche
-hi Search ctermfg=black
-if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
-    hi SearchCurrent ctermfg=black ctermbg=red cterm=bold
-endif
-
-"------------------------------------------------------------
-" Couleurs pours les espaces surnuméraires en fin de ligne
-hi ExtraWhitespace ctermbg=red
-
-"------------------------------------------------------------
-" Couleurs de la barre de statut
-hi StatusLineNC ctermfg=5 ctermbg=black cterm=none
-function! SetWindowFocused()
-    hi clear StatusLine
-    hi StatusLine ctermfg=black ctermbg=5 cterm=bold
-endfunction
-function! SetWindowUnfocused()
-    hi clear StatusLine
-    hi StatusLine ctermfg=5 ctermbg=black cterm=none
-endfunction
-augroup BgHighlight
-    autocmd!
-    autocmd FocusGained * call SetWindowFocused()
-    autocmd FocusLost * call SetWindowUnfocused()
-augroup END
-
-"------------------------------------------------------------
-" Couleurs de la tabline (plugin Buftabline)
-if !empty(glob("~/.config/nvim/bundle/vim-buftabline"))
-    hi BufTabLineCurrent ctermfg=white ctermbg=black cterm=underline,bold
-    hi BufTabLineActive ctermfg=white ctermbg=black cterm=bold
-    hi BufTabLineHidden ctermfg=5 ctermbg=black cterm=none
-    hi BufTabLineFill ctermbg=0
-endif
-
-"------------------------------------------------------------
-" Couleurs pour la syntaxe Markdown
-" Voir $VIMRUNTIME/syntax/markdown.vim pour la liste des groupes
-function! MarkdownGroups()
-    hi markdownH1 ctermfg=3 cterm=bold
-    hi markdownH2 ctermfg=3 cterm=bold
-    hi markdownH3 ctermfg=3 cterm=bold
-    hi markdownH4 ctermfg=3 cterm=bold
-    hi markdownH5 ctermfg=3 cterm=bold
-    hi markdownH6 ctermfg=3 cterm=bold
-    hi markdownHeadingDelimiter ctermfg=2
-    hi markdownBlockquote ctermfg=3
-    hi markdownCode ctermfg=white ctermbg=black
-    hi markdownCodeDelimiter ctermfg=white ctermbg=black
-    hi markdownFootnote ctermfg=red
-    hi markdownFootnoteDefinition ctermfg=red
-    hi markdownLink ctermfg=darkblue
-    hi markdownLinkDelimiter ctermfg=darkblue
-    hi markdownLinkTextDelimiter ctermfg=darkblue
-    hi markdownLinkText ctermfg=darkblue
-    hi markdownAutomaticLink ctermfg=darkblue
-    hi markdownUrl ctermfg=darkblue
-    hi markdownUrlTitle ctermfg=darkblue
-    hi markdownUrlDelimiter ctermfg=darkblue
-    hi markdownUrlTitleDelimiter ctermfg=darkblue
-    hi markdownError ctermfg=black ctermbg=red cterm=bold
-    " Ajout de groupes pour les formules mathématiques, les indices
-    " et les exposants
-    syn region markdownMath start=/\$\$/ end=/\$\$/
-    syn match markdownMathBlock '\$[^$].\{-}\$'
-    " Repris de https://github.com/vim-pandoc/vim-pandoc-syntax/blob/master/syntax/pandoc.vim
-    syn region markdownSubscript start=/\~\(\([[:graph:]]\(\\ \)\=\)\{-}\~\)\@=/ end=/\~/ keepend
-    syn region markdownSuperscript start=/\^\(\([[:graph:]]\(\\ \)\=\)\{-}\^\)\@=/ skip=/\\ / end=/\^/ keepend
-    hi link markdownMath markdownCode
-    hi link markdownMathBlock markdownCode
-    hi markdownSubscript ctermfg=blue
-    hi markdownSuperscript ctermfg=blue
-endfunction
-if exists("g:syntax_on")
-    autocmd BufRead,BufNewFile,BufEnter *.md,*.mkd,*.mkdwn,*.markdown call MarkdownGroups()
-endif
-
-"------------------------------------------------------------
-" Autres changements de couleurs
-hi clear Visual
-hi Visual ctermfg=black ctermbg=blue
-hi clear MatchParen
-hi MatchParen ctermfg=black ctermbg=blue
-hi Error ctermfg=black ctermbg=red cterm=bold
-hi ErrorMsg ctermfg=black ctermbg=red cterm=bold
-hi LineNr ctermfg=5 ctermbg=black cterm=none
-hi CursorLineNr ctermfg=white ctermbg=black cterm=bold
-hi FoldColumn ctermfg=white ctermbg=black cterm=bold
-hi VertSplit ctermfg=black ctermbg=none cterm=none
-hi Folded ctermfg=black ctermbg=green cterm=bold
-hi ModeMsg ctermfg=white
-hi ColorColumn ctermfg=black
-
-"------------------------------------------------------------
-" Fin de la fonction pour les changements de couleurs
-endfunction
-call s:highlighting()
-
-"------------------------------------------------------------
-" Surlignement des espaces insécables
-if exists("g:syntax_on")
-    autocmd VimEnter,BufWinEnter * syn match ErrorMsg " "
-endif
-
-"------------------------------------------------------------
-" Mettre en surbrillance les espaces surnuméraires en fin de ligne
-" Fonction appelée aussi en entrant et sortant du mode de Goyo
-function! s:ExtraWhitespace()
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-endfunction
-if exists("g:syntax_on")
-    call s:ExtraWhitespace()
-endif
-
-"------------------------------------------------------------
 " Plugin Goyo
 function! s:goyo_enter()
     if exists('$TMUX')
@@ -519,9 +361,6 @@ function! s:goyo_enter()
     set scrolloff=999
     set showtabline=0
     exe "normal! \<c-w>="
-    if exists("g:syntax_on")
-        call s:ExtraWhitespace()
-    endif
 endfunction
 function! s:goyo_leave()
     if exists('$TMUX')
@@ -531,10 +370,6 @@ function! s:goyo_leave()
     "set showmode
     set showcmd
     set scrolloff=3
-    call s:highlighting()
-    if exists("g:syntax_on")
-        call s:ExtraWhitespace()
-    endif
 endfunction
 if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
     autocmd! User GoyoEnter nested call <SID>goyo_enter()
