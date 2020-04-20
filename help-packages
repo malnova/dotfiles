@@ -40,9 +40,8 @@ Pour exclure temporairement certains paquets des mises à jour : pacman -Syu --i
 Pour exclure systématiquement certains paquets / groupes des mises à jour : modifier le fichier /etc/pacman.conf, en ajoutant les paquets à ignorer à la variable "IgnorePkg=" (liste de paquets séparés par des espaces, ou recopier plusieurs fois IgnorePkg=<paquet>), ou les groupes à ignorer à la variable "IgnoreGroup="
 
 6. Autres mises à jour
-Pour mettre à jour les dépôts : repos-update OU reflector --country "France -- latest 50 --age 6 [en nombre d'heures, pour avoir des dépôts contenant bien les dernières mises à jour de paquets] --sort rate -- save /etc/pacman.d/mirrorlist
-Pour mettre à jour les plugins de vim avec Pathogen : vim-update
-Pour mettre à jour les taux de change de units (définis, comme les autres unités de conversion, dans /usr/share/units/definitions.units) : sudo units_cur
+Pour mettre à jour les dépôts : update-repos
+Pour mettre à jour les taux de change de units (définis, comme les autres unités de conversion, dans /usr/share/units/definitions.units) : sudo update-units
 
 7. Suppression de paquets (aide : pacman -R --help)
 Supprimer un ou plusieurs paquet(s) / groupe(s) : pacman -R <paquets>

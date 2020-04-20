@@ -24,8 +24,8 @@ sudo aunpack /usr/share/kbd/keymaps/i386/azerty/<keymap_souhaitée> -X /usr/loca
 Par exemple :
 sudo aunpack /usr/share/kbd/keymaps/i386/azerty/fr-latin9.map.gz -X /usr/local/share/kbd/keymaps/personal.map
 2. SOIT on veut réutiliser une keymap existante et ne modifier que quelques touches (il est en effet possible d'inclure (include) la keymap par défaut dans la keymap personnalisée, de façon à ne modifier que les touches souhaitées) :
-sudo vim /usr/local/share/kbd/keymaps/personal.map
-Et ajouter en première ligne du fichier : 
+vim /usr/local/share/kbd/keymaps/personal.map
+Et ajouter en première ligne du fichier :
 include "/usr/share/kbd/keymaps/<keymap_par_défaut>"
 Par exemple :
 include "/usr/share/kbd/keymaps/i386/azerty/fr-latin9.map.gz"
