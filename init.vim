@@ -379,25 +379,29 @@ endif
 
 "------------------------------------------------------------
 " Plugin Vim Tmux Navigator
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
-nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
-nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
-nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
+    let g:tmux_navigator_no_mappings = 1
+    nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
+    nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
+    nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+endif
 
 "------------------------------------------------------------
 " Plugin suda
-let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
-" Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
-" préfixes sont possibles : let g:suda#prefix = 'suda://' OU
-" let g:suda#prefix = ['suda://', 'sudo://', '_://']
-" Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
-" ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
-let g:suda#prefix = 'sudo:'
-" Enregistrer les fichiers protégés en écriture avec W et Wq
-autocmd BufEnter * set noro " Ne pas avertir
-command W :execute ':w '.g:suda#prefix.'%'
-command Wq :execute ':w '.g:suda#prefix.'%' | :q
+if !empty(glob("~/.config/nvim/bundle/suda.vim"))
+    let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
+    " Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
+    " préfixes sont possibles : let g:suda#prefix = 'suda://' OU
+    " let g:suda#prefix = ['suda://', 'sudo://', '_://']
+    " Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
+    " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
+    let g:suda#prefix = 'sudo:'
+    " Enregistrer les fichiers protégés en écriture avec W et Wq
+    autocmd BufEnter * set noro " Ne pas avertir
+    command W :execute ':w '.g:suda#prefix.'%'
+    command Wq :execute ':w '.g:suda#prefix.'%' | :q
+endif
 
 "------------------------------------------------------------
 " Options pour les fichiers markdown
