@@ -654,6 +654,7 @@ tmux kill-server                 Tuer toutes les sessions et les fenêtres
 separator:Touche Compose
 &lt;alt gr&gt;&lt;Win&gt;                       Touche Compose (Préf.&gt;Claviers&gt;
                                                 Éditer la configuration par défaut)
+                                                ! Pas avec le pavé numérique !
   &lt;espace&gt;&lt;espace&gt;              (espace insécable)
   ..                                           …
   ---                                          — (cadratin)
@@ -663,22 +664,22 @@ separator:Touche Compose
   O/ /O                                      Ø
   88                                         ∞
   v/ /v                                       √
-  =__                                         ≡
+  =_                                          ≡
   ~~                                        ≈
   ~- -~                                     ≃
   ~= =~                                  ≅
   =/ /=                                     ≠
   +- -+                                     ±
   -: :-                                        ÷
-  &lt;= / &gt;=                                ≤ / ≥
+  &lt;_ / &gt;_                                  ≤ / ≥
   app / napp                             ∈ / ∉ (_appartient à)
   cont / ncont                           ∋ / ∌ (_contient)
   ie                                           ∃  (_il existe)
   int                                         ∫ (_intégrale)
   pt                                          ∀ (_pour tout...)
-  &lt;- / -&gt; / &lt;-&gt;                          ← / → / ↔
-  ^| |^ / v| |v                           ↑ / ↓
-  ^\ \^ / ^/ /^ / v/ /v / v\ \v       ↖ / ↗ / ↙ / ↘
+  -&lt; / -&gt; / &lt;-&gt;                          ← / → / ↔
+  ^| |^ / V| |V                           ↑ / ↓
+  ^\ \^ / ^/ /^ / V/ /V / V\ \V       ↖ / ↗ / ↙ / ↘
   =&lt; / =&gt; / &lt;=&gt;                      ⇐ / ⇒ / ⇔
   p! P!                                      ¶
   &lt;&lt; / &gt;&gt;                                « / »

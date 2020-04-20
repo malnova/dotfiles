@@ -1,7 +1,11 @@
 include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 
-# !!! L'affichage des combinaisons personnalisées dépend aussi de la police de
-# caractères utilisée ! Celle-ci est définie dans le fichier ~/.Xresources !
+# La touche Compose (<Multi_key>) est définie dans le fichier
+# /etc/X11/xorg.conf.d/00-keyboard.conf
+
+# !!! L'affichage des combinaisons personnalisées dépend aussi de la police
+# de caractères utilisée ! Celle-ci est définie dans le fichier
+# ~/.Xresources !
 
 # Symboles personnalisés
 <Multi_key> <i> <n> <t> : "∫"
@@ -18,6 +22,8 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <i> <e> : "∃"
 
 # Flèches
+# Le "V" est majuscule pour ne pas interférer avec certaines combinaisons
+# par défaut (par ex. <bar> <v> ou <v> <bar> pour le caractère √)
 <Multi_key> <equal> <less> : "⇐"
 <Multi_key> <less> <equal> <greater> : "⇔"
 <Multi_key> <less> <minus> <greater> : "↔"
@@ -25,8 +31,8 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <asciicircum> <bar> : "↑"
 <Multi_key> <bar> <dead_circumflex> : "↑"
 <Multi_key> <dead_circumflex> <bar> : "↑"
-<Multi_key> <bar> <v> : "↓"
-<Multi_key> <v> <bar> : "↓"
+<Multi_key> <bar> <V> : "↓"
+<Multi_key> <V> <bar> : "↓"
 <Multi_key> <backslash> <asciicircum> : "↖"
 <Multi_key> <asciicircum> <backslash> : "↖"
 <Multi_key> <backslash> <dead_circumflex> : "↖"
@@ -35,10 +41,11 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <asciicircum> <slash> : "↗"
 <Multi_key> <slash> <dead_circumflex> : "↗"
 <Multi_key> <dead_circumflex> <slash> : "↗"
-<Multi_key> <slash> <v> : "↙"
-<Multi_key> <v> <slash> : "↙"
-<Multi_key> <backslash> <v> : "↘"
-<Multi_key> <v> <backslash> : "↘"
+<Multi_key> <slash> <V> : "↙"
+<Multi_key> <V> <slash> : "↙"
+<Multi_key> <backslash> <V> : "↘"
+<Multi_key> <V> <backslash> : "↘"
+<Multi_key> <minus> <less> : "←" # <less> <minus> ne fonctionne pas dans le fichier contenant les combinaisons par défaut !
 
 # Lettres grecques
 # Suit la disposition du clavier "grec" :
