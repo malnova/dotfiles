@@ -500,6 +500,7 @@ C-e                                    Quitter et annuler l'autocomplétion
 :set noexpandtab              Tabulations à la place des espaces
 :retab!                               Modifie le fichier en fonction de
                                             set expandtab ou set noexpandtab
+:syntax on / off                   Coloration syntaxique on / off
 separator=Marques
 m&lt;caractère&gt;                   Mettre une marque
 ' / ` &lt;caractère&gt;                Aller au début de / à la marque
