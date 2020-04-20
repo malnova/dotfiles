@@ -435,8 +435,8 @@ function! s:convert_to_pdf()
     ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
 endfunction
 function! s:pdf_preview()
-    write! ~/.cache/%:t:r.md > ~/.cache/%:t:r_Prev_log.txt 2>&1
-    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
+    write! ~/.cache/%:t:r.md
+    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
