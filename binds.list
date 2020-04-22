@@ -333,7 +333,6 @@ separator=Autres
 $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 [^&lt;#&gt;] ... [^&lt;#&gt;]: xxx  Note avec explication séparée
 ^[xxx]                             Note avec explication interne
-&lt;pre&gt;xxx&lt;pre&gt;              Texte préformaté
 &gt; xxx                               Bloc de citation
 &lt;http://lien&gt;                    Lien simple
 [xxx](http://lien)               Lien avec titre
