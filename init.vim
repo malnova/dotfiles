@@ -414,29 +414,50 @@ endif
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
+function! s:typography()
+    write! ~/.cache/%:t:r.md
+    " Remplacer les espaces devant les poncutations doubles par des
+    " espaces insécables
+    ! sed -i -Ee '/ ([:;?\!])/ s// \1/g' ~/.cache/%:t:r.md
+    " Remplacer les guillemets simples par des guillemets français
+    ! sed -i -Ee '/"(.+)"/ s//« \1 »/g' ~/.cache/%:t:r.md
+    " Remplacer trois points par le signe correspondant
+    ! sed -i -Ee '/\.{3,}/ s//…/g' ~/.cache/%:t:r.md
+endfunction
 function! s:convert_to_doc()
     " La conversion en doc directement avec Pandoc n'est pas possible ;
     " Pandoc ne gère que le docx
-    ! pandoc % -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+    call s:typography()
+    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
     ! soffice --headless --convert-to doc --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
 endfunction
 function! s:convert_to_docx()
-    ! pandoc % -s -f markdown -t docx -o %:r.docx > ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
+    " On convertit d'abord en odt pour un meilleur résultat grâce au
+    " fichier de référence
+    " La conversion en docx est beaucoup mieux gérée par LibreOffice
+    " que par pandoc
+    call s:typography()
+    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
+    ! soffice --headless --convert-to docx --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.md >> ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
 endfunction
 function! s:convert_to_odt()
-    ! pandoc % -s -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
+    call s:typography()
+    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.md >> ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
 endfunction
 function! s:convert_to_pdf()
     " La conversion en pdf directement avec Pandoc nécessiterait
     " d'installer un processeur LaTeX
-    ! pandoc % -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
+    call s:typography()
+    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
     ! soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
+    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
 endfunction
 function! s:pdf_preview()
-    write! ~/.cache/%:t:r.md
-    ! pandoc ~/.cache/%:t:r.md -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
+    call s:typography()
+    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
