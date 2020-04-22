@@ -652,7 +652,7 @@ tmux kill-session -t #         Tuer la session #
 tmux kill-session -a            Tuer toutes les autres sessions
 tmux kill-server                 Tuer toutes les sessions et les fenêtres
 separator:Touche Compose
-&lt;alt gr&gt;&lt;Win&gt;                       Touche Compose (Préf.&gt;Claviers&gt;
+&lt;AltGr&gt;&lt;Win&gt;                        Touche Compose (Préf.&gt;Claviers&gt;
                                                 Éditer la configuration par défaut)
                                                 ! Pas avec le pavé numérique !
   &lt;espace&gt;&lt;espace&gt;              (espace insécable)
@@ -695,7 +695,23 @@ separator:Touche Compose
   oc oC Oc OC                          ©
   or oR Or OR                           ®
   tm TM                                   ™
+separator=Alphabet grec
   ga / gb / gc...                         Lettres _grecques
+separator=Alphabet phonétique
+  pha                                       ɑ (âne, tâche)
+  phe                                       ə (l_e, me, demain)
+  phE                                       ε (m_erci, père, maire)
+  pho                                       ɔ (p_omme, corps)
+  phu                                       ɥ (h_uile, nuit)
+  phj                                        ʒ (_jardin, gendarme)
+  phr                                        ʁ (_renard, barre)
+  phA                                       ɑ̃ (v_ent, sans)
+  phI                                        ɛ̃ (l_in, pain)
+  phU                                       œ̃ (br_un, lundi)
+  phO                                       ɔ̃ (n_om, bon)
+  phch                                      ʃ (_choix, shérif)
+  phgn                                      ɲ (di_gne, bagne)
+  phng                                      ŋ (parki_ng, ping-pong)
 separator:zathura
 Flèches / h, j, k, l                 Déplacement sur la page
 Home / End                         Aller en début / fin de fichier

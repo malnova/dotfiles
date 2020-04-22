@@ -109,3 +109,23 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <g> <C> : "Χ"
 <Multi_key> <g> <B> : "Β"
 <Multi_key> <g> <N> : "Ν"
+
+# Alphabet phonétique (API / IPA)
+# Uniquement pour les lettres qui diffèrent de l'alphabet latin
+# Références :
+# https://www.espacefrancais.com/lalphabet-phonetique-international-api/
+# http://la.phonetique.francaise.free.fr/PDF/ALPHABET-PHONETIQUE-FRANCAIS-INTERNATIONAL-TABLEAU-SYMBOLES-SYMBOLE-FRENCH-PHONETIC-PHONETICS-SYMBOLS-CHART-IPA-TABLE.PDF
+<Multi_key> <p> <h> <a> : "ɑ"
+<Multi_key> <p> <h> <e> : "ə"
+<Multi_key> <p> <h> <E> : "ε"
+<Multi_key> <p> <h> <o> : "ɔ"
+<Multi_key> <p> <h> <u> : "ɥ"
+<Multi_key> <p> <h> <j> : "ʒ"
+<Multi_key> <p> <h> <r> : "ʁ"
+<Multi_key> <p> <h> <A> : "ɑ̃"
+<Multi_key> <p> <h> <I> : "ɛ̃"
+<Multi_key> <p> <h> <U> : "œ̃"
+<Multi_key> <p> <h> <O> : "ɔ̃"
+<Multi_key> <p> <h> <c> <h> : "ʃ"
+<Multi_key> <p> <h> <g> <n> : "ɲ"
+<Multi_key> <p> <h> <n> <g> : "ŋ"
