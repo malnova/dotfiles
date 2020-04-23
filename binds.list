@@ -156,6 +156,8 @@ watch (-n #) &lt;prog.&gt; Exécuter un prog. (ttes les # sec. ; déf. 2)
 wc -l                       Afficher le nombre de lignes de la sortie
 separator:Changements de claviers
 Maj gauche-Maj droite           Clavier suivant (config. d'Openbox)
+separator=Clavier API
+&lt;caractère&gt; puis AltGr-*      ~ au-dessus de la lettre
 separator=Clavier français
 AltGr-1-&lt;caractère&gt;             ˇ au-dessus de la lettre
 AltGr-^-&lt;caractère&gt;             ~ au-dessus de la lettre
