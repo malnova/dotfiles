@@ -497,7 +497,10 @@ k / j / l / h                           Haut / bas / droite / gauche
 C-g                                    Afficher la position du curseur
 za / zo / zc                         Ouvrir / fermer le repli
 zR / zM                              Ouvrir / fermer tous les replis
-:digraphs                          Afficher la liste des digraphes
+:dig[raphs]                        Afficher la liste des digraphes
+:dig[raphs] xx #                Ajouter le caractère Unicode # comme
+                                            digraphe avec les touches xx
+:h digraph-table puis /xxx  Rechercher dans les digraphes
 C-k &lt;caractères&gt;              Taper un digraphe
 C-p / C-n                            Menu d'autocomplétion
 C-y                                    Quitter l'autocomplétion
@@ -706,20 +709,7 @@ separator:Touche Compose
   oc oC Oc OC                          ©
   or oR Or OR                           ®
   tm TM                                   ™
-separator=Alphabet grec
   ga / gb / gc...                         Lettres _grecques
-separator=Alphabet phonétique
-  pha                                       ɑ (âne, tâche)
-  phe                                       ə (l_e, me, demain)
-  phE                                       ε (m_erci, père, maire)
-  pho                                       ɔ (p_omme, corps)
-  phu                                       ɥ (h_uile, nuit)
-  phj                                        ʒ (_jardin, gendarme)
-  phr                                        ʁ (_renard, barre)
-  phch                                      ʃ (_choix, shérif)
-  phgn                                      ɲ (di_gne, bagne)
-  phng                                      ŋ (parki_ng, ping-pong)
-  (GTK ne supporte pas les caractères doubles : ɑ̃ɛ̃œ̃ɔ̃)
 separator:zathura
 Flèches / h, j, k, l                 Déplacement sur la page
 Home / End                         Aller en début / fin de fichier
