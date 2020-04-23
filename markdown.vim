@@ -20,16 +20,18 @@ hi markdownUrlTitle ctermfg=darkblue
 hi markdownUrlDelimiter ctermfg=darkblue
 hi markdownUrlTitleDelimiter ctermfg=darkblue
 hi markdownError ctermfg=black ctermbg=red cterm=bold
-" Ajout de groupes pour les formules mathématiques, les indices
-" et les exposants
+" Ajout de groupes pour les notes de bas de page en ligne, les formules
+" mathématiques, les indices et les exposants
 " Repris de https://github.com/vim-pandoc/vim-pandoc-syntax/blob/master/syntax/pandoc.vim
-syn region pandocLaTeXInlineMath start=/\v\\@<!\$\S@=/ end=/\v\\@<!\$\d@!/ keepend contains=@LATEX
-syn region pandocLaTeXInlineMath start=/\\\@<!\\(/ end=/\\\@<!\\)/ keepend contains=@LATEX
-syn region pandocLaTeXMathBlock start=/\$\$/ end=/\$\$/ keepend contains=@LATEX
-syn region pandocLaTeXMathBlock start=/\\\@<!\\\[/ end=/\\\@<!\\\]/ keepend contains=@LATEX
+syn region pandocFootnoteDef start=/\^\[/ skip=/\[.\{-}]/ end=/\]/
+hi link pandocFootnoteDef markdownFootnoteDefinition
+syn region pandocLaTeXInlineMath start=/\v\\@<!\$\S@=/ end=/\v\\@<!\$\d@!/ keepend
+syn region pandocLaTeXInlineMath start=/\\\@<!\\(/ end=/\\\@<!\\)/ keepend
+syn region pandocLaTeXMathBlock start=/\$\$/ end=/\$\$/ keepend
+syn region pandocLaTeXMathBlock start=/\\\@<!\\\[/ end=/\\\@<!\\\]/ keepend
 hi link pandocLaTeXInlineMath markdownCode
 hi link pandocLaTeXMathBlock markdownCode
 syn region markdownSubscript start=/\~\(\([[:graph:]]\(\\ \)\=\)\{-}\~\)\@=/ end=/\~/ keepend
 syn region markdownSuperscript start=/\^\(\([[:graph:]]\(\\ \)\=\)\{-}\^\)\@=/ skip=/\\ / end=/\^/ keepend
-hi markdownSubscript ctermfg=white
-hi markdownSuperscript ctermfg=white
+hi link markdownSubscript markdownCode
+hi link markdownSuperscript markdownCode
