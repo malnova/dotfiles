@@ -716,13 +716,10 @@ separator=Alphabet phonétique
   phu                                       ɥ (h_uile, nuit)
   phj                                        ʒ (_jardin, gendarme)
   phr                                        ʁ (_renard, barre)
-  phA                                       ɑ̃ (v_ent, sans)
-  phI                                        ɛ̃ (l_in, pain)
-  phU                                       œ̃ (br_un, lundi)
-  phO                                       ɔ̃ (n_om, bon)
   phch                                      ʃ (_choix, shérif)
   phgn                                      ɲ (di_gne, bagne)
   phng                                      ŋ (parki_ng, ping-pong)
+  (GTK ne supporte pas les caractères doubles : ɑ̃ɛ̃œ̃ɔ̃)
 separator:zathura
 Flèches / h, j, k, l                 Déplacement sur la page
 Home / End                         Aller en début / fin de fichier
