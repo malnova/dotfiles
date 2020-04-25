@@ -15,6 +15,9 @@ export QUOTING_STYLE=literal
 # (voir aussi ~/.xinitrc)
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Éditeur (pour sudo -e)
+export EDITOR=vim
+
 # Ne rien faire si le mode n'est pas interactif
 [[ $- != *i* ]] && return
 
