@@ -416,11 +416,12 @@ autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
 function! s:typography()
     write! ~/.cache/%:t:r.md
+    " Remplacer les guillemets simples par des guillemets français
+    ! sed -i -Ee '/(^|\s|\(|\[)"/ s//\1« /g' ~/.cache/%:t:r.md
+    ! sed -i -Ee '/(\S)"/ s//\1 »/g' ~/.cache/%:t:r.md
     " Remplacer les espaces devant les poncutations doubles par des
     " espaces insécables
     ! sed -i -Ee '/ ([:;?\!])/ s// \1/g' ~/.cache/%:t:r.md
-    " Remplacer les guillemets simples par des guillemets français
-    ! sed -i -Ee '/"(.+)"/ s//« \1 »/g' ~/.cache/%:t:r.md
     " Remplacer trois points par le signe correspondant
     ! sed -i -Ee '/\.{3,}/ s//…/g' ~/.cache/%:t:r.md
 endfunction
