@@ -389,9 +389,6 @@ separator=Captures d'écran
 s / S                               Capture d'écran avec / sans sous-titres
 A-s                                 Capture d'écran en continu
 C-s                                 Capture telle qu'affichée (zoom, OSD...)
-C-S                                 Capture avec recadrage (par ex. pour
-                                         recadrer un fichier image, ou voir les
-                                         coordonnées x et y du pointeur...)
 --screenshot-format=x    Format des captures (png / jpg / jpeg)
 separator=Playlists
 --playlist-start=#           Lire à partir du fichier n°# (déf. 0)
