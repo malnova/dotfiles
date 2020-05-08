@@ -413,26 +413,6 @@ separator=Retoucher, réencoder
 g                     Recadrer la vidéo (annuler : G)
 y                     Début / fin pour couper et réencoder (reenc.conf)
 Y                     Début / fin pour couper sans réencoder (slice.conf)
-separator:MuPDF
-Flèches/PageDown/PageUp  Page suivante / précédente
-+ / -                                    Zoomer / dézoomer
-*                                         Taille originale
-/ / ? &lt;motif&gt;                       Rechercher
-  n / N                                 Occurrence suivante / _précédente
-Clic droit-sélection               Copier une zone de texte
-Tab                                     Afficher / masquer l'index
-Espace / S-Espace              Écran suivant / précédent
-c                                        _Couleurs en niveaux de gris sur noir
-d                                        Afficher une / _deux pages
-f                                         Plein écran
-gg / G / #gg/#G                 Aller à la première / dernière / # page
-h, j, k, l                              Déplacement sur la page
-i                                         Afficher la barre d'_informations
-L / R                                   Rotation gauche / droite
-o / O                                   _Ouvrir un fichier
-q                                        _Quitter
-r                                         _Recharger le fichier
-W / H                                  Largeur / hauteur en pleine page
 separator:nvim / vim / vimdiff
 Syntaxe générale        Opérateur [Quantificateur] [mouvement]
 separator=Opérateurs et commandes
