@@ -4,6 +4,7 @@ set guioptions ""
 set page-padding 2
 set selection-clipboard clipboard
 set database null
+set first-page-column 1:1
 unmap [normal] <C-r>
 unmap [fullscreen] <C-r>
 map [normal] c set recolor
