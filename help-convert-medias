@@ -101,7 +101,7 @@ Avec ffmpeg comme avec ffprobe, on peut augmenter la taille du fragment de fichi
    * ac3 : -c:a ac3
 - pour ne pas changer le format (par ex. pour modifier seulement le fichier audio avec certaines options ci-dessous) : ajouter -c:a copy (ex. ffmpeg -ss 5 -t 5 -i "if" -c:a copy "of")
 - pour spécifier une qualité précise pour un mp3 (à utiliser avec -c:a libmp3lame) : ajouter -qscale:a # (de 0 - haute qualité - à 9 - mauvaise - ; de 0 à 3 pour une qualité presque parfaite, 5 pour une qualité moyenne entre 120 et 150 kbit/s ; 4 par défaut ; par ex. ffmpeg -i "if" -c:a libmp3lame -qscale:a 2 "of")
-- enregistrer l'audio (régler "PCM" suffisamment fort dans amixer pour enregistrer sans micro, ou "Mic" avec micro) : ffmpeg -f alsa -i default -c:a libmp3lame -qscale:a 5 test.mp3
+- enregistrer l'audio (si ça ne fonctionne pas : dans amixer, appuyer sur F5 pour "Afficher tout", et vérifier que "PCM" ET "Digital" sont suffisamment forts - PCM devrait être au max., et Digital à au moins 30 ; on peut augmenter l'intensité du micro interne en augmentant le niveau de "Capture", et d'un micro externe en augmentant "Mic") : ffmpeg -f alsa -i default -c:a libmp3lame -qscale:a 5 test.mp3
 - entendre le son d'un micro dans les haut-parleurs externes : arecord | aplay
 
 2. Convertir par lots
