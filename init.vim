@@ -463,9 +463,23 @@ function! s:pdf_preview()
     ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
     ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
 endfunction
+function! s:convert_to_markdown(...)
+    for file in a:000
+        if filereadable(file)
+            let filebase = fnameescape(fnamemodify(file, ":t:r"))
+            execute '! pandoc ' . fnameescape(file) . ' -s -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
+            execute 'e ~/.cache/' . filebase . '_ConvMd_file.md'
+        else
+            echohl ErrorMsg
+            echomsg 'Erreur : le fichier "' . file . '" ne peut être lu.'
+            echohl None
+        endif
+    endfor
+endfunction
 " Les noms de commandes doivent commencer par une majuscule
 command ConvDoc call s:convert_to_doc()
 command ConvDocx call s:convert_to_docx()
 command ConvOdt call s:convert_to_odt()
 command ConvPdf call s:convert_to_pdf()
 command Prev call s:pdf_preview()
+command! -complete=file -nargs=+ ConvMd call s:convert_to_markdown(<f-args>)
