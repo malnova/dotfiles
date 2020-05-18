@@ -1411,6 +1411,9 @@
     <application name="kdenlive">
       <maximized>true</maximized>
     </application>
+    <application name="lowriter">
+      <maximized>true</maximized>
+    </application>
     <application name="ocrfeeder">
       <maximized>true</maximized>
     </application>
