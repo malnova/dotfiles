@@ -467,7 +467,7 @@ function! s:convert_to_markdown(...)
     for file in a:000
         if filereadable(file)
             let filebase = fnameescape(fnamemodify(file, ":t:r"))
-            execute '! pandoc ' . fnameescape(file) . ' -s -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
+            execute '! pandoc ' . fnameescape(file) . ' -s --wrap=preserve -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
             execute 'e ~/.cache/' . filebase . '_ConvMd_file.md'
         else
             echohl ErrorMsg
