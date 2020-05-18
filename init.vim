@@ -415,23 +415,25 @@ endif
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
 function! s:typography()
-    write! ~/.cache/%:t:r.md
+    let filebase = fnameescape(expand("%:t:r"))
+    execute 'write! ~/.cache/' . filebase . '.md'
     " Remplacer les guillemets simples par des guillemets français
-    ! sed -i -Ee '/(^|\s|\(|\[)"/ s//\1« /g' ~/.cache/%:t:r.md
-    ! sed -i -Ee '/(\S)"/ s//\1 »/g' ~/.cache/%:t:r.md
+    execute '! sed -i -Ee "/(^|\s|\(|\[)\"/ s//\1« /g" ~/.cache/' . filebase . '.md'
+    execute '! sed -i -Ee "/(\S)\"/ s//\1 »/g" ~/.cache/' . filebase . '.md'
     " Remplacer les espaces devant les poncutations doubles par des
     " espaces insécables
-    ! sed -i -Ee '/ ([:;?\!])/ s// \1/g' ~/.cache/%:t:r.md
+    execute '! sed -i -Ee "/ ([:;?\!])/ s// \1/g" ~/.cache/' . filebase . '.md'
     " Remplacer trois points par le signe correspondant
-    ! sed -i -Ee '/\.{3,}/ s//…/g' ~/.cache/%:t:r.md
+    execute '! sed -i -Ee "/\.{3,}/ s//…/g" ~/.cache/' . filebase . '.md'
 endfunction
 function! s:convert_to_doc()
     " La conversion en doc directement avec Pandoc n'est pas possible ;
     " Pandoc ne gère que le docx
     call s:typography()
-    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
-    ! soffice --headless --convert-to doc --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDoc_log.txt 2>&1
+    let filebase = fnameescape(expand("%:t:r"))
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
+    execute '! soffice --headless --convert-to doc --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
 endfunction
 function! s:convert_to_docx()
     " On convertit d'abord en odt pour un meilleur résultat grâce au
@@ -439,29 +441,33 @@ function! s:convert_to_docx()
     " La conversion en docx est beaucoup mieux gérée par LibreOffice
     " que par pandoc
     call s:typography()
-    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
-    ! soffice --headless --convert-to docx --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.md >> ~/.cache/%:t:r_ConvDocx_log.txt 2>&1
+    let filebase = fnameescape(expand("%:t:r"))
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
+    execute '! soffice --headless --convert-to docx --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
 endfunction
 function! s:convert_to_odt()
     call s:typography()
-    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o %:r.odt > ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.md >> ~/.cache/%:t:r_ConvOdt_log.txt 2>&1
+    let filebase = fnameescape(expand("%:t:r"))
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ' . fnameescape(expand("%:r")) . '.odt > ~/.cache/' . filebase . '_ConvOdt_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md >> ~/.cache/' . filebase . '_ConvOdt_log.txt 2>&1'
 endfunction
 function! s:convert_to_pdf()
     " La conversion en pdf directement avec Pandoc nécessiterait
     " d'installer un processeur LaTeX
     call s:typography()
-    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
-    ! soffice --headless --convert-to pdf --outdir %:p:h ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_ConvPdf_log.txt 2>&1
+    let filebase = fnameescape(expand("%:t:r"))
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
+    execute '! soffice --headless --convert-to pdf --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
 endfunction
 function! s:pdf_preview()
     call s:typography()
-    ! pandoc ~/.cache/%:t:r.md --data-dir=$HOME/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/%:t:r.odt > ~/.cache/%:t:r_Prev_log.txt 2>&1
-    ! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/%:t:r.odt >> ~/.cache/%:t:r_Prev_log.txt 2>&1
-    ! zathura ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
-    ! rm ~/.cache/%:t:r.md ~/.cache/%:t:r.odt ~/.cache/%:t:r.pdf >> ~/.cache/%:t:r_Prev_log.txt 2>&1
+    let filebase = fnameescape(expand("%:t:r"))
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
+    execute '! soffice --headless --convert-to pdf --outdir ~/.cache ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
+    execute '! zathura ~/.cache/' . filebase . '.pdf >> ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt ~/.cache/' . filebase . '.pdf >> ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
 endfunction
 function! s:convert_to_markdown(...)
     for file in a:000
