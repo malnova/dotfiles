@@ -465,13 +465,13 @@ function! s:pdf_preview()
 endfunction
 function! s:convert_to_markdown(...)
     for file in a:000
-        if filereadable(file)
-            let filebase = fnameescape(fnamemodify(file, ":t:r"))
-            execute '! pandoc ' . fnameescape(file) . ' -s --wrap=preserve -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
+        if filereadable(expand(file))
+            let filebase = fnameescape(fnamemodify(expand(file), ":t:r"))
+            execute '! pandoc ' . fnameescape(expand(file)) . ' -s --wrap=preserve -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
             execute 'e ~/.cache/' . filebase . '_ConvMd_file.md'
         else
             echohl ErrorMsg
-            echomsg 'Erreur : le fichier "' . file . '" ne peut être lu.'
+            echomsg 'Erreur : le fichier "' . expand(file) . '" ne peut être lu.'
             echohl None
         endif
     endfor
