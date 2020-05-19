@@ -476,16 +476,24 @@ function! s:convert_to_text(...)
                 let filebase = fnameescape(fnamemodify(expand(f), ":t:r"))
                 if fileext ==? "pdf"
                     execute '! pdftotext ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    let fileistext = system("filecontent=$(cat ' . homedir . '/.cache/" . filebase . "_ConvToTxt_file.txt); if [[ $filecontent =' . homedir . ' [0-9a-zA-Y] ]]; then echo '1'; else echo '0'; fi")
+                    let fileistext = system("filecontent=$(cat " . homedir . "/.cache/" . filebase . "_ConvToTxt_file.txt); if [[ $filecontent =~ [0-9a-zA-Y] ]]; then echo '1'; else echo '0'; fi")
                     " https://stackoverflow.com/questions/2789319/file-content-into-unix-variable-with-newlines
                     let fileistext = substitute(fileistext, '\n\+$', '', '')
                     if fileistext ==? "0"
-                        " On peut aussi utiliser pdfimages (sans possibilité de préciser la résolution en DPI)
-                        execute '! pdftoppm -r 300 ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                        execute '! i=0; j=$(ls ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm | wc -l); for img in ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi 300 "$img" "$img" >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1; done; cat ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm.txt > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt 2>> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt'
-                        execute '! rm ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm* >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                        if !empty(glob('/usr/bin/tesseract'))
+                            " On peut aussi utiliser pdfimages (sans possibilité de préciser la résolution en DPI)
+                            execute '! pdftoppm -r 300 ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                            execute '! i=0; j=$(ls ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm | wc -l); for img in ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi 300 "$img" "$img" >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1; done; cat ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm.txt > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt 2>> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt'
+                            execute '! rm ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm* >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                            execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
+                        else
+                            echohl ErrorMsg
+                            echomsg "Erreur : tesseract n'est pas installé ; la reconnaissance du fichier \"" . expand(f) . "\" est impossible."
+                            echohl None
+                        endif
+                    else
+                        execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
                     endif
-                    execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
                 elseif fileext ==? "ppm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif"
                     execute '! tesseract -l fra --dpi 300 ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
                     execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
@@ -500,7 +508,7 @@ function! s:convert_to_text(...)
                 endif
             else
                 echohl ErrorMsg
-                echomsg 'Erreur : le fichier "' . expand(f) . '" ne peut être lu.'
+                echomsg "Erreur : le fichier \"" . expand(f) . "\" ne peut être lu."
                 echohl None
             endif
         endfor
