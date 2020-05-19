@@ -431,9 +431,9 @@ function! s:convert_to_doc()
     " Pandoc ne gère que le docx
     call s:typography()
     let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
-    execute '! soffice --headless --convert-to doc --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
-    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDoc_log.txt 2>&1'
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
+    execute '! soffice --headless --convert-to doc --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
 endfunction
 function! s:convert_to_docx()
     " On convertit d'abord en odt pour un meilleur résultat grâce au
@@ -442,24 +442,58 @@ function! s:convert_to_docx()
     " que par pandoc
     call s:typography()
     let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
-    execute '! soffice --headless --convert-to docx --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
-    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvDocx_log.txt 2>&1'
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
+    execute '! soffice --headless --convert-to docx --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
 endfunction
 function! s:convert_to_odt()
     call s:typography()
     let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ' . fnameescape(expand("%:r")) . '.odt > ~/.cache/' . filebase . '_ConvOdt_log.txt 2>&1'
-    execute '! rm ~/.cache/' . filebase . '.md >> ~/.cache/' . filebase . '_ConvOdt_log.txt 2>&1'
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ' . fnameescape(expand("%:r")) . '.odt > ~/.cache/' . filebase . '_ConvToOdt_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md >> ~/.cache/' . filebase . '_ConvToOdt_log.txt 2>&1'
 endfunction
 function! s:convert_to_pdf()
     " La conversion en pdf directement avec Pandoc nécessiterait
     " d'installer un processeur LaTeX
     call s:typography()
     let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
-    execute '! soffice --headless --convert-to pdf --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
-    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvPdf_log.txt 2>&1'
+    execute '! pandoc ~/.cache/' . filebase . '.md --data-dir=~/documents/configurations/ressources -s -f markdown -t odt -o ~/.cache/' . filebase . '.odt > ~/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
+    execute '! soffice --headless --convert-to pdf --outdir ' . fnameescape(expand("%:p:h")) . ' ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
+    execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt >> ~/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
+endfunction
+function! s:convert_to_text(...)
+    for file in a:000
+        " Permettre d'utiliser des wildcards dans les noms de fichiers à convertir (https://vi.stackexchange.com/questions/2607/how-to-open-multiple-files-matching-a-wildcard-expression)
+        for f in glob(file, 0, 1)
+            if !empty(glob(expand(f)))
+                let fileext = fnameescape(fnamemodify(expand(f), ":e"))
+                let filebase = fnameescape(fnamemodify(expand(f), ":t:r"))
+                if fileext ==? "pdf"
+                    execute '! pdftotext ' . fnameescape(expand(f)) . ' ~/.cache/' . filebase . '_ConvToTxt_file.txt > ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    let fileistext = system("filecontent=$(cat ~/.cache/" . filebase . "_ConvToTxt_file.txt); if [[ $filecontent =~ [0-9a-zA-Y] ]]; then echo '1'; else echo '0'; fi")
+                    " https://stackoverflow.com/questions/2789319/file-content-into-unix-variable-with-newlines
+                    let fileistext = substitute(fileistext, '\n\+$', '', '')
+                    if fileistext ==? "0"
+                        " On peut aussi utiliser pdfimages (sans possibilité de préciser la résolution en DPI)
+                        execute '! pdftoppm -r 300 ' . fnameescape(expand(f)) . ' ~/.cache/' . filebase . '_ConvToTxt_file >> ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                        execute '! i=0; j=$(ls ~/.cache/' . filebase . '_ConvToTxt_file*.ppm | wc -l); for img in ~/.cache/' . filebase . '_ConvToTxt_file*.ppm; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi 300 "$img" "$img" >> ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1; done; cat ~/.cache/' . filebase . '_ConvToTxt_file*.ppm.txt > ~/.cache/' . filebase . '_ConvToTxt_file.txt 2>> ~/.cache/' . filebase . '_ConvToTxt_log.txt'
+                        execute '! rm ~/.cache/' . filebase . '_ConvToTxt_file*.ppm* >> ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    endif
+                    execute 'e ~/.cache/' . filebase . '_ConvToTxt_file.txt'
+                elseif fileext ==? "ppm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif"
+                    execute '! tesseract -l fra --dpi 300 ' . fnameescape(expand(f)) . ' ~/.cache/' . filebase . '_ConvToTxt_file > ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    execute 'e ~/.cache/' . filebase . '_ConvToTxt_file.txt'
+                else
+                    execute '! pandoc ' . fnameescape(expand(f)) . ' -s --wrap=preserve -t markdown -o ~/.cache/' . filebase . '_ConvToTxt_file.md > ~/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    execute 'e ~/.cache/' . filebase . '_ConvToTxt_file.md'
+                endif
+            else
+                echohl ErrorMsg
+                echomsg 'Erreur : le fichier "' . expand(f) . '" ne peut être lu.'
+                echohl None
+            endif
+        endfor
+    endfor
 endfunction
 function! s:pdf_preview()
     call s:typography()
@@ -469,23 +503,10 @@ function! s:pdf_preview()
     execute '! zathura ~/.cache/' . filebase . '.pdf >> ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
     execute '! rm ~/.cache/' . filebase . '.md ~/.cache/' . filebase . '.odt ~/.cache/' . filebase . '.pdf >> ~/.cache/' . filebase . '_Prev_log.txt 2>&1'
 endfunction
-function! s:convert_to_markdown(...)
-    for file in a:000
-        if filereadable(expand(file))
-            let filebase = fnameescape(fnamemodify(expand(file), ":t:r"))
-            execute '! pandoc ' . fnameescape(expand(file)) . ' -s --wrap=preserve -t markdown -o ~/.cache/' . filebase . '_ConvMd_file.md > ~/.cache/' . filebase . '_ConvMd_log.txt 2>&1'
-            execute 'e ~/.cache/' . filebase . '_ConvMd_file.md'
-        else
-            echohl ErrorMsg
-            echomsg 'Erreur : le fichier "' . expand(file) . '" ne peut être lu.'
-            echohl None
-        endif
-    endfor
-endfunction
 " Les noms de commandes doivent commencer par une majuscule
-command ConvDoc call s:convert_to_doc()
-command ConvDocx call s:convert_to_docx()
-command ConvOdt call s:convert_to_odt()
-command ConvPdf call s:convert_to_pdf()
+command ConvToDoc call s:convert_to_doc()
+command ConvToDocx call s:convert_to_docx()
+command ConvToOdt call s:convert_to_odt()
+command ConvToPdf call s:convert_to_pdf()
+command! -complete=file -nargs=+ ConvToTxt call s:convert_to_text(<f-args>)
 command Prev call s:pdf_preview()
-command! -complete=file -nargs=+ ConvMd call s:convert_to_markdown(<f-args>)
