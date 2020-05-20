@@ -499,11 +499,11 @@ function! s:convert_to_text(...)
                     execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
                 elseif fileext ==? "rtf"
                     execute '! soffice --headless --convert-to odt --outdir ' . homedir . '/.cache ' . fnameescape(expand(f)) . ' > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.odt -s --wrap=preserve -f odt -t markdown -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.odt -s --wrap=preserve -f odt -t markdown-smart -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
                     execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md'
                     execute '! rm ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
                 else
-                    execute '! pandoc ' . fnameescape(expand(f)) . ' -s --wrap=preserve -t markdown -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    execute '! pandoc ' . fnameescape(expand(f)) . ' -s --wrap=preserve -t markdown-smart -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
                     execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md'
                 endif
             else
