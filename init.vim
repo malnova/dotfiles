@@ -417,116 +417,131 @@ autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 function! s:typography()
     let homedir = fnameescape(expand("~"))
     let filebase = fnameescape(expand("%:t:r"))
-    execute 'write! ' . homedir . '/.cache/' . filebase . '.md'
+    let mdfile = homedir . '/.cache/' . filebase . '.md'
+    silent execute 'write! ' . mdfile
     " Remplacer les guillemets simples par des guillemets français
-    execute '! sed -i -Ee "/(^|\s|\(|\[)\"/ s//\1« /g" ' . homedir . '/.cache/' . filebase . '.md'
-    execute '! sed -i -Ee "/(\S)\"/ s//\1 »/g" ' . homedir . '/.cache/' . filebase . '.md'
+    silent execute '! sed -i -Ee "/(^|\s|\(|\[)\"/ s//\1« /g" ' . mdfile
+    silent execute '! sed -i -Ee "/(\S)\"/ s//\1 »/g" ' . mdfile
     " Remplacer les espaces devant les poncutations doubles par des
     " espaces insécables
-    execute '! sed -i -Ee "/ ([:;?\!])/ s// \1/g" ' . homedir . '/.cache/' . filebase . '.md'
+    silent execute '! sed -i -Ee "/ ([:;?\!])/ s// \1/g" ' . mdfile
     " Remplacer trois points par le signe correspondant
-    execute '! sed -i -Ee "/\.{3,}/ s//…/g" ' . homedir . '/.cache/' . filebase . '.md'
+    silent execute '! sed -i -Ee "/\.{3,}/ s//…/g" ' . mdfile
 endfunction
-function! s:convert_to_doc()
-    " La conversion en doc directement avec Pandoc n'est pas possible ;
-    " Pandoc ne gère que le docx
-    call s:typography()
-    let homedir = fnameescape(expand("~"))
-    let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.md --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . homedir . '/.cache/' . filebase . '.odt > ' . homedir . '/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
-    execute '! soffice --headless --convert-to doc --outdir ' . fnameescape(expand("%:p:h")) . ' ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
-    execute '! rm ' . homedir . '/.cache/' . filebase . '.md ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToDoc_log.txt 2>&1'
-endfunction
-function! s:convert_to_docx()
-    " On convertit d'abord en odt pour un meilleur résultat grâce au
-    " fichier de référence
-    " La conversion en docx est beaucoup mieux gérée par LibreOffice
-    " que par pandoc
-    call s:typography()
-    let homedir = fnameescape(expand("~"))
-    let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.md --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . homedir . '/.cache/' . filebase . '.odt > ' . homedir . '/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
-    execute '! soffice --headless --convert-to docx --outdir ' . fnameescape(expand("%:p:h")) . ' ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
-    execute '! rm ' . homedir . '/.cache/' . filebase . '.md ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToDocx_log.txt 2>&1'
-endfunction
-function! s:convert_to_odt()
-    call s:typography()
-    let homedir = fnameescape(expand("~"))
-    let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.md --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . fnameescape(expand("%:r")) . '.odt > ' . homedir . '/.cache/' . filebase . '_ConvToOdt_log.txt 2>&1'
-    execute '! rm ' . homedir . '/.cache/' . filebase . '.md >> ' . homedir . '/.cache/' . filebase . '_ConvToOdt_log.txt 2>&1'
-endfunction
-function! s:convert_to_pdf()
-    " La conversion en pdf directement avec Pandoc nécessiterait
-    " d'installer un processeur LaTeX
-    call s:typography()
-    let homedir = fnameescape(expand("~"))
-    let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.md --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . homedir . '/.cache/' . filebase . '.odt > ' . homedir . '/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
-    execute '! soffice --headless --convert-to pdf --outdir ' . fnameescape(expand("%:p:h")) . ' ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
-    execute '! rm ' . homedir . '/.cache/' . filebase . '.md ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToPdf_log.txt 2>&1'
+function! s:convert(format, useoffice, pdfpreview)
+    if !empty(bufname(''))
+        echomsg "Conversion en cours..."
+        call s:typography()
+        let homedir = fnameescape(expand("~"))
+        if exists("*strftime") | let localtime = strftime("%Y-%m-%d_%H-%M-%S") | else | let localtime = localtime() | endif
+        let filebase = fnameescape(expand("%:t:r")) . '_' . localtime
+        let mdfile = homedir . '/.cache/' . fnameescape(expand("%:t:r")) . '.md'
+        let exitfile = fnameescape(expand("%:p:r")) . '_' . localtime . '.' . a:format
+        let errorfile = homedir . '/.cache/' . filebase . '_log.txt'
+        let tempfile = homedir . '/.cache/' . filebase . '.odt'
+        if a:useoffice == 1
+            silent execute '! pandoc ' . mdfile . ' --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . tempfile . ' > ' . errorfile . ' 2>&1'
+            silent execute '! soffice --headless --convert-to ' . a:format . ' --outdir ' . fnameescape(expand("%:p:h")) . ' ' . tempfile . ' >> ' . errorfile . ' 2>&1'
+            silent execute '! rm ' . mdfile . ' ' . tempfile . ' >> ' . errorfile . ' 2>&1'
+        else
+            silent execute '! pandoc ' . mdfile . ' --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t ' . a:format . ' -o ' . exitfile . ' > ' . errorfile . ' 2>&1'
+        endif
+        if v:shell_error == 0
+            if a:pdfpreview == "0"
+                echomsg "Conversion réussie vers \"" . exitfile . "\"."
+            else
+                echomsg "Conversion réussie."
+                silent execute '! zathura ' . exitfile . ' >> ' . errorfile . ' 2>&1'
+                silent execute '! rm ' . exitfile . ' >> ' . errorfile . ' 2>&1'
+            endif
+        else
+            echohl ErrorMsg | echomsg "Erreur : la conversion a échoué." | echohl None
+            execute 'e ' . errorfile
+        endif
+    else
+        echohl ErrorMsg | echomsg "Erreur : le fichier ouvert n'a pas de nom." | echohl None
+    endif
 endfunction
 function! s:convert_to_text(...)
+    echomsg "Conversion en cours..."
     let homedir = fnameescape(expand("~"))
     for file in a:000
-        " Permettre d'utiliser des wildcards dans les noms de fichiers à convertir (https://vi.stackexchange.com/questions/2607/how-to-open-multiple-files-matching-a-wildcard-expression)
-        for f in glob(file, 0, 1)
-            if !empty(glob(expand(f)))
-                let fileext = fnameescape(fnamemodify(expand(f), ":e"))
-                let filebase = fnameescape(fnamemodify(expand(f), ":t:r"))
-                if fileext ==? "pdf"
-                    execute '! pdftotext ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    let fileistext = system("filecontent=$(cat " . homedir . "/.cache/" . filebase . "_ConvToTxt_file.txt); if [[ $filecontent =~ [0-9a-zA-Y] ]]; then echo '1'; else echo '0'; fi")
-                    " https://stackoverflow.com/questions/2789319/file-content-into-unix-variable-with-newlines
-                    let fileistext = substitute(fileistext, '\n\+$', '', '')
-                    if fileistext ==? "0"
-                        if !empty(glob('/usr/bin/tesseract'))
-                            " On peut aussi utiliser pdfimages (sans possibilité de préciser la résolution en DPI)
-                            execute '! pdftoppm -r 300 ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                            execute '! i=0; j=$(ls ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm | wc -l); for img in ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi 300 "$img" "$img" >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1; done; cat ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm.txt > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt 2>> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt'
-                            execute '! rm ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file*.ppm* >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                            execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
+        if !empty(glob(file, 0, 1))
+            " Permettre d'utiliser des wildcards dans les noms de fichiers à convertir (voir ':h glob' et https://vi.stackexchange.com/questions/2607/how-to-open-multiple-files-matching-a-wildcard-expression)
+            for f in glob(file, 0, 1)
+                if !empty(glob(expand(f)))
+                    let fileext = fnameescape(fnamemodify(expand(f), ":e"))
+                    if exists("*strftime") | let localtime = strftime("%Y-%m-%d_%H-%M-%S") | else | let localtime = localtime() | endif
+                    let filebase = fnameescape(fnamemodify(expand(f), ":t:r")) . '_' . localtime
+                    let errorfile = homedir . '/.cache/' . filebase . '_log.txt'
+                    let errorcode = 0
+                    if fileext ==? "pdf"
+                        let exitfile = homedir . '/.cache/' . filebase . '.txt'
+                        silent execute '! pdftotext ' . fnameescape(expand(f)) . ' ' . exitfile . ' > ' . errorfile . ' 2>&1'
+                        let fileistext = system("filecontent=$(cat " . exitfile . "); if [[ $filecontent =~ [0-9a-zA-Y] ]]; then echo -n '1'; else echo -n '0'; fi")
+                        if fileistext ==? "0"
+                            if !empty(glob('/usr/bin/tesseract'))
+                                let file_max_ppi = system('file_list=$(pdfimages -list ' . fnameescape(expand(f)) . " 2>/dev/null | tail -n +3);x_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($13>0+a) a=$13} END{print a}');y_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($14>0+a) a=$14} END{print a}');(( $x_ppi > $y_ppi)) && echo -n $x_ppi || echo -n $y_ppi")
+                                call inputsave()
+                                let user_dpi = input('Résolution à appliquer pour la conversion du fichier "' . expand(f) . '", en DPI (la résolution max. du fichier est de ' . file_max_ppi . ' PPI) : ')
+                                call inputrestore()
+                                echo "\n"
+                                if user_dpi =~# '^\d\+$'
+                                    let tempfile = homedir . '/.cache/' . filebase . '*.pgm'
+                                    silent execute '! pdftoppm -r ' . user_dpi . ' -gray ' . fnameescape(expand(f)) . ' ' . exitfile . ' >> ' . errorfile . ' 2>&1'
+                                    silent execute '! i=0; j=$(ls ' . tempfile . ' | wc -l); for img in ' . tempfile . '; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi ' . user_dpi . ' "$img" "$img" >> ' . errorfile . ' 2>&1; done; cat ' . tempfile . '.txt > ' . exitfile . ' 2>> ' . errorfile
+                                    silent execute '! rm ' . tempfile . '* >> ' . errorfile . ' 2>&1'
+                                    if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
+                                else
+                                    echohl ErrorMsg | echomsg "Fichier \"" . expand(f) . "\" : la résolution indiquée est incorrecte." | echohl None
+                                endif
+                            else
+                                echohl ErrorMsg | echomsg "Fichier \"" . expand(f) . "\" : tesseract n'est pas installé ; reconnaissance impossible." | echohl None
+                            endif
                         else
-                            echohl ErrorMsg
-                            echomsg "Erreur : tesseract n'est pas installé ; la reconnaissance du fichier \"" . expand(f) . "\" est impossible."
-                            echohl None
+                            let errorcode = 1
                         endif
+                    elseif fileext ==? "ppm" || fileext ==? "pgm" || fileext ==? "pbm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif"
+                        let exitfile = homedir . '/.cache/' . filebase . '.txt'
+                        let tempfile = homedir . '/.cache/' . filebase . '.png'
+                        let file_max_dpi = system("x_dpi=$(identify -format '%x' -units PixelsPerInch " . fnameescape(expand(f)) . ' 2> ' . errorfile . ");if [ $? -eq 0 ]; then y_dpi=$(identify -format '%y' -units PixelsPerInch " . fnameescape(expand(f)) . ' 2>> ' . errorfile . ');(( $x_dpi > $y_dpi)) && echo -n $x_dpi || echo -n $y_dpi;fi')
+                        silent execute '! convert ' . fnameescape(expand(f)) . ' -auto-orient -colorspace Gray ' . tempfile . ' >> ' . errorfile . ' 2>&1'
+                        silent execute '! tesseract -l fra --dpi ' . file_max_dpi . ' ' . tempfile . ' ' . homedir . '/.cache/' . filebase . ' >> ' . errorfile . ' 2>&1'
+                        silent execute '! rm ' . tempfile . ' >> ' . errorfile . ' 2>&1'
+                        if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
+                    elseif fileext ==? "rtf"
+                        let exitfile = homedir . '/.cache/' . filebase . '.md'
+                        let tempfile = homedir . '/.cache/' . filebase . '.odt'
+                        silent execute '! soffice --headless --convert-to odt --outdir ' . homedir . '/.cache ' . fnameescape(expand(f)) . ' > ' . errorfile . ' 2>&1'
+                        silent execute '! pandoc ' . tempfile . ' -s --wrap=preserve -f odt -t markdown-smart -o ' . exitfile . ' >> ' . errofile . ' 2>&1'
+                        silent execute '! rm ' . tempfile . ' >> ' . errorfile . ' 2>&1'
+                        if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                     else
-                        execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
+                        let exitfile = homedir . '/.cache/' . filebase . '.md'
+                        silent execute '! pandoc ' . fnameescape(expand(f)) . ' -s --wrap=preserve -t markdown-smart -o ' . exitfile . ' > ' . errorfile . ' 2>&1'
+                        if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                     endif
-                elseif fileext ==? "ppm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif"
-                    execute '! tesseract -l fra --dpi 300 ' . fnameescape(expand(f)) . ' ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.txt'
-                elseif fileext ==? "rtf"
-                    execute '! soffice --headless --convert-to odt --outdir ' . homedir . '/.cache ' . fnameescape(expand(f)) . ' > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.odt -s --wrap=preserve -f odt -t markdown-smart -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md'
-                    execute '! rm ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
+                    if errorcode == 1
+                        echomsg "Fichier \"" . expand(f) . "\" : conversion réussie."
+                        execute 'e ' . exitfile
+                    elseif errorcode == 2
+                        echohl ErrorMsg | echomsg "Fichier \"" . expand(f) . "\" : la conversion a échoué." | echohl None
+                        execute 'e ' . errorfile
+                    endif
                 else
-                    execute '! pandoc ' . fnameescape(expand(f)) . ' -s --wrap=preserve -t markdown-smart -o ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md > ' . homedir . '/.cache/' . filebase . '_ConvToTxt_log.txt 2>&1'
-                    execute 'e ' . homedir . '/.cache/' . filebase . '_ConvToTxt_file.md'
+                    echohl ErrorMsg | echomsg "Fichier \"" . expand(f) . "\" : le fichier ne peut être lu." | echohl None
                 endif
-            else
-                echohl ErrorMsg
-                echomsg "Erreur : le fichier \"" . expand(f) . "\" ne peut être lu."
-                echohl None
-            endif
-        endfor
+            endfor
+        else
+            echohl ErrorMsg | echomsg "Fichier \"" . expand(file) . "\" : leS fichier ne peut être lu." | echohl None
+        endif
     endfor
 endfunction
-function! s:pdf_preview()
-    call s:typography()
-    let homedir = fnameescape(expand("~"))
-    let filebase = fnameescape(expand("%:t:r"))
-    execute '! pandoc ' . homedir . '/.cache/' . filebase . '.md --data-dir=' . homedir . '/documents/configurations/ressources -s -f markdown -t odt -o ' . homedir . '/.cache/' . filebase . '.odt > ' . homedir . '/.cache/' . filebase . '_Prev_log.txt 2>&1'
-    execute '! soffice --headless --convert-to pdf --outdir ' . homedir . '/.cache ' . homedir . '/.cache/' . filebase . '.odt >> ' . homedir . '/.cache/' . filebase . '_Prev_log.txt 2>&1'
-    execute '! zathura ' . homedir . '/.cache/' . filebase . '.pdf >> ' . homedir . '/.cache/' . filebase . '_Prev_log.txt 2>&1'
-    execute '! rm ' . homedir . '/.cache/' . filebase . '.md ' . homedir . '/.cache/' . filebase . '.odt ' . homedir . '/.cache/' . filebase . '.pdf >> ' . homedir . '/.cache/' . filebase . '_Prev_log.txt 2>&1'
-endfunction
 " Les noms de commandes doivent commencer par une majuscule
-command ConvToDoc call s:convert_to_doc()
-command ConvToDocx call s:convert_to_docx()
-command ConvToOdt call s:convert_to_odt()
-command ConvToPdf call s:convert_to_pdf()
+command ConvToDoc call s:convert("doc", "1", "0")
+command ConvToDocx call s:convert("docx", "1", "0")
+command ConvToOdt call s:convert("odt", "0", "0")
+command ConvToPdf call s:convert("pdf", "1", "0")
+command ConvToRtf call s:convert("rtf", "1", "0")
+command Prev call s:convert("pdf", "1", "1")
 command! -complete=file -nargs=+ ConvToTxt call s:convert_to_text(<f-args>)
-command Prev call s:pdf_preview()
