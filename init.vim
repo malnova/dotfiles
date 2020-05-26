@@ -533,7 +533,7 @@ function! s:convert_to_text(...)
                 endif
             endfor
         else
-            echohl ErrorMsg | echomsg "Fichier \"" . expand(file) . "\" : leS fichier ne peut être lu." | echohl None
+            echohl ErrorMsg | echomsg "Fichier \"" . expand(file) . "\" : le fichier ne peut être lu." | echohl None
         endif
     endfor
 endfunction
