@@ -412,6 +412,8 @@ endif
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
+"------------------------------------------------------------
+" Conversion de fichiers entre différents formats
 function! s:typography(mdfile, errorfile)
     silent execute 'write! '.fnameescape(a:mdfile)
     " Remplacer les guillemets simples par des guillemets français
@@ -423,6 +425,7 @@ function! s:typography(mdfile, errorfile)
     " Remplacer trois points par le signe correspondant
     silent execute '! sed -i -Ee "/\.{3,}/ s//…/g" "'.a:mdfile.'" >> "'.a:errorfile.'" 2>&1'
 endfunction
+
 function! s:convert_events(data, pdfpreview, mdfile, errorfile, exitfile, tempfile)
     if a:data == 0
         if a:pdfpreview == "0"
@@ -438,6 +441,7 @@ function! s:convert_events(data, pdfpreview, mdfile, errorfile, exitfile, tempfi
     silent execute '! rm "'.a:mdfile.'"'
     if !empty(glob(a:tempfile)) | silent execute '! rm "'.a:tempfile.'"' | endif
 endfunction
+
 function! s:convert(format, useoffice, pdfpreview)
     if !empty(bufname(''))
         echo "Conversion en cours..."
@@ -459,6 +463,7 @@ function! s:convert(format, useoffice, pdfpreview)
         echohl ErrorMsg | echo "Erreur : le fichier ouvert n'a pas de nom." | echohl None
     endif
 endfunction
+
 function! s:convert_to_text(...)
     echo "Conversion en cours..."
     let homedir = expand("~")
@@ -534,6 +539,7 @@ function! s:convert_to_text(...)
         endif
     endfor
 endfunction
+
 " Les noms de commandes doivent commencer par une majuscule
 command ConvToDoc call s:convert("doc", "1", "0")
 command ConvToDocx call s:convert("docx", "1", "0")
