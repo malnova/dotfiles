@@ -409,6 +409,8 @@ endif
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
 
+"------------------------------------------------------------
+" Conversion de fichiers entre différents formats
 function! s:typography(mdfile, errorfile)
     silent execute 'write! '.fnameescape(a:mdfile)
     " Remplacer les guillemets simples par des guillemets français
@@ -420,6 +422,7 @@ function! s:typography(mdfile, errorfile)
     " Remplacer trois points par le signe correspondant
     silent execute '! sed -i -Ee "/\.{3,}/ s//…/g" "'.a:mdfile.'" >> "'.a:errorfile.'" 2>&1'
 endfunction
+
 function! s:convert_events(data, pdfpreview, mdfile, errorfile, exitfile, tempfile)
     if a:data == 0
         if a:pdfpreview == "0"
@@ -435,6 +438,7 @@ function! s:convert_events(data, pdfpreview, mdfile, errorfile, exitfile, tempfi
     silent execute '! rm "'.a:mdfile.'"'
     if !empty(glob(a:tempfile)) | silent execute '! rm "'.a:tempfile.'"' | endif
 endfunction
+
 function! s:convert(format, useoffice, pdfpreview)
     if !empty(bufname(''))
         echo "Conversion en cours..."
@@ -456,6 +460,7 @@ function! s:convert(format, useoffice, pdfpreview)
         echohl ErrorMsg | echo "Erreur : le fichier ouvert n'a pas de nom." | echohl None
     endif
 endfunction
+
 function! s:convert_to_text(...)
     echo "Conversion en cours..."
     let homedir = expand("~")
@@ -481,10 +486,11 @@ function! s:convert_to_text(...)
                                 call inputrestore()
                                 echo "\n"
                                 if user_dpi =~# '^\d\+$'
-                                    let tempfile = fnameescape(homedir.'/.cache/'.filebase).'*.pgm'
+                                    let tempfile = homedir.'/.cache/'.filebase
                                     silent execute '! pdftoppm -r '.user_dpi.' -gray "'.expand(f).'" "'.exitfile.'" >> "'.errorfile.'" 2>&1'
-                                    silent execute '! i=0; j=$(ls '.tempfile.' | wc -l); for img in '.tempfile.'; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat '.tempfile.'.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
-                                    silent execute '! rm '.tempfile.'* >> "'.errorfile.'" 2>&1'
+                                    echo "Reconnaissance des images du fichier \"".expand(f)."\" en cours..."
+                                    silent execute '! for img in "'.tempfile.'"*.pgm; do tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat "'.tempfile.'"*.pgm.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
+                                    silent execute '! rm "'.tempfile.'"*.pgm* >> "'.errorfile.'" 2>&1'
                                     if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                                 else
                                     echohl ErrorMsg | echo "Fichier \"".expand(f)."\" : la résolution indiquée est incorrecte." | echohl None
@@ -531,6 +537,7 @@ function! s:convert_to_text(...)
         endif
     endfor
 endfunction
+
 " Les noms de commandes doivent commencer par une majuscule
 command! ConvToDoc call s:convert("doc", "1", "0")
 command! ConvToDocx call s:convert("docx", "1", "0")
