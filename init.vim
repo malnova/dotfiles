@@ -489,10 +489,11 @@ function! s:convert_to_text(...)
                                 call inputrestore()
                                 echo "\n"
                                 if user_dpi =~# '^\d\+$'
-                                    let tempfile = fnameescape(homedir.'/.cache/'.filebase).'*.pgm'
+                                    let tempfile = homedir.'/.cache/'.filebase
                                     silent execute '! pdftoppm -r '.user_dpi.' -gray "'.expand(f).'" "'.exitfile.'" >> "'.errorfile.'" 2>&1'
-                                    silent execute '! i=0; j=$(ls '.tempfile.' | wc -l); for img in '.tempfile.'; do ((i++)); echo "Reconnaissance de la page ${i} sur ${j}."; tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat '.tempfile.'.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
-                                    silent execute '! rm '.tempfile.'* >> "'.errorfile.'" 2>&1'
+                                    echo "Reconnaissance des images du fichier \"".expand(f)."\" en cours..."
+                                    silent execute '! for img in "'.tempfile.'"*.pgm; do tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat "'.tempfile.'"*.pgm.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
+                                    silent execute '! rm "'.tempfile.'"*.pgm* >> "'.errorfile.'" 2>&1'
                                     if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                                 else
                                     echohl ErrorMsg | echo "Fichier \"".expand(f)."\" : la résolution indiquée est incorrecte." | echohl None
