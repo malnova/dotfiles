@@ -111,17 +111,22 @@ endif
 " Couleurs de la barre de statut
 hi StatusLineNC ctermfg=5 ctermbg=black cterm=none
 function! SetWindowFocused()
-    hi clear StatusLine
-    hi StatusLine ctermfg=black ctermbg=5 cterm=bold
+    if !exists('#goyo')
+        hi clear StatusLine
+        hi StatusLine ctermfg=black ctermbg=5 cterm=bold
+    endif
 endfunction
 function! SetWindowUnfocused()
-    hi clear StatusLine
-    hi StatusLine ctermfg=5 ctermbg=black cterm=none
+    if !exists('#goyo')
+        hi clear StatusLine
+        hi StatusLine ctermfg=5 ctermbg=black cterm=none
+    endif
 endfunction
 augroup BgHighlight
     autocmd!
     autocmd BufEnter,FocusGained * call SetWindowFocused()
     autocmd BufLeave,FocusLost * call SetWindowUnfocused()
+    autocmd User GoyoLeave nested call SetWindowFocused()
 augroup END
 " Couleurs pours les espaces surnuméraires en fin de ligne
 hi ExtraWhitespace ctermbg=DarkGray

@@ -19,22 +19,22 @@ call plug#begin('~/.config/nvim/bundle')
     " Plugin Buftabline, pour afficher la liste des buffers (fichiers)
     " ouverts dans la tabline (par défaut, il n'est pas visible du tout
     " si plusieurs fichiers sont ouverts dans vim) :
-    Plug 'https://github.com/ap/vim-buftabline.git'
+    Plug 'https://github.com/ap/vim-buftabline'
 
     " Plugin Searchant, pour mettre en surbrillance de couleur différente
     " le résultat de recherche actif/sous lequel se trouve le curseur
     " (par défaut, tous les résultats de recherche sont surlignés de la
     " même couleur) (la couleur du paramètre SearchCurrent est définie
     " plus bas) :
-    Plug 'https://github.com/timakro/vim-searchant.git'
+    Plug 'https://github.com/timakro/vim-searchant'
 
     " Plugin Goyo, pour écrire sans distraction (en masquant les différentes
     " barres, horizontales et verticales, de vim et de tmux) :
-    Plug 'https://github.com/junegunn/goyo.vim.git'
+    Plug 'https://github.com/junegunn/goyo.vim', { 'on': 'Goyo' }
 
     " Plugin VIM Table Mode, pour aligner automatiquement les colonnes
     " des tableaux, y compris en Markdown :
-    Plug 'https://github.com/dhruvasagar/vim-table-mode.git'
+    Plug 'https://github.com/dhruvasagar/vim-table-mode'
 
     " Plugin Vim Tmux Navigator, pour pouvoir utiliser les mêmes raccourcis
     " pour passer d'un panneau (split) à l'autre dans vim et dans Tmux
@@ -88,7 +88,7 @@ set shiftwidth=4 " Largeur de l'indentation (<< ou >> en modes normal et visuel)
 " Autres options utiles
 set breakindent breakindentopt=shift:1,sbr " Décalage des lignes en cas de wrap
 set linebreak " Ne pas revenir à la ligne au milieu d'un mot
-set scrolloff=2 " Minimum de 2 lignes autour du curseur en cas de scroll
+set scrolloff=3 " Minimum de 3 lignes autour du curseur en cas de scroll
 set noincsearch " Pas de recherche pendant la frappe
 set noerrorbells " Empêche vim de beeper
 
@@ -120,14 +120,7 @@ set splitbelow
 "------------------------------------------------------------
 " Redimensionnement automatique des splits
 autocmd VimResized * wincmd =
-autocmd VimResized * exe "normal! \<c-w>="
-
-"------------------------------------------------------------
-" Commande DiffOrig pour afficher les différences entre le fichier modifié
-" et le fichier d'origine sur le disque
-if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-endif
+autocmd VimResized * exe "normal! \<C-w>="
 
 "------------------------------------------------------------
 " Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
@@ -349,30 +342,34 @@ autocmd VimEnter * if &diff | syntax off | endif
 
 "------------------------------------------------------------
 " Plugin Goyo
-function! s:goyo_enter()
-    if exists('$TMUX')
-        silent !tmux set status off
-        silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-    endif
-    "set noshowmode
-    set noshowcmd
-    set scrolloff=999
-    set showtabline=0
-    exe "normal! \<c-w>="
-endfunction
-function! s:goyo_leave()
-    if exists('$TMUX')
-        silent !tmux set status on
-        silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-    endif
-    "set showmode
-    set showcmd
-    set scrolloff=3
-endfunction
 if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
-    autocmd! User GoyoEnter nested call <SID>goyo_enter()
-    autocmd! User GoyoLeave nested call <SID>goyo_leave()
-    autocmd VimLeave * call <SID>goyo_leave()
+    function! s:goyo_enter()
+        if executable('tmux') && strlen($TMUX)
+            silent !tmux set status off
+            silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+        endif
+        set noshowcmd
+        set scrolloff=999
+        set nolazyredraw
+        set showtabline=0
+        let b:fcstatus = &foldcolumn
+        setlocal foldcolumn=0
+    endfunction
+    function! s:goyo_leave()
+        if executable('tmux') && strlen($TMUX)
+            silent !tmux set status on
+            silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+        endif
+        set showcmd
+        set scrolloff=3
+        let &foldcolumn = b:fcstatus
+    endfunction
+    augroup goyo-resize
+        autocmd! User GoyoEnter nested call <SID>goyo_enter()
+        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+        autocmd VimLeave * call <SID>goyo_leave()
+        autocmd VimResized * if exists('#goyo') | exe "normal \<C-w>=" | redraw! | endif
+    augroup END
 endif
 
 "------------------------------------------------------------
@@ -397,8 +394,8 @@ if !empty(glob("~/.config/nvim/bundle/suda.vim"))
     let g:suda#prefix = 'sudo:'
     " Enregistrer les fichiers protégés en écriture avec W et Wq
     autocmd BufEnter * set noro " Ne pas avertir
-    command W :execute ':w '.g:suda#prefix.'%'
-    command Wq :execute ':w '.g:suda#prefix.'%' | :q
+    command! W :execute ':w '.g:suda#prefix.'%'
+    command! Wq :execute ':w '.g:suda#prefix.'%' | :q
 endif
 
 "------------------------------------------------------------
@@ -535,10 +532,10 @@ function! s:convert_to_text(...)
     endfor
 endfunction
 " Les noms de commandes doivent commencer par une majuscule
-command ConvToDoc call s:convert("doc", "1", "0")
-command ConvToDocx call s:convert("docx", "1", "0")
-command ConvToOdt call s:convert("odt", "0", "0")
-command ConvToPdf call s:convert("pdf", "1", "0")
-command ConvToRtf call s:convert("rtf", "1", "0")
-command Prev call s:convert("pdf", "1", "1")
+command! ConvToDoc call s:convert("doc", "1", "0")
+command! ConvToDocx call s:convert("docx", "1", "0")
+command! ConvToOdt call s:convert("odt", "0", "0")
+command! ConvToPdf call s:convert("pdf", "1", "0")
+command! ConvToRtf call s:convert("rtf", "1", "0")
+command! Prev call s:convert("pdf", "1", "1")
 command! -complete=file -nargs=+ ConvToTxt call s:convert_to_text(<f-args>)
