@@ -202,6 +202,7 @@ Espace                         Diaporama en pause / reprendre
 Flèches / h, j, k, l          Déplacement sur l'image
 suppr                           Supprimer l'image de la liste
 C-suppr                        Supprimer le fichier sans confirmation
+C-c                               Copier l'image dans le presse-papier
 _ / |                              Miroir vert. / horiz. et enregistrer l'image
 + / -                             Zoomer / dézoomer
 *                                  Taille originale

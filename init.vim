@@ -345,6 +345,11 @@ nmap <SID>ws <Nop>
 autocmd VimEnter * if &diff | syntax off | endif
 
 "------------------------------------------------------------
+" Utiliser xsel pour gérer les registres pour éviter les erreurs
+" dues à xclip au cas où il est aussi installé (cf. :h g:clipboard)
+let g:clipboard = { 'name': 'xsel_override', 'copy': { '+': 'xsel --input --clipboard', '*': 'xsel --input --primary', }, 'paste': { '+': 'xsel --output --clipboard', '*': 'xsel --output --primary', }, 'cache_enabled': 1, }
+
+"------------------------------------------------------------
 " Plugin Goyo
 if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
     function! s:goyo_enter()

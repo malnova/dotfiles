@@ -25,3 +25,4 @@ zoom_fit H
 zoom_fill W
 jump_first Home g
 jump_last End G
+action_0 C-c
