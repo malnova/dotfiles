@@ -207,7 +207,6 @@ _ / |                              Miroir vert. / horiz. et enregistrer l'image
 + / -                             Zoomer / dézoomer
 *                                  Taille originale
 A                                  Activer / désactiver l'anti-aliasing
-d                                  Afficher / masquer le nom du fichier
 f                                   Plein écran
 g / G                             Aller à la première / dernière image
 i                                   Afficher / masquer les _infos EXIF
@@ -217,6 +216,7 @@ n / p                             Image suivante / _précédente
 o                                  Montrer / masquer le curseur de souris
 q / Esc                          _Quitter
 r                                   _Recharger le fichier
+t                                   Afficher / masquer le _titre du fichier
 u                                  Mêmes dimensions en changeant d'image
 w                                  Fenêtre à la taille de l'image
 W / H                            Largeur ou hauteur en pleine page
@@ -371,6 +371,7 @@ m                                  _Mute on / off
 o                                   Montrer brièvement la progression (OSD)
 O                                   Afficher / masquer la progression (OSD)
 q / Q                              _Quitter / enregistrer la position et quitter
+t                                    Afficher le _titre du fichier
 separator
 mpv dvd://                     Jouer un DVD
 --aid=#/sid=#/vid=#     Démarrer avec la piste audio / de
