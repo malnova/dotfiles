@@ -230,7 +230,7 @@ separator
 --hide-pointer / -Y          Masquer le curseur de souris
 --list / -l                         Liste les infos des images dans le terminal
 --conversion-timeout 5  Convertit l'image avant affichage pour les
-                                      formats incompatibles (otf, svg, webp...)
+                                      formats incompatibles (otf, svg...)
 --multiwindow / -w        Ouvrir une fenêtre par image
 --randomize / -z             Images au hasard
 --reverse, -n                  Inverser l'ordre de tri des images
@@ -363,8 +363,7 @@ C-b                                Fixer le début et la fin de la _boucle
 b / B                              Lire en _boucle le fichier courant / tous
 c                                   Image en _couleurs / en niveaux de gris
 f                                    Plein écran
-i                                    Montrer brièvement les _infos sur le fichier
-I                                    Afficher / masquer les _infos sur le fichier
+i / I (1 / 2 / 3)                 _Infos sur le fichier (pages 1 / 2 / 3)
 L / R                              Rotation gauche / droite de 90°
 C-L / C-R                        Rotation gauche / droite de 1°
 m                                  _Mute on / off
