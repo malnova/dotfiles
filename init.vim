@@ -382,6 +382,10 @@ if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
 endif
 
 "------------------------------------------------------------
+" Plugin VIM Table Mode
+let g:table_mode_corner='|'
+
+"------------------------------------------------------------
 " Plugin Vim Tmux Navigator
 if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     let g:tmux_navigator_no_mappings = 1
