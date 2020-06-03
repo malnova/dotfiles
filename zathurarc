@@ -19,6 +19,8 @@ map [normal] * zoom 0.0
 map [fullscreen] * zoom 0.0
 unmap [normal] <C-n>
 unmap [fullscreen] <C-n>
+map [normal] l display_link
+map [fullscreen] l display_link
 map [normal] i toggle_statusbar
 map [fullscreen] i toggle_statusbar
 map [normal] n navigate next

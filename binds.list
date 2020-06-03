@@ -677,6 +677,7 @@ d                                        Afficher une / _deux pages
 f                                         Plein écran
 gg / G / #gg/#G                 Aller à la première / dernière / # page
 i                                         Afficher / masquer la barre d'_infos
+l #                                      Afficher le _lien n°#
 L / R                                   Rotation gauche / droite
 n/PageDown / p/PageUp      Page suivante / _précédente
 o / O                                   _Ouvrir un fichier
