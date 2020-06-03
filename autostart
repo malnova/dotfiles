@@ -13,9 +13,6 @@ picom --config ~/.config/picom.conf &
 ## Polybar
 (sleep 1; polybar -q mainbar) &
 
-## Conky
-#(sleep 2; conky -q) &
-
 ## Paramètres pour les montages et démontages des périphériques amovibles
 # udiskie utilise udisks2 pour effectuer les montages et démontages
 udiskie --automount --notify --no-tray --no-file-manager --no-password-cache &
