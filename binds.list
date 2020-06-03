@@ -103,8 +103,6 @@ journalctl                 Afficher les journaux centralisés par journald
 udevadm monitor    Contrôler les événements udev (gestion des
                                   périphériques) (ex. branchement...)
 separator=Télécharger
-w3m -dump &quot;url&quot;    Afficher le texte seul d'une page
-w3m &quot;url&quot; &gt; xxx.txt Télécharger le texte d'une page
 wget &quot;url.html&quot;       Télécharger une page seule ou un fichier
    -c                         Reprendre un téléchargement interrompu
    -O &quot;xxx&quot;               Enregistrer le fichier téléchargé dans xxx
