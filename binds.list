@@ -595,32 +595,6 @@ separator=Gestion des bureaux
 A-# (sans Maj)       Aller au bureau n°#
 C-A-# (sans Maj)    Envoyer la fenêtre active sur le bureau n°#
 C-A-b                     Montrer / masquer le _bureau
-separator:ranger
-Espace                    Sélectionner le(s) fichier(s)
-  dd / yy / pp           Couper / copier / coller
-  dD                        Supprimer
-  m                          _Marquer
-  t                           _Tagger (persistent)
-  ud / uy / ut / um   Annuler l'action
-  v                          Inverser la sélection
-  +x / -x                  chmod +x / -x
-a                            Renommer le fichier
-E                            Éditer le fichier dans Vim
-gh                          Aller au dossier _home
-gr                           Aller au dossier _root
-i                              _Inspecter le fichier avec less
-o&lt;lettre&gt;                Trier les fichiers
-zh                           Montrer / masquer les fichiers cachés
-zp                           Activer / désactiver la _prévisualisation
-zP                           _Prévisualisation des dossiers
-:flat #                     Lister ensemble # niveaux de sous-dossiers
-  :flat -1                  Lister ensemble tous les sous-dossiers
-  :flat 0                   Ne plus lister ensemble les sous-dossiers
-C-n                         _Nouvel onglet
-C-w                         Fermet l'onglet courant
-Tab                         Aller à l'onglet suivant
-q / :q                      _Quitter / fermer l'onglet courant
-:qa                         _Quitter / fermer tous les onglets
 separator:tmux
 C-a                                   Préfixe
 C-a Esc                             Mode copie (q pour quitter)
