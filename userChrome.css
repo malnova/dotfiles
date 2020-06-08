@@ -1,0 +1,20 @@
+#urlbar[breakout-extend] {
+    top:calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2)!important;
+    left:calc((var(--urlbar-toolbar-width) - var(--urlbar-width)) / 2)!important;
+    width:100%!important;
+}
+#urlbar[breakout-extend] #urlbar-input-container {
+    height:calc(var(--tab-min-height) - 3px)!important;
+    padding:0px!important;
+}
+.urlbarView{
+    margin:0px!important;
+    width:100%!important;
+}
+.urlbarView-row{
+    padding:0px!important;
+}
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+    box-shadow: 0 1px 4px rgba(0,0,0,.05) !important;
+    animation: none !important;
+}
