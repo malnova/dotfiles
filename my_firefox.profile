@@ -2,6 +2,7 @@
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.local/share/pki
 
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
@@ -17,8 +18,10 @@ blacklist /run/media
 
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
+mkdir ${HOME}/.local/share/pki
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/téléchargements
 whitelist ${HOME}/.XCompose
 whitelist ${HOME}/.config/mimeapps.list
