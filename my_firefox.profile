@@ -2,7 +2,6 @@
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
-noblacklist ${HOME}/.pki
 
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
@@ -18,16 +17,13 @@ blacklist /run/media
 
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
-mkdir ${HOME}/.pki
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
-whitelist ${HOME}/.pki
 whitelist ${HOME}/téléchargements
 whitelist ${HOME}/.XCompose
 whitelist ${HOME}/.config/mimeapps.list
 whitelist ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.dirs
-whitelist ${HOME}/.icons
 # À recopier et modifier avec les noms corrects des profils !
 # Une instruction pour chaque profil.
 # Exemple : whitelist ${HOME}/profils_Firefox/default
@@ -41,7 +37,6 @@ whitelist ${HOME}/.config/dconf
 whitelist ${HOME}/.cache/fontconfig
 
 # GTK+
-whitelist ${HOME}/.gtkrc-2.0
 whitelist ${HOME}/.config/gtk-3.0
 
 # common /var whitelist
