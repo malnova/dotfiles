@@ -42,3 +42,7 @@ Syntaxe générale et options de pandoc :
 - en doc, docx ou pdf :
    * créer un fichier odt comme ci-dessus
    * voir la conversion de fichiers odt en doc, docx ou pdf
+- en diapositives de présentation (slides) :
+    * pandoc -s -t slidy "if" -o "of.html" -> utilise slidy : https://www.w3.org/Talks/Tools/Slidy2/Overview.html
+    * pandoc -s -t dzslides "if" -o "of.html" -> utilise dzslides : http://paulrouget.com/dzslides/ (la CSS et le script sont inclus dans le fichier de sortie)
+    * pour intégrer les ressources externes (CSS/jscript/polices pour slidy ; polices pour dzslides) au document (et donc éviter de devoir utiliser une connexion lors du visionnage), ajouter l'option --self-contained (par ex. pandoc -s --self-contained...)

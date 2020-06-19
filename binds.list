@@ -338,6 +338,13 @@ $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 &lt;http://lien&gt;                    Lien simple
 [xxx](http://lien)               Lien avec titre
 ![xxx](/chemin/image)      Image (xxx peut être vide)
+separator=Diapositives (slides)
+% Titre                             Titre du diapo. (obligat. pour Pandoc)
+% Auteur                          Auteur du diaporama
+% Date                             Date
+---                                     Diapo. suivante (3 - minimum, avec
+                                          1 ligne blanche avant et après)
+> - xxx                             Affichage progressif de la liste
 separator:mpv
 suppr                            Barre de contrôles (OSC) auto / tjs / jms
 Espace                          Pause / reprendre
@@ -549,9 +556,11 @@ separator=Plugin Goyo
 :Goyo #+/-#x#+/-#           Redimensionner avec offset
 separator=Plugin VIM Table Mode
 :TableModeToggle / \tm       Activer / désactiver le mode Tableau
-||                                       Insérer les lignes de délimitation sous
-                                            les cellules de titres (PAS en début /
-                                            fin de tabl. si on tape en Markdown)
+| xxx | xxx |                        Première ligne (titres) du tableau
+||                                       Deuxième ligne (séparateurs)
+| xxx | xxx |                        Lignes de texte suivantes
+||                                       Lignes séparatrices suivantes (ou ligne
+                                            de fin)
 :Tableize/|                          Formater un tableau préexistant avec
                                             | comme délimiteur (sélectionner de
                                             la ligne précédente à la l. suivante)
