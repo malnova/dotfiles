@@ -45,7 +45,7 @@ call plug#begin('~/.config/nvim/bundle')
 
     " Plugin vim-convertfiles pour convertir des fichiers depuis / vers
     " différents formats
-    Plug 'https://github.com/malnova/vim-convertfiles', { 'on': ['ConvToDoc', 'ConvToDocx', 'ConvToOdt', 'ConvToPdf', 'ConvToRtf', 'ConvToTxt', 'Prev'] }
+    Plug 'https://github.com/malnova/vim-convertfiles', { 'on': ['ConvToDoc', 'ConvToDocx', 'ConvToOdt', 'ConvToPdf', 'ConvToRtf', 'Prev', 'ConvToTxt', 'ConvToSlides'] }
 call plug#end()
 
 "------------------------------------------------------------
