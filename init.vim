@@ -412,6 +412,30 @@ if !empty(glob("~/.config/nvim/bundle/suda.vim"))
 endif
 
 "------------------------------------------------------------
+" Plugin vim-convertfiles
+" Fonctions d'auto-completion (avec la touche Tab) de la fonction
+" ConvToSlides, devant être chargées dans tous les cas (incompatibles
+" avec le chargement à la demande)
+function! CompletionFormat(ArgLead, CmdLine, CursorPos)
+    " Pandoc peut convertir vers toutes les librairies suivantes
+    " return ['dzslides', 'revealjs', 's5', 'slideous', 'slidy']
+    " mais seules 'dzslides' et 'slidy' ne nécessitent pas le
+    " téléchargement préalable de leur librairie
+    return ['dzslides', 'slidy']
+endfunction
+function! CompletionSelfContained(ArgLead, CmdLine, CursorPos)
+    return ['--self-contained', '--no-self-contained']
+endfunction
+function! CompletionTest(ArgLead, CmdLine, CursorPos)
+    let l = split(a:CmdLine[:a:CursorPos-1], '\%(\%(\%(^\|[^\\]\)\\\)\@<!\s\)\+', 1)
+    let n = len(l) - index(l, 'ConvToSlides') - 2
+    if n < 2
+        let funcs = ['CompletionFormat', 'CompletionSelfContained']
+        return call(funcs[n], [a:ArgLead, a:CmdLine, a:CursorPos])
+    endif
+endfunction
+
+"------------------------------------------------------------
 " Options pour les fichiers markdown
 
 " Correcteur d'orthographe
