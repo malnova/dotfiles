@@ -558,9 +558,7 @@ separator=Plugin VIM Table Mode
 :TableModeToggle / \tm       Activer / désactiver le mode Tableau
 | xxx | xxx |                        Première ligne (titres) du tableau
 ||                                       Deuxième ligne (séparateurs)
-| xxx | xxx |                        Lignes de texte suivantes
-||                                       Lignes séparatrices suivantes (ou ligne
-                                            de fin)
+| xxx | xxx |                        Lignes suivantes
 :Tableize/|                          Formater un tableau préexistant avec
                                             | comme délimiteur (sélectionner de
                                             la ligne précédente à la l. suivante)
