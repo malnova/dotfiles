@@ -42,10 +42,6 @@ call plug#begin('~/.config/nvim/bundle')
 
     " Plugin suda pour travailler sur des fichiers en lecture seule
     Plug 'https://github.com/lambdalisue/suda.vim'
-
-    " Plugin vim-convertfiles pour convertir des fichiers depuis / vers
-    " différents formats
-    Plug 'https://github.com/malnova/vim-convertfiles'
 call plug#end()
 
 "------------------------------------------------------------
@@ -421,3 +417,33 @@ endif
 
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes)
 autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
+
+"------------------------------------------------------------
+" Commandes pour convertir en markdown, odt, doc, etc.
+" Les noms de commandes doivent commencer par une majuscule
+if !exists(":ConvToDoc")
+    command ConvToDoc call convertfiles#convert("doc", "1", "0")
+endif
+if !exists(":ConvToDocx")
+    command ConvToDocx call convertfiles#convert("docx", "1", "0")
+endif
+if !exists(":ConvToOdt")
+    command ConvToOdt call convertfiles#convert("odt", "0", "0")
+endif
+if !exists(":ConvToPdf")
+    command ConvToPdf call convertfiles#convert("pdf", "1", "0")
+endif
+if !exists(":ConvToRtf")
+    command ConvToRtf call convertfiles#convert("rtf", "1", "0")
+endif
+if !exists(":Prev")
+    command Prev call convertfiles#convert("pdf", "1", "1")
+endif
+
+if !exists(":ConvToTxt")
+    command -complete=file -nargs=+ ConvToTxt call convertfiles#convert_to_text(<f-args>)
+endif
+
+if !exists(":ConvToSlides")
+    command -complete=customlist,convertfiles#CompletionTest -nargs=* ConvToSlides call convertfiles#convert_to_slides(<f-args>)
+endif
