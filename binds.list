@@ -252,11 +252,11 @@ separator:gphoto2
 --list-files / -L               Lister les fichiers avec leurs numéros
 --list-folders / -l            Lister les répertoires de l'appareil
 --get-all-files / -P          Récupérer tous les fichiers
---get-file/-p xxx/#/#-# Récupérer le(s) fichier(s) xxx (liste de noms
-                                      séparés par des espaces) ou le n°# ou
-                                      tous les fichiers des n°# à # (XOR /
-                                      exclusive or, ex. 1-5,3,7 = 1,2,4,5,7)
-                                      (noms et n° peuvent être combinés)
+--get-file/-p xxx/#/#-# Récupérer le(s) fichier(s) xxx (liste de
+                                      noms séparés par des espaces) ou le
+                                      n°# ou tous les fichiers des n°# à #
+                                      (XOR/exclusive or, ex. 1-5,3,7=1,2,4,5,
+                                      7) (noms et n° peuvent être combinés)
 --folder / -f                    Spécifier un répertoire de l'appareil
                                       (nécessaire si on indique un nom de
                                       fichier : voir son dossier avec --list-files)
@@ -337,14 +337,30 @@ $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 &gt; xxx                               Bloc de citation
 &lt;http://lien&gt;                    Lien simple
 [xxx](http://lien)               Lien avec titre
-![xxx](/chemin/image)      Image (xxx peut être vide)
+![xxx](/chemin/image)      Image (xxx sera affiché comme
+                                          légende mais peut être vide)
+![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
 separator=Diapositives (slides)
-% Titre                             Titre du diapo. (obligat. pour Pandoc)
+&lt;Si une CSS de même nom que le fichier à convertir existe, elle
+sera intégrée dans le fichier html lors de la conversion.&gt;
+% Titre                             Titre du diaporama
 % Auteur                          Auteur du diaporama
-% Date                             Date
+% Date                             Date du diaporama
 ---                                     Diapo. suivante (3 - minimum, avec
                                           1 ligne blanche avant et après)
 > - xxx                             Affichage progressif de la liste
+![](img){ xxx }                Ajouter des précisions à une image
+   .classe                             Préciser une classe (de la CSS)
+   #id                                  Préciser un identifiant
+   width=# height=#          Préciser les dimensions
+      OU style=&quot;xxx&quot;                OU préciser le style (ex. &quot;float:left;
+                                             width:10%; border:1px;&quot;)
+::: {style=&quot;xxx&quot;}             Ajouter un style au bloc de texte déli-
+yyy                                    mité (ex. &quot;width:50%; margin:auto&quot;}
+:::
+[xxx]{style=&quot;xxx&quot;}         Style pour la partie de ligne délimitée
+                                         (ex. &quot;display:block; text-align:center;
+                                         color:red; text-decoration:underline&quot;)
 separator:mpv
 suppr                            Barre de contrôles (OSC) auto / tjs / jms
 Espace                          Pause / reprendre
