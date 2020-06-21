@@ -312,6 +312,7 @@ I.  xxx                              Ch. romain maj. (2 esp. après le signe
                                           pour le distinguer d'une abr./initiale)
 a. xxx                              Liste numérotée en lettres
 A.  xxx                             Lettre majuscule (2 esp. après la lettre)
+* [x] xxx / * [ ] xxx           Liste de tâches (cochées ou non)
 &lt;!-- --&gt;                            Forcer la fin de liste
 separator=Tableaux
 &lt;Les tableaux doivent être précédés d'une ligne vide.&gt;
@@ -330,11 +331,16 @@ xxx                                    langue pour toute la partie du docu-
 [xxx]{lang=xxx}            Définit la langue du texte entre crochets
 separator=Autres
 | xxx                                Bloc avec conservation des espaces
+&gt; xxx                               Bloc de citation (blockquote)
+``` langage                      Bloc de code (indiquer le nom du
+xxx                                     langage est optionnel, par ex.
+```                                      json ou html...)
+`xxx`                               Code en ligne
+: xxx                                Définition du mot de la ligne précéd.
 ---                                    Ligne de séparation (3 - minimum)
 $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 [^&lt;#&gt;] ... [^&lt;#&gt;]: xxx  Note avec explication séparée
 ^[xxx]                             Note avec explication interne
-&gt; xxx                               Bloc de citation
 &lt;http://lien&gt;                    Lien simple
 [xxx](http://lien)               Lien avec titre
 ![xxx](/chemin/image)      Image (xxx sera affiché comme
