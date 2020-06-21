@@ -1,8 +1,7 @@
 function! s:typography(mdfile, errorfile)
     silent execute 'write! '.fnameescape(a:mdfile)
     " Remplacer les guillemets simples par des guillemets français
-    silent execute '! sed -i -Ee "/(^|\s|\(|\[)\"/ s//\1« /g" "'.a:mdfile.'" > "'.a:errorfile.'" 2>&1'
-    silent execute '! sed -i -Ee "/(\S)\"/ s//\1 »/g" "'.a:mdfile.'" >> "'.a:errorfile.'" 2>&1'
+    let tmp=system("! gawk -i inplace -F '' ' { for (i=1;i<=NF;i++){ if ($i==\"{\") brace++; if ($i==\"}\") brace--; if (brace==0 && $i==\"\\\"\"){ printf \"%s\", (cquote ? \" »\" : \"« \"); cquote=!cquote; continue; } printf \"%s\", $i } print \"\" }' \"".a:mdfile.'" > "'.a:errorfile.'" 2>&1')
     " Remplacer les espaces devant les poncutations doubles par des
     " espaces insécables
     silent execute '! sed -i -Ee "/ ([:;?\!])/ s// \1/g" "'.a:mdfile.'" >> "'.a:errorfile.'" 2>&1'
@@ -137,8 +136,10 @@ function! convertfiles#convert_to_slides(...)
         let format = a:0 ? a:1 : 'slidy'
         let selfcontained = a:0 >=2 && a:2 == "--no-self-contained" ? '' : '--self-contained '
         let exitfile = outdir."/".filebase.'.html'
+        let cssfile = outdir."/".expand("%:t:r").'.css'
+        let css = !empty(glob(cssfile)) ? '--css "'.cssfile.'" ' : ''
         call s:typography(mdfile, errorfile)
-        call jobstart (['bash', '-c', 'pandoc "'.mdfile.'" -s '.selfcontained.'-f markdown -t "'.format.'" -o "'.exitfile.'" >> "'.errorfile.'" 2>&1'], {'on_exit': {j,d,e -> execute('call s:convert_events("'.d.'", "0", "'.mdfile.'", "'.errorfile.'", "'.exitfile.'", "")', '')}})
+        call jobstart (['bash', '-c', 'pandoc "'.mdfile.'" -s '.selfcontained.css.'-f markdown -t "'.format.'" -o "'.exitfile.'" >> "'.errorfile.'" 2>&1'], {'on_exit': {j,d,e -> execute('call s:convert_events("'.d.'", "0", "'.mdfile.'", "'.errorfile.'", "'.exitfile.'", "")', '')}})
     else
         echohl ErrorMsg | echo "Erreur : le fichier ouvert n'a pas de nom." | echohl None
     endif
