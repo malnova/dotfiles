@@ -1,6 +1,9 @@
 function! s:typography(mdfile, errorfile)
     silent execute 'write! '.fnameescape(a:mdfile)
-    " Remplacer les guillemets simples par des guillemets français
+    " Remplacer les guillemets simples par des guillemets français, sauf
+    " entre des accolades (pour ne pas empêcher d'appliquer des styles aux
+    " fichiers en markdown, par ex. pour les convertir en slides)
+    " Cf. https://stackoverflow.com/questions/62488125/regex-replace-quotes-except-inside-curly-brackets
     let tmp=system("! gawk -i inplace -F '' ' { for (i=1;i<=NF;i++){ if ($i==\"{\") brace++; if ($i==\"}\") brace--; if (brace==0 && $i==\"\\\"\"){ printf \"%s\", (cquote ? \" »\" : \"« \"); cquote=!cquote; continue; } printf \"%s\", $i } print \"\" }' \"".a:mdfile.'" > "'.a:errorfile.'" 2>&1')
     " Remplacer les espaces devant les poncutations doubles par des
     " espaces insécables
@@ -47,7 +50,7 @@ function! convertfiles#convert(format, useoffice, pdfpreview)
     endif
 endfunction
 
-function! convertfiles#convert_to_text(...)
+function! convertfiles#convert_to_text(ismarkdown, ...)
     echo "Conversion en cours..."
     let homedir = expand("~")
     for file in a:000
@@ -56,12 +59,13 @@ function! convertfiles#convert_to_text(...)
             for f in glob(file, 0, 1)
                 if !empty(glob(expand(f)))
                     let fileext = fnamemodify(expand(f), ":e")
+                    let exitext = a:ismarkdown ? ".md" : ".txt"
                     if exists("*strftime") | let localtime = strftime("%Y-%m-%d_%H-%M-%S") | else | let localtime = localtime() | endif
                     let filebase = fnamemodify(expand(f), ":t:r").'_'.localtime
                     let errorfile = homedir.'/.cache/'.filebase.'_log.txt'
                     let errorcode = 0
                     if fileext ==? "pdf"
-                        let exitfile = homedir.'/.cache/'.filebase.'.txt'
+                        let exitfile = homedir.'/.cache/'.filebase.exitext
                         silent execute '! pdftotext "'.expand(f).'" "'.exitfile.'" > "'.errorfile.'" 2>&1'
                         let fileistext = system('if grep -q "[^[:space:]]" "'.exitfile.'"; then echo -n "1"; else echo -n "0"; fi')
                         if fileistext ==? "0"
@@ -88,7 +92,7 @@ function! convertfiles#convert_to_text(...)
                             let errorcode = 1
                         endif
                     elseif fileext ==? "ppm" || fileext ==? "pgm" || fileext ==? "pbm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif" || fileext ==? "png"
-                        let exitfile = homedir.'/.cache/'.filebase.'.txt'
+                        let exitfile = homedir.'/.cache/'.filebase.exitext
                         let tempfile = homedir.'/.cache/'.filebase.'.png'
                         let file_max_dpi = system("x_dpi=$(identify -format '%x' -units PixelsPerInch \"".expand(f).'" 2> "'.errorfile."\");if [ $? -eq 0 ]; then y_dpi=$(identify -format '%y' -units PixelsPerInch \"".expand(f).'" 2>> "'.errorfile.'");(( $x_dpi > $y_dpi)) && echo -n $x_dpi || echo -n $y_dpi;fi')
                         silent execute '! convert "'.expand(f).'" -auto-orient -colorspace Gray "'.tempfile.'" >> "'.errorfile.'" 2>&1'
@@ -96,15 +100,17 @@ function! convertfiles#convert_to_text(...)
                         silent execute '! rm "'.tempfile.'" >> "'.errorfile.'" 2>&1'
                         if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                     elseif fileext ==? "rtf"
-                        let exitfile = homedir.'/.cache/'.filebase.'.md'
+                        let exitfile = homedir.'/.cache/'.filebase.exitext
+                        let exitformat = a:ismarkdown ? "markdown-smart" : "plain"
                         let tempfile = homedir.'/.cache/'.fnamemodify(expand(f), ":t:r").'.odt'
                         silent execute '! soffice --headless --convert-to odt --outdir "'.homedir.'/.cache" "'.expand(f).'" > "'.errorfile.'" 2>&1'
-                        silent execute '! pandoc "'.tempfile.'" -s --wrap=preserve -f odt -t markdown-smart -o "'.exitfile.'" >> "'.errorfile.'" 2>&1'
+                        silent execute '! pandoc "'.tempfile.'" -s --wrap=preserve -f odt -t '.exitformat.' -o "'.exitfile.'" >> "'.errorfile.'" 2>&1'
                         silent execute '! rm "'.tempfile.'" >> "'.errorfile.'" 2>&1'
                         if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                     else
-                        let exitfile = homedir.'/.cache/'.filebase.'.md'
-                        silent execute '! pandoc "'.expand(f).'" -s --wrap=preserve -t markdown-smart -o "'.exitfile.'" > "'.errorfile.'" 2>&1'
+                        let exitfile = homedir.'/.cache/'.filebase.exitext
+                        let exitformat = a:ismarkdown ? "markdown-smart" : "plain"
+                        silent execute '! pandoc "'.expand(f).'" -s --wrap=preserve -t '.exitformat.' -o "'.exitfile.'" > "'.errorfile.'" 2>&1'
                         if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                     endif
                     if errorcode == 1

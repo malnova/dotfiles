@@ -441,8 +441,11 @@ if !exists(":Prev")
     command Prev call convertfiles#convert("pdf", "1", "1")
 endif
 
+if !exists(":ConvToMd")
+    command -complete=file -nargs=+ ConvToMd call convertfiles#convert_to_text("1", <f-args>)
+endif
 if !exists(":ConvToTxt")
-    command -complete=file -nargs=+ ConvToTxt call convertfiles#convert_to_text(<f-args>)
+    command -complete=file -nargs=+ ConvToTxt call convertfiles#convert_to_text("0", <f-args>)
 endif
 
 if !exists(":ConvToSlides")
