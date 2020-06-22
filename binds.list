@@ -361,10 +361,10 @@ sera intégrée dans le fichier html lors de la conversion.&gt;
    width=# height=#          Préciser les dimensions
       OU style=&quot;xxx&quot;                OU préciser le style (ex. &quot;float:left;
                                              width:10%; border:1px;&quot;)
-::: {style=&quot;xxx&quot;}             Ajouter un style au bloc de texte déli-
-yyy                                    mité (ex. &quot;width:50%; margin:auto&quot;}
-:::
-[xxx]{style=&quot;xxx&quot;}         Style pour la partie de ligne délimitée
+::: {.c #id style=&quot;xxx&quot;}   Ajouter une classe et/ou un identifiant
+yyy                                    et/ou un style au bloc de texte déli-
+:::                                      mité (ex. &quot;width:50%; margin:auto&quot;}
+[xxx]{.c #id style=&quot;y&quot;}  Style pour la partie de ligne délimitée
                                          (ex. &quot;display:block; text-align:center;
                                          color:red; text-decoration:underline&quot;)
 separator:mpv
