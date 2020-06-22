@@ -571,7 +571,7 @@ dp                                     Mettre le changement dans l'autre
 do                                     _Obtenir le changement de l'autre
 :(windo )diffthis                 Diff (sur toutes les fenêtres visibles)
 :(windo )diffoff(!)               Quitter le mode diff (toutes fenêtres)
-:DiffOrig                            Différences avec le fichier sur le disque
+:diffupdate                        Mettre à jour les différences
 separator=Plugin Goyo
 :Goyo / :q/:Goyo!                Activer / désactiver goyo
 :Goyo #(%)x#(%)               Redimensionner largeurxhauteur
