@@ -45,6 +45,11 @@ call plug#begin('~/.config/nvim/bundle')
 call plug#end()
 
 "------------------------------------------------------------
+" Ne pas montrer le message d'intro ("welcome screen", visible avec :intro)
+" au démarrage de vim
+set shortmess+=I
+
+"------------------------------------------------------------
 " Choix du thème
 " On peut voir et appliquer les thèmes déjà installés en tapant
 " :colo (ou :colorscheme) puis <Tab> jusqu'au thème voulu et <Entrée>
