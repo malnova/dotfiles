@@ -66,18 +66,36 @@ function! convertfiles#convert_to_text(ismarkdown, ...)
                     let errorcode = 0
                     if fileext ==? "pdf"
                         let exitfile = homedir.'/.cache/'.filebase.exitext
-                        silent execute '! pdftotext "'.expand(f).'" "'.exitfile.'" > "'.errorfile.'" 2>&1'
+                        let pagenb = system('pdfinfo "'.expand(f)."\" | grep -i \"Pages\" | awk '{print $2}'")[:-2]
+                        let pages = ''
+                        if pagenb =~# '^\d\+$' && pagenb > 1
+                            call inputsave()
+                            let firstpage = input('Le fichier "'.expand(f).'" contient '.pagenb." pages ; n° de la première page à convertir : ")
+                            call inputrestore()
+                            echo "\n"
+                            call inputsave()
+                            let lastpage = input("N° de la dernière page à convertir : ")
+                            call inputrestore()
+                            echo "\n"
+                            if firstpage =~# '^\d\+$' && lastpage =~# '^\d\+$' && firstpage >= 1 && lastpage <= pagenb && firstpage <= lastpage
+                                let pages = "-f ".firstpage." -l ".lastpage." "
+                            else
+                                echohl ErrorMsg | echo "Fichier \"".expand(file)."\" : les numéros de pages indiqués sont incorrects." | echohl None
+                                return
+                            endif
+                        endif
+                        silent execute '! pdftotext '.pages.'"'.expand(f).'" "'.exitfile.'" > "'.errorfile.'" 2>&1'
                         let fileistext = system('if grep -q "[^[:space:]]" "'.exitfile.'"; then echo -n "1"; else echo -n "0"; fi')
                         if fileistext ==? "0"
                             if !empty(glob('/usr/bin/tesseract'))
-                                let file_max_ppi = system('file_list=$(pdfimages -list "'.expand(f)."\" 2>/dev/null | tail -n +3);x_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($13>0+a) a=$13} END{print a}');y_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($14>0+a) a=$14} END{print a}');(( $x_ppi > $y_ppi)) && echo -n $x_ppi || echo -n $y_ppi")
+                                let file_max_ppi = system('file_list=$(pdfimages '.pages.'-list "'.expand(f)."\" 2>/dev/null | tail -n +3);x_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($13>0+a) a=$13} END{print a}');y_ppi=$(echo $file_list | awk 'BEGIN{a=   0}{if ($14>0+a) a=$14} END{print a}');(( $x_ppi > $y_ppi)) && echo -n $x_ppi || echo -n $y_ppi")
                                 call inputsave()
                                 let user_dpi = input('Résolution à appliquer pour la conversion du fichier "'.expand(f).'", en DPI (la résolution max. du fichier est de '.file_max_ppi.' PPI) : ')
                                 call inputrestore()
                                 echo "\n"
                                 if user_dpi =~# '^\d\+$'
                                     let tempfile = homedir.'/.cache/'.filebase
-                                    silent execute '! pdftoppm -r '.user_dpi.' -gray "'.expand(f).'" "'.exitfile.'" >> "'.errorfile.'" 2>&1'
+                                    silent execute '! pdftoppm '.pages.'-r '.user_dpi.' -gray "'.expand(f).'" "'.exitfile.'" >> "'.errorfile.'" 2>&1'
                                     echo "Reconnaissance des images du fichier \"".expand(f)."\" en cours..."
                                     silent execute '! for img in "'.tempfile.'"*.pgm; do tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat "'.tempfile.'"*.pgm.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
                                     silent execute '! rm "'.tempfile.'"*.pgm* >> "'.errorfile.'" 2>&1'
