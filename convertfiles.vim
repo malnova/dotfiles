@@ -58,12 +58,16 @@ function! convertfiles#convert_to_text(ismarkdown, ...)
             " Permettre d'utiliser des wildcards dans les noms de fichiers à convertir (voir ':h glob' et https://vi.stackexchange.com/questions/2607/how-to-open-multiple-files-matching-a-wildcard-expression)
             for f in glob(file, 0, 1)
                 if !empty(glob(expand(f)))
-                    " Langues à utiliser pour l'OCR avec Tesseract pour les
-                    " formats PDF et images
+                    " Langue(s) à utiliser pour l'OCR avec Tesseract pour
+                    " les formats PDF et images.
                     " Plusieurs langues peuvent être utilisées, par ex.
-                    " 'fra+deu+eng+grc+lat'
+                    " 'fra+deu+eng+grc+lat'.
                     " Voir la page 'man tesseract' pour la liste des langues
                     " possibles.
+                    " Les paquets correspondants (tesseract-data-<langue>)
+                    " doivent d'abord avoir été installés avec pacman.
+                    " Utiliser la commande 'tesseract --list-langs' pour
+                    " voir la liste des langues déjà installées.
                     let tesseract_languages = 'fra'
                     let fileext = fnamemodify(expand(f), ":e")
                     let exitext = a:ismarkdown ? ".md" : ".txt"
