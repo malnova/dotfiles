@@ -58,6 +58,13 @@ function! convertfiles#convert_to_text(ismarkdown, ...)
             " Permettre d'utiliser des wildcards dans les noms de fichiers à convertir (voir ':h glob' et https://vi.stackexchange.com/questions/2607/how-to-open-multiple-files-matching-a-wildcard-expression)
             for f in glob(file, 0, 1)
                 if !empty(glob(expand(f)))
+                    " Langues à utiliser pour l'OCR avec Tesseract pour les
+                    " formats PDF et images
+                    " Plusieurs langues peuvent être utilisées, par ex.
+                    " 'fra+deu+eng+grc+lat'
+                    " Voir la page 'man tesseract' pour la liste des langues
+                    " possibles.
+                    let tesseract_languages = 'fra'
                     let fileext = fnamemodify(expand(f), ":e")
                     let exitext = a:ismarkdown ? ".md" : ".txt"
                     if exists("*strftime") | let localtime = strftime("%Y-%m-%d_%H-%M-%S") | else | let localtime = localtime() | endif
@@ -97,7 +104,7 @@ function! convertfiles#convert_to_text(ismarkdown, ...)
                                     let tempfile = homedir.'/.cache/'.filebase
                                     silent execute '! pdftoppm '.pages.'-r '.user_dpi.' -gray "'.expand(f).'" "'.exitfile.'" >> "'.errorfile.'" 2>&1'
                                     echo "Reconnaissance des images du fichier \"".expand(f)."\" en cours..."
-                                    silent execute '! for img in "'.tempfile.'"*.pgm; do tesseract -l fra --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat "'.tempfile.'"*.pgm.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
+                                    silent execute '! for img in "'.tempfile.'"*.pgm; do tesseract -l '.tesseract_languages.' --dpi '.user_dpi.' "$img" "$img" >> "'.errorfile.'" 2>&1; done; cat "'.tempfile.'"*.pgm.txt >> "'.exitfile.'" 2>> "'.errorfile.'"'
                                     silent execute '! rm "'.tempfile.'"*.pgm* >> "'.errorfile.'" 2>&1'
                                     if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
                                 else
@@ -110,13 +117,17 @@ function! convertfiles#convert_to_text(ismarkdown, ...)
                             let errorcode = 1
                         endif
                     elseif fileext ==? "ppm" || fileext ==? "pgm" || fileext ==? "pbm" || fileext ==? "bmp" || fileext ==? "jpg" || fileext ==? "jpeg" || fileext ==? "tif" || fileext ==? "tiff" || fileext ==? "webp" || fileext ==? "gif" || fileext ==? "png"
-                        let exitfile = homedir.'/.cache/'.filebase.exitext
-                        let tempfile = homedir.'/.cache/'.filebase.'.png'
-                        let file_max_dpi = system("x_dpi=$(identify -format '%x' -units PixelsPerInch \"".expand(f).'" 2> "'.errorfile."\");if [ $? -eq 0 ]; then y_dpi=$(identify -format '%y' -units PixelsPerInch \"".expand(f).'" 2>> "'.errorfile.'");(( $x_dpi > $y_dpi)) && echo -n $x_dpi || echo -n $y_dpi;fi')
-                        silent execute '! convert "'.expand(f).'" -auto-orient -colorspace Gray "'.tempfile.'" >> "'.errorfile.'" 2>&1'
-                        silent execute '! tesseract -l fra --dpi '.file_max_dpi.' "'.tempfile.'" "'.homedir.'/.cache/'.filebase.'" >> "'.errorfile.'" 2>&1'
-                        silent execute '! rm "'.tempfile.'" >> "'.errorfile.'" 2>&1'
-                        if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
+                        if !empty(glob('/usr/bin/tesseract'))
+                            let exitfile = homedir.'/.cache/'.filebase.exitext
+                            let tempfile = homedir.'/.cache/'.filebase.'.png'
+                            let file_max_dpi = system("x_dpi=$(identify -format '%x' -units PixelsPerInch \"".expand(f).'" 2> "'.errorfile."\");if [ $? -eq 0 ]; then y_dpi=$(identify -format '%y' -units PixelsPerInch \"".expand(f).'" 2>> "'.errorfile.'");(( $x_dpi > $y_dpi)) && echo -n $x_dpi || echo -n $y_dpi;fi')
+                            silent execute '! convert "'.expand(f).'" -auto-orient -colorspace Gray "'.tempfile.'" >> "'.errorfile.'" 2>&1'
+                            silent execute '! tesseract -l '.tesseract_languages.' --dpi '.file_max_dpi.' "'.tempfile.'" "'.homedir.'/.cache/'.filebase.'" >> "'.errorfile.'" 2>&1'
+                            silent execute '! rm "'.tempfile.'" >> "'.errorfile.'" 2>&1'
+                            if v:shell_error == 0 | let errorcode = 1 | else | let errorcode = 2 | endif
+                        else
+                            echohl ErrorMsg | echo "Fichier \"".expand(f)."\" : tesseract n'est pas installé ; reconnaissance impossible." | echohl None
+                        endif
                     elseif fileext ==? "rtf"
                         let exitfile = homedir.'/.cache/'.filebase.exitext
                         let exitformat = a:ismarkdown ? "markdown-smart" : "plain"
