@@ -342,9 +342,11 @@ nn <script> <SID>ws<S-Right> <C-w><<SID>ws
 nmap <SID>ws <Nop>
 
 "------------------------------------------------------------
-" Mode diff : pas de coloration syntaxique, et algorithme plus juste
+" Mode diff : pas de coloration syntaxique, algorithme plus juste et
+" nombre de lignes réduit autour des lignes comportant des différences
+" (par défaut : 6)
 autocmd VimEnter * if &diff | syntax off | endif
-set diffopt+=algorithm:patience
+set diffopt+=algorithm:patience,context:3
 
 "------------------------------------------------------------
 " Utiliser xsel pour gérer les registres pour éviter les erreurs
