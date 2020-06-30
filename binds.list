@@ -529,7 +529,7 @@ m&lt;caractère&gt;                   Mettre une marque
 '. / `.                                  Retourner au dernier endroit modifié
 '&quot;                                       Retourner à l'endroit quitté
 :marks                               Liste des marques
-separator=Fenêtres et buffers (tampons)
+separator=Windows (fenêtres)
 vim -o / -O &lt;fichiers&gt;        Fichiers dans des fenêtres horiz. / vert.
 :sp / :split / :vs(p) / :vsplit   Diviser la fenêtre horiz. / vert.
   (&lt;fichier&gt;)                         (et y ouvrir le fichier)
@@ -543,6 +543,15 @@ C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
 &lt;nombre&gt;C-w +/&lt;/&gt;        Redimensionner la fenêtre
    ou C-w S-flèches
 C-w =                                Tailles de fenêtres identiques
+separator=Tabs (onglets)
+:tabnew                             Ouvrir un nouvel onglet
+:tabedit/:tabfind &lt;fichier&gt; Ouvrir un nouvel onglet avec fichier
+:tabclose (&lt;#&gt;)                 Supprimer l'onglet courant / n°#
+:tabonly                             Supprimer tous les autres onglets
+:tabp/gT / :tabn/gt             Onglet précédent / suivant
+&lt;#&gt;gt                              Aller à l'onglet n°#
+:tabs                                  Liste des onglets
+separator=Buffers (tampons)
 :enew / :ene                      Ouvrir un nouveau buffer
 :edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
 :bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
