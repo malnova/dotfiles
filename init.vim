@@ -38,9 +38,6 @@ call plug#begin('~/.config/nvim/bundle')
     " Plugin Vim Tmux Navigator, pour pouvoir utiliser les mêmes raccourcis
     " pour passer d'un panneau (split) à l'autre dans vim et dans Tmux
     Plug 'https://github.com/christoomey/vim-tmux-navigator'
-
-    " Plugin suda pour travailler sur des fichiers en lecture seule
-    Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 "------------------------------------------------------------
@@ -352,6 +349,12 @@ set diffopt+=algorithm:patience,context:3
 let g:clipboard = { 'name': 'xsel_override', 'copy': { '+': 'xsel --input --clipboard', '*': 'xsel --input --primary', }, 'paste': { '+': 'xsel --output --clipboard', '*': 'xsel --output --primary', }, 'cache_enabled': 1, }
 
 "------------------------------------------------------------
+" Permettre l'enregistrement des fichiers en lecture seule avec Polkit
+autocmd BufEnter * set noro " Ne pas avertir que le fichier est en lecture seule
+command! -bang W exec 'w !pkexec tee %:p > /dev/null' | e!
+command! -bang Wq exec 'w !pkexec tee %:p > /dev/null' | e! | q
+
+"------------------------------------------------------------
 " Plugin Vem Tabline
 let g:vem_tabline_show = 2
 let g:vem_unnamed_buffer_label = '[Aucun nom]'
@@ -405,22 +408,6 @@ if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     nnoremap <silent> <S-Down> :TmuxNavigateDown<CR>
     nnoremap <silent> <S-Up> :TmuxNavigateUp<CR>
     nnoremap <silent> <S-Right> :TmuxNavigateRight<CR>
-endif
-
-"------------------------------------------------------------
-" Plugin suda
-if !empty(glob("~/.config/nvim/bundle/suda.vim"))
-    let g:suda#prompt = "[sudo] Mot de passe de ".$USER." : "
-    " Préfixe à utiliser pour les commandes nécessitant sudo ; un ou plusieurs
-    " préfixes sont possibles : let g:suda#prefix = 'suda://' OU
-    " let g:suda#prefix = ['suda://', 'sudo://', '_://']
-    " Par exemple : :w sudo:% pour enregistrer le fichier courant avec sudo
-    " ou :e sudo:<fichier> pour ouvrir un fichier avec sudo
-    let g:suda#prefix = 'sudo:'
-    " Enregistrer les fichiers protégés en écriture avec W et Wq
-    autocmd BufEnter * set noro " Ne pas avertir
-    command! W :execute ':w '.g:suda#prefix.'%'
-    command! Wq :execute ':w '.g:suda#prefix.'%' | :q
 endif
 
 "------------------------------------------------------------
