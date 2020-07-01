@@ -10,9 +10,8 @@
 " :PlugUpdate : mettre à jour les plugins
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-source ~/.config/nvim/autoload/plug.vim
 
 " Liste des plugins à installer automatiquement avec vim-plug
 call plug#begin('~/.config/nvim/bundle')
@@ -118,8 +117,7 @@ set splitbelow
 
 "------------------------------------------------------------
 " Redimensionnement automatique des splits
-autocmd VimResized * wincmd =
-autocmd VimResized * exe "normal! \<C-w>="
+autocmd VimResized * wincmd = | exe "normal! \<C-w>="
 
 "------------------------------------------------------------
 " Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
@@ -336,11 +334,14 @@ nn <script> <SID>ws<S-Right> <C-w><<SID>ws
 nmap <SID>ws <Nop>
 
 "------------------------------------------------------------
-" Mode diff : pas de coloration syntaxique, algorithme plus juste et
-" nombre de lignes réduit autour des lignes comportant des différences
-" (par défaut : 6)
-autocmd VimEnter * if &diff | syntax off | endif
-autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let b:synstatus = '1' | syntax off | else | let b:synstatus = '0' | endif | else | if b:synstatus == "1" | syntax on | endif | endif
+" Mode diff : pas de coloration syntaxique ni de correcteur d'orthographe
+" + algorithme plus juste + nombre de lignes réduit autour des lignes
+" comportant des différences (par défaut : 6)
+augroup diffmode
+    autocmd!
+    autocmd VimEnter * if &diff | syntax off | endif
+    autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let b:synstatus = '1' | setlocal syntax=off | else | let b:synstatus = '0' | endif | let b:spellstatus = &spell | setlocal nospell | else | if b:synstatus == "1" | setlocal syntax=on | endif | let &spell = b:spellstatus | endif
+augroup END
 set diffopt+=algorithm:patience,context:3
 
 "------------------------------------------------------------
@@ -386,8 +387,9 @@ if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
         let &foldcolumn = b:fcstatus
     endfunction
     augroup goyo-resize
-        autocmd! User GoyoEnter nested call <SID>goyo_enter()
-        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+        autocmd!
+        autocmd User GoyoEnter nested call <SID>goyo_enter()
+        autocmd User GoyoLeave nested call <SID>goyo_leave()
         autocmd VimLeave * call <SID>goyo_leave()
         autocmd VimResized * if exists('#goyo') | exe "normal \<C-w>=" | redraw! | endif
     augroup END
@@ -412,44 +414,19 @@ endif
 
 "------------------------------------------------------------
 " Options pour les fichiers markdown
-
-" Correcteur d'orthographe
-if !&diff
-    autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set spell spelllang=fr
-endif
-
-" N'afficher les symboles, liens... qu'en cas de survol (replis internes)
-autocmd BufEnter *.md,*.mkd,*.mkdwn,*.markdown set conceallevel=2
+" N'afficher les symboles, liens... qu'en cas de survol (replis internes),
+" et activer le correcteur d'orthographe (sauf en mode diff)
+autocmd FileType markdown setlocal conceallevel=2 | if !&diff | setlocal spell spelllang=fr | endif
 
 "------------------------------------------------------------
 " Commandes pour convertir en markdown, odt, doc, etc.
 " Les noms de commandes doivent commencer par une majuscule
-if !exists(":ConvToDoc")
-    command ConvToDoc call convertfiles#convert("doc", "1", "0")
-endif
-if !exists(":ConvToDocx")
-    command ConvToDocx call convertfiles#convert("docx", "1", "0")
-endif
-if !exists(":ConvToOdt")
-    command ConvToOdt call convertfiles#convert("odt", "0", "0")
-endif
-if !exists(":ConvToPdf")
-    command ConvToPdf call convertfiles#convert("pdf", "1", "0")
-endif
-if !exists(":ConvToRtf")
-    command ConvToRtf call convertfiles#convert("rtf", "1", "0")
-endif
-if !exists(":Prev")
-    command Prev call convertfiles#convert("pdf", "1", "1")
-endif
-
-if !exists(":ConvToMd")
-    command -complete=file -nargs=+ ConvToMd call convertfiles#convert_to_text("1", <f-args>)
-endif
-if !exists(":ConvToTxt")
-    command -complete=file -nargs=+ ConvToTxt call convertfiles#convert_to_text("0", <f-args>)
-endif
-
-if !exists(":ConvToSlides")
-    command -complete=customlist,convertfiles#CompletionTest -nargs=* ConvToSlides call convertfiles#convert_to_slides(<f-args>)
-endif
+command! ConvToDoc call convertfiles#convert("doc", "1", "0")
+command! ConvToDocx call convertfiles#convert("docx", "1", "0")
+command! ConvToOdt call convertfiles#convert("odt", "0", "0")
+command! ConvToPdf call convertfiles#convert("pdf", "1", "0")
+command! ConvToRtf call convertfiles#convert("rtf", "1", "0")
+command! Prev call convertfiles#convert("pdf", "1", "1")
+command! -complete=file -nargs=+ ConvToMd call convertfiles#convert_to_text("1", <f-args>)
+command! -complete=file -nargs=+ ConvToTxt call convertfiles#convert_to_text("0", <f-args>)
+command! -complete=customlist,convertfiles#CompletionTest -nargs=* ConvToSlides call convertfiles#convert_to_slides(<f-args>)

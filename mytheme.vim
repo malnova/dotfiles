@@ -28,11 +28,11 @@
 
 " First remove all existing highlighting.
 "!!! set background=light
-set background=dark
+"!!! set background=dark " Inutile, et entraîne un 2e chargement de syncolor.vim
 "!!! hi clear " Si actif, surlignage incorrect des erreurs (ou des problèmes de fichier swap, etc.) en blanc sur rouge avant l'ouverture de vim
-if exists("syntax_on")
-  syntax reset
-endif
+"!!! if exists("syntax_on") " Inutile ? Entraîne un 2e chargement de syncolor.vim
+"!!!   syntax reset
+"!!! endif
 
 "!!! let colors_name = "peachpuff"
 let colors_name = "mytheme"
