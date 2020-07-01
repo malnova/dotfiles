@@ -16,10 +16,9 @@ source ~/.config/nvim/autoload/plug.vim
 
 " Liste des plugins à installer automatiquement avec vim-plug
 call plug#begin('~/.config/nvim/bundle')
-    " Plugin Buftabline, pour afficher la liste des buffers (fichiers)
-    " ouverts dans la tabline (par défaut, il n'est pas visible du tout
-    " si plusieurs fichiers sont ouverts dans vim) :
-    Plug 'https://github.com/ap/vim-buftabline'
+    " Plugin Vem Tabline, pour afficher la liste des tabs et des buffers
+    " dans la tabline :
+    Plug 'https://github.com/pacha/vem-tabline'
 
     " Plugin Searchant, pour mettre en surbrillance de couleur différente
     " le résultat de recherche actif/sous lequel se trouve le curseur
@@ -34,7 +33,7 @@ call plug#begin('~/.config/nvim/bundle')
 
     " Plugin VIM Table Mode, pour aligner automatiquement les colonnes
     " des tableaux, y compris en Markdown :
-    Plug 'https://github.com/dhruvasagar/vim-table-mode'
+    Plug 'https://github.com/dhruvasagar/vim-table-mode', { 'on': ['TableModeEnable', 'TableModeToggle', 'Tableize'] }
 
     " Plugin Vim Tmux Navigator, pour pouvoir utiliser les mêmes raccourcis
     " pour passer d'un panneau (split) à l'autre dans vim et dans Tmux
@@ -104,9 +103,7 @@ set complete-=i
 "------------------------------------------------------------
 " Format de la barre de statut
 set statusline=%F " chemin complet et nom du fichier
-set statusline+=\ [%{strlen(&fenc)?&fenc:'none'}] " encodage du fichier
-set statusline+=%h "help file flag
-set statusline+=%m "modified flag
+set statusline+=\ [%{strlen(&fenc)?&fenc:'Aucun\ encodage'}] " encodage du fichier
 set statusline+=\ %= " aligné à droite
 set statusline+=%l/%L, " ligne X de Y
 set statusline+=%c " colonne actuelle
@@ -345,13 +342,18 @@ nmap <SID>ws <Nop>
 " Mode diff : pas de coloration syntaxique, algorithme plus juste et
 " nombre de lignes réduit autour des lignes comportant des différences
 " (par défaut : 6)
-autocmd VimEnter * if &diff | syntax off | endif
+autocmd VimEnter,FilterWritePre * if &diff | syntax off | endif
 set diffopt+=algorithm:patience,context:3
 
 "------------------------------------------------------------
 " Utiliser xsel pour gérer les registres pour éviter les erreurs
 " dues à xclip au cas où il est aussi installé (cf. :h g:clipboard)
 let g:clipboard = { 'name': 'xsel_override', 'copy': { '+': 'xsel --input --clipboard', '*': 'xsel --input --primary', }, 'paste': { '+': 'xsel --output --clipboard', '*': 'xsel --output --primary', }, 'cache_enabled': 1, }
+
+"------------------------------------------------------------
+" Plugin Vem Tabline
+let g:vem_tabline_show = 2
+let g:vem_unnamed_buffer_label = '[Aucun nom]'
 
 "------------------------------------------------------------
 " Plugin Goyo
@@ -365,6 +367,7 @@ if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
         set scrolloff=999
         set nolazyredraw
         set showtabline=0
+        let g:vem_tabline_show = 0
         let b:fcstatus = &foldcolumn
         setlocal foldcolumn=0
     endfunction
@@ -375,6 +378,7 @@ if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
         endif
         set showcmd
         set scrolloff=3
+        let g:vem_tabline_show = 2
         let &foldcolumn = b:fcstatus
     endfunction
     augroup goyo-resize
@@ -387,16 +391,19 @@ endif
 
 "------------------------------------------------------------
 " Plugin VIM Table Mode
-let g:table_mode_corner='|'
+if !empty(glob("~/.config/nvim/bundle/vim-table-mode"))
+    let g:table_mode_corner='|'
+    nnoremap <Leader>tm :TableModeToggle<CR>
+endif
 
 "------------------------------------------------------------
 " Plugin Vim Tmux Navigator
 if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     let g:tmux_navigator_no_mappings = 1
-    nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
-    nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
-    nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
-    nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+    nnoremap <silent> <S-Left> :TmuxNavigateLeft<CR>
+    nnoremap <silent> <S-Down> :TmuxNavigateDown<CR>
+    nnoremap <silent> <S-Up> :TmuxNavigateUp<CR>
+    nnoremap <silent> <S-Right> :TmuxNavigateRight<CR>
 endif
 
 "------------------------------------------------------------
