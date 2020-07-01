@@ -323,14 +323,14 @@ nnoremap <C-w>\| <C-w>v
 "------------------------------------------------------------
 " Redimensionner les fenêtres en continu avec <C-w> puis <S-flèches>
 " Imite les raccourcis de tmux
-nmap <C-w><S-Up> <C-w>+<SID>ws
-nmap <C-w><S-Down> <C-w>-<SID>ws
-nmap <C-w><S-Left> <C-w>><SID>ws
-nmap <C-w><S-Right> <C-w><<SID>ws
-nn <script> <SID>ws<S-Up> <C-w>+<SID>ws
-nn <script> <SID>ws<S-Down> <C-w>-<SID>ws
-nn <script> <SID>ws<S-Left> <C-w>><SID>ws
-nn <script> <SID>ws<S-Right> <C-w><<SID>ws
+nmap <silent> <C-w><S-Up> :resize +1<CR><SID>ws
+nmap <silent> <C-w><S-Down> :resize -1<CR><SID>ws
+nmap <silent> <C-w><S-Left> :vertical resize +1<CR><SID>ws
+nmap <silent> <C-w><S-Right> :vertical resize -1<CR><SID>ws
+nnoremap <script> <SID>ws<S-Up> <C-w>+<SID>ws
+nnoremap <script> <SID>ws<S-Down> <C-w>-<SID>ws
+nnoremap <script> <SID>ws<S-Left> <C-w>><SID>ws
+nnoremap <script> <SID>ws<S-Right> <C-w><<SID>ws
 nmap <SID>ws <Nop>
 
 "------------------------------------------------------------
