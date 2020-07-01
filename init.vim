@@ -342,7 +342,8 @@ nmap <SID>ws <Nop>
 " Mode diff : pas de coloration syntaxique, algorithme plus juste et
 " nombre de lignes réduit autour des lignes comportant des différences
 " (par défaut : 6)
-autocmd VimEnter,FilterWritePre * if &diff | syntax off | endif
+autocmd VimEnter * if &diff | syntax off | endif
+autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let b:synstatus = '1' | syntax off | else | let b:synstatus = '0' | endif | else | if b:synstatus == "1" | syntax on | endif | endif
 set diffopt+=algorithm:patience,context:3
 
 "------------------------------------------------------------
