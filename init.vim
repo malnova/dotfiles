@@ -325,12 +325,12 @@ nnoremap <C-w>\| <C-w>v
 " Imite les raccourcis de tmux
 nmap <silent> <C-w><S-Up> :resize +1<CR><SID>ws
 nmap <silent> <C-w><S-Down> :resize -1<CR><SID>ws
-nmap <silent> <C-w><S-Left> :vertical resize +1<CR><SID>ws
-nmap <silent> <C-w><S-Right> :vertical resize -1<CR><SID>ws
-nnoremap <script> <SID>ws<S-Up> <C-w>+<SID>ws
-nnoremap <script> <SID>ws<S-Down> <C-w>-<SID>ws
-nnoremap <script> <SID>ws<S-Left> <C-w>><SID>ws
-nnoremap <script> <SID>ws<S-Right> <C-w><<SID>ws
+nmap <silent> <C-w><S-Left> :vertical resize -1<CR><SID>ws
+nmap <silent> <C-w><S-Right> :vertical resize +1<CR><SID>ws
+nnoremap <script> <SID>ws<S-Up> :resize +1<CR><SID>ws
+nnoremap <script> <SID>ws<S-Down> :resize -1<CR><SID>ws
+nnoremap <script> <SID>ws<S-Left> :vertical resize -1<CR><SID>ws
+nnoremap <script> <SID>ws<S-Right> :vertical resize +1<CR><SID>ws
 nmap <SID>ws <Nop>
 
 "------------------------------------------------------------
