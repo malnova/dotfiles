@@ -59,9 +59,6 @@ endif
 "------------------------------------------------------------
 " Options de base
 
-" Reset / désactiver les options par défaut de Vi
-set nocompatible
-
 " Permettre de changer de buffer sans demander systématiquement
 " à sauvegarder au préalable en cas de modification effectuée
 set hidden
@@ -122,11 +119,11 @@ autocmd VimResized * wincmd = | exe "normal! \<C-w>="
 "------------------------------------------------------------
 " Y pour agir comme D et C, i.e. copier jusqu'à la fin de la ligne
 " au lieu de copier la ligne entière par défaut
-map Y y$
+noremap Y y$
 
 "------------------------------------------------------------
 " Activer / désactiver le correcteur d'orthographe avec zs
-nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<Return>
+nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
 
 "------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne
@@ -166,9 +163,9 @@ vnoremap <silent> <C-Up> <C-y>
 
 "------------------------------------------------------------
 " Touche home pour début du texte OU de la ligne en cas de wrap
-nmap <silent> <Home> :call SmartHome("n")<CR>
-imap <silent> <Home> <C-r>=SmartHome("i")<CR>
-vmap <silent> <Home> <Esc>:call SmartHome("v")<CR>
+nnoremap <silent> <Home> :call SmartHome("n")<CR>
+inoremap <silent> <Home> <C-r>=SmartHome("i")<CR>
+vnoremap <silent> <Home> <Esc>:call SmartHome("v")<CR>
 function! SaveMark(...)
     let l:name = a:0 ? a:1 : 'm'
     let s:save_mark = getpos("'".l:name)
@@ -206,9 +203,9 @@ endfunction
 
 "------------------------------------------------------------
 " Touche end pour fin du texte OU de la ligne en cas de wrap
-nmap <silent> <End> :call SmartEnd("n")<CR>
-imap <silent> <End> <C-r>=SmartEnd("i")<CR>
-vmap <silent> <End> <Esc>:call SmartEnd("v")<CR>
+nnoremap <silent> <End> :call SmartEnd("n")<CR>
+inoremap <silent> <End> <C-r>=SmartEnd("i")<CR>
+vnoremap <silent> <End> <Esc>:call SmartEnd("v")<CR>
 function! SaveReg(...)
     let l:name = a:0 ? a:1 : v:register
     let s:save_reg = [getreg(l:name), getregtype(l:name)]
@@ -255,9 +252,11 @@ function! SmartEnd(mode)
 endfunction
 
 "------------------------------------------------------------
-" PageUp et PageDown sans changer la position du curseur sur la page
-map <silent> <PageUp> :set scroll=0<CR>:set scroll^=2<CR>:set scroll-=1<CR><C-U>:set scroll=0<CR>
-map <silent> <PageDown> :set scroll=0<CR>:set scroll^=2<CR>:set scroll-=1<CR><C-D>:set scroll=0<CR>
+" Fonctionnement normal des touches PageUp et PageDown
+noremap <silent> <PageUp> 1000<C-U>
+noremap <silent> <PageDown> 1000<C-D>
+inoremap <silent> <PageUp> <C-O>1000<C-U>
+inoremap <silent> <PageDown> <C-O>1000<C-D>
 
 "------------------------------------------------------------
 " Ctrl-PageUp et Ctrl-PageDown pour paragraphe précédent / suivant
@@ -416,7 +415,7 @@ endif
 " Options pour les fichiers markdown
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes),
 " et activer le correcteur d'orthographe (sauf en mode diff)
-autocmd FileType markdown setlocal conceallevel=2 | if !&diff | setlocal spell spelllang=fr | endif
+autocmd FileType markdown if !&diff | setlocal conceallevel=2 | setlocal spell spelllang=fr | endif
 
 "------------------------------------------------------------
 " Commandes pour convertir en markdown, odt, doc, etc.
