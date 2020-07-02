@@ -352,8 +352,8 @@ let g:clipboard = { 'name': 'xsel_override', 'copy': { '+': 'xsel --input --clip
 "------------------------------------------------------------
 " Permettre l'enregistrement des fichiers en lecture seule avec Polkit
 autocmd BufEnter * set noro " Ne pas avertir que le fichier est en lecture seule
-command! -bang W exec 'w !pkexec tee %:p > /dev/null' | e!
-command! -bang Wq exec 'w !pkexec tee %:p > /dev/null' | e! | q
+command! -bang W silent exec 'w !pkexec tee %:p > /dev/null' | e!
+command! -bang Wq silent exec 'w !pkexec tee %:p > /dev/null' | e! | q
 
 "------------------------------------------------------------
 " Plugin Vem Tabline
