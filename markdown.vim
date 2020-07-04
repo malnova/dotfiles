@@ -21,6 +21,13 @@ hi markdownUrlTitle ctermfg=darkblue
 hi markdownUrlDelimiter ctermfg=darkblue
 hi markdownUrlTitleDelimiter ctermfg=darkblue
 hi markdownError ctermfg=black ctermbg=red cterm=bold
+hi Conceal ctermfg=white ctermbg=none cterm=bold
+syn match matchURL /\(http[s]\?\|ftp\|file\|ssh\|git\):\/\/[[:alnum:]&:;@~*?!+=%\/_#.-]*/
+hi matchURL ctermfg=blue
+syn match matchEmail /[[:alnum:]&:;@~*?!+=%\/_#.-]\+@[[:alnum:]&:;@~*?!+=%\/_#.-]\+\.[[:alnum:]&:;@~*?!+=%\/_#.-]\+/
+hi matchEmail ctermfg=blue
+syn match matchIP /\(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)/
+hi matchIP ctermfg=blue
 " Ajout de plusieurs groupes
 " Repris de https://github.com/vim-pandoc/vim-pandoc-syntax/blob/master/syntax/pandoc.vim
 syn region pandocFootnoteDef start=/\^\[/ skip=/\[.\{-}]/ end=/\]/
@@ -37,10 +44,9 @@ hi link markdownSubscript markdownCode
 hi link markdownSuperscript markdownCode
 syn match pandocUListItem /^>\=\s*[*+-]\ze\s\+-\@!.*$/
 syn match pandocUListItemBullet /^>\=\s*\zs[*+-]/ contained containedin=pandocUListItem conceal cchar=•
-hi Conceal ctermfg=white ctermbg=none cterm=bold
-hi link markdownOrderedListMarker Conceal
 syn match pandocListItem /^\s*(\?\(\d\+\|\l\|\#\|@\)\+[.)]\ze\s\+.*$/
 syn match pandocListItem /^\s*(\?x\=l\=\(i\{,3}[a-z]\=\)\{,3}c\{,3}[.)]\ze\s\+.*$/
+hi link markdownOrderedListMarker Conceal
 hi link pandocListItem Conceal
 syn match pandocBlockquote /^\s\{,3}>.*\n\(.*\n\@1<!\n\)*/
 hi link pandocBlockquote markdownBlockquote
