@@ -354,7 +354,7 @@ sera intégrée dans le fichier html lors de la conversion.&gt;
 % Date                             Date du diaporama
 ---                                     Diapo. suivante (3 - minimum, avec
                                           1 ligne blanche avant et après)
-> - xxx                             Affichage progressif de la liste
+> - xxx / >- xxx                Affichage progressif de la liste
 ![](img){ xxx }                Ajouter des précisions à une image
    .classe                             Préciser une classe (de la CSS)
    #id                                  Préciser un identifiant

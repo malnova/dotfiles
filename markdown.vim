@@ -42,11 +42,11 @@ syn region markdownSubscript start=/\~\(\([[:graph:]]\(\\ \)\=\)\{-}\~\)\@=/ end
 syn region markdownSuperscript start=/\^\(\([[:graph:]]\(\\ \)\=\)\{-}\^\)\@=/ skip=/\\ / end=/\^/ keepend
 hi link markdownSubscript markdownCode
 hi link markdownSuperscript markdownCode
+syn match pandocBlockquote /^\s\{,3}>.*\n\(.*\n\@1<!\n\)*/
+hi link pandocBlockquote markdownBlockquote
 syn match pandocUListItem /^>\=\s*[*+-]\ze\s\+-\@!.*$/
 syn match pandocUListItemBullet /^>\=\s*\zs[*+-]/ contained containedin=pandocUListItem conceal cchar=•
 syn match pandocListItem /^\s*(\?\(\d\+\|\l\|\#\|@\)\+[.)]\ze\s\+.*$/
 syn match pandocListItem /^\s*(\?x\=l\=\(i\{,3}[a-z]\=\)\{,3}c\{,3}[.)]\ze\s\+.*$/
 hi link markdownOrderedListMarker Conceal
 hi link pandocListItem Conceal
-syn match pandocBlockquote /^\s\{,3}>.*\n\(.*\n\@1<!\n\)*/
-hi link pandocBlockquote markdownBlockquote
