@@ -423,6 +423,7 @@ nnoremap <Leader>md :setlocal ft=markdown<CR>
 " Les noms de commandes doivent commencer par une majuscule
 command! ConvToDoc call convertfiles#convert("doc", "1", "0")
 command! ConvToDocx call convertfiles#convert("docx", "1", "0")
+command! ConvToHtml call convertfiles#convert("html", "0", "0")
 command! ConvToOdt call convertfiles#convert("odt", "0", "0")
 command! ConvToPdf call convertfiles#convert("pdf", "1", "0")
 command! ConvToRtf call convertfiles#convert("rtf", "1", "0")
