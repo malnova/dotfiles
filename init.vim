@@ -416,6 +416,7 @@ endif
 " N'afficher les symboles, liens... qu'en cas de survol (replis internes),
 " et activer le correcteur d'orthographe (sauf en mode diff)
 autocmd FileType markdown if !&diff | setlocal conceallevel=2 | setlocal spell spelllang=fr | endif
+nnoremap <Leader>md :setlocal ft=markdown<CR>
 
 "------------------------------------------------------------
 " Commandes pour convertir en markdown, odt, doc, etc.
