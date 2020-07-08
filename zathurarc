@@ -19,8 +19,12 @@ map [normal] * zoom 0.0
 map [fullscreen] * zoom 0.0
 unmap [normal] <C-n>
 unmap [fullscreen] <C-n>
+unmap [normal] F
+unmap [fullscreen] F
 map [normal] l display_link
 map [fullscreen] l display_link
+map [normal] s follow
+map [fullscreen] s follow
 map [normal] i toggle_statusbar
 map [fullscreen] i toggle_statusbar
 map [normal] n navigate next
@@ -39,8 +43,6 @@ map [normal] r reload
 map [fullscreen] r reload
 unmap [normal] a
 unmap [fullscreen] a
-unmap [normal] s
-unmap [fullscreen] s
 map [normal] H adjust_window best-fit
 map [fullscreen] H adjust_window best-fit
 map [normal] W adjust_window width

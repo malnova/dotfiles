@@ -345,20 +345,16 @@ $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 &lt;nom@domaine.com&gt;    Adresse e-mail
 [xxx](http://lien)               Lien complet
 [xxx](#yyy)                      Lien interne vers un {#id} ou un titre
-                                          (avec minuscules et - et sans ponct.
-                                          donc Mon &quot;Titre&quot;, 1 ! -> mon-titre-1)
+                                          (avec - et minusc. sans ponct. donc
+                                          C'éTait &quot;Titre&quot;, 1 ! -> cétait-titre-1)
 ![xxx](/chemin/image)      Image (xxx sera affiché comme
                                           légende mais peut être vide)
 ![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
-separator=Diapositives (slides)
-&lt;Si une CSS de même nom que le fichier à convertir existe, elle
-sera intégrée dans le fichier html lors de la conversion.&gt;
+separator=Bloc de titre propre à Pandoc (avec l'option -s)
 % Titre                             Titre du diaporama
 % Auteur                          Auteur du diaporama
 % Date                             Date du diaporama
----                                     Diapo. suivante (3 - minimum, avec
-                                          1 ligne blanche avant et après)
-> - xxx / >- xxx                Affichage progressif de la liste
+separator=Rendu en HTML
 ![](img){ xxx }                Ajouter des précisions à une image
    .classe                             Préciser une classe (de la CSS)
    #id                                  Préciser un identifiant
@@ -371,6 +367,12 @@ yyy                                    et/ou un style au bloc de texte déli-
 [xxx]{.c #id style=&quot;y&quot;}  Style pour la partie de ligne délimitée
                                          (ex. &quot;display:block; text-align:center;
                                          color:red; text-decoration:underline&quot;)
+separator=Diapositives (slides)
+&lt;Si une CSS de même nom que le fichier à convertir existe, elle
+sera intégrée dans le fichier html lors de la conversion.&gt;
+---                                     Diapo. suivante (3 - minimum, avec
+                                          1 ligne blanche avant et après)
+> - xxx / >- xxx                Affichage progressif de la liste
 separator:mpv
 suppr                            Barre de contrôles (OSC) auto / tjs / jms
 Espace                          Pause / reprendre
@@ -719,7 +721,7 @@ d                                        Afficher une / _deux pages
 f                                         Plein écran
 gg / G / #gg/#G                 Aller à la première / dernière / # page
 i                                         Afficher / masquer la barre d'_infos
-l #                                      Afficher le _lien n°#
+l # / s #                              Afficher / suivre le _lien n°#
 L / R                                   Rotation gauche / droite
 n/PageDown / p/PageUp      Page suivante / _précédente
 o / O                                   _Ouvrir un fichier
