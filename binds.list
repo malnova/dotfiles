@@ -331,6 +331,9 @@ gée lors de la conversion du fichier.&gt;
 ![xxx](/chemin/image)      Image (xxx sera affiché comme
                                           légende mais peut être vide)
 ![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
+![](img){ xxx }                Styler l'image (par ex. .classe #id OU
+                                          height=50 width=50 OU style=&quot;float:
+                                          left; width:10%; border:1px;&quot;)
 [![xxx](img)](lien)            Lien sur une image
 separator=Langues
 ---                                    Ces 3 lignes permettent de définir la
@@ -355,12 +358,6 @@ $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 [^&lt;#&gt;] ... [^&lt;#&gt;]: xxx  Note avec explication séparée
 ^[xxx]                             Note avec explication interne
 separator=Rendu en HTML
-![](img){ xxx }                Ajouter des précisions à une image
-   .classe                             Préciser une classe (de la CSS)
-   #id                                  Préciser un identifiant
-   width=# height=#          Préciser les dimensions
-      OU style=&quot;xxx&quot;                OU préciser le style (ex. &quot;float:left;
-                                             width:10%; border:1px;&quot;)
 ::: {.c #id style=&quot;xxx&quot;}   Ajouter une classe et/ou un identifiant
 yyy                                    et/ou un style au bloc de texte déli-
 :::                                      mité (ex. &quot;width:50%; margin:auto&quot;}
