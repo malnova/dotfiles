@@ -283,30 +283,28 @@ les lignes vides surnuméraires ne sont pas prises en compte.&gt;
                                           être échappés : \ )
 ~xxx~                             Texte en indice (espaces à échapper)
 ~~xxx~~                        Texte barré
+\                                       Caractère d'échappement (ex. \*xxx)
 separator=Listes
 &lt;Les listes, ou les § dans une liste, doivent être précédés d'une
 ligne vide, sauf au début du doc. ; la 1re ligne de chaque liste de
 niveau n+1, ou de chaque § dans une liste, doit être au minimum
-indentée autant que le texte qui suit le signe de la liste :
-I. Liste de niveau 1, élément 1
-II. Élémént 2
+indentée autant que le texte qui suit le signe de la liste.&gt;
+1. Liste de niveau 1, élément 1
+2. Élément 2
 &lt;ligne vide&gt;
     Paragraphe aligné sur le texte &quot;Élément 2&quot;
-III. Élément 3
-     1.  Liste de niveau 2, él. 1, alignée sur le texte &quot;Élément 3&quot;
-&lt;ligne vide&gt;
-          Paragraphe aligné sur le texte qui suit le signe de la liste&gt;
+3. Élément 3
+    1. Liste de niveau 2, él. 1, alignée sur le texte &quot;Élément 3&quot;
 * xxx / + xxx / - xxx         Liste à puces de niveau 1
-  * xxx / + xxx / - xxx       Liste à puces de niveau 2 (indentée au
-                                          mininum avec 2 espaces ou 1 tab.)
-  xxx                                § dans une liste (1re ligne à 2 esp/tab)
-&lt;pour tous les types de listes numérotées qui suivent, le signe
-peut être suivi d'un . ou d'une ) ou être entouré par des ().&gt;
+  * xxx / + xxx / - xxx       Liste à puces de niveau 2
+&lt;ligne vide&gt;
+    xxx                              Paragraphe dans une liste
+&lt;Pour tous les types de listes numérotées, le signe peut être
+suivi d'un . ou d'une ) ou être entouré par des ().&gt;
 3. xxx / 3) xxx / (3) xxx   Liste numérotée de niveau 1
                                           commençant par le chiffre 3 (le
                                           chiffre peut être remplacé par un #)
-   1. xxx / 1) xxx / (1) xxx Liste numérotée de niveau 2 (indentée
-                                          au min. avec 3 ou 4 espaces / 1 tab.)
+    1. xxx                          Liste numérotée de niveau 2
 i. xxx                               Liste numérotée en chiffres romains
 I.  xxx                              Ch. romain maj. (2 esp. après le signe
                                           pour le distinguer d'une abr./initiale)
@@ -324,7 +322,7 @@ separator=Tableaux
 separator=Langues
 ---                                    Ces 3 lignes permettent de définir la
 lang: xxx                           langue globale du document (par ex.
-...                                      de, en, es, fr, grc, la, ou en-GB...)
+---                                      de, en, es, fr, grc, la, ou en-GB...)
 ::: {lang=xxx}                Ces 3 lignes permettent de définir la
 xxx                                    langue pour toute la partie du docu-
 :::                                      ment entre les 3 signes deux-points
@@ -332,18 +330,23 @@ xxx                                    langue pour toute la partie du docu-
 separator=Autres
 | xxx                                Bloc avec conservation des espaces
 &gt; xxx                               Bloc de citation (blockquote)
+&gt; &gt; xxx                           Citation imbriquée dans une autre
 ``` langage                      Bloc de code (indiquer le nom du
 xxx                                     langage est optionnel, par ex.
 ```                                      json ou html...)
+    xxx                              Autre format de bloc de code (4 esp.)
 `xxx`                               Code en ligne
 : xxx                                Définition du mot de la ligne précéd.
----                                    Ligne de séparation (3 - minimum)
+--- / - - -                            Ligne de séparation (3 - minimum)
 $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 [^&lt;#&gt;] ... [^&lt;#&gt;]: xxx  Note avec explication séparée
 ^[xxx]                             Note avec explication interne
 &lt;http://lien&gt;                    Lien simple
-[xxx](http://lien)               Lien avec titre
+&lt;nom@domaine.com&gt;    Adresse e-mail
+[xxx](http://lien)               Lien complet
 [xxx](#yyy)                      Lien interne vers un {#id} ou un titre
+                                          (avec minuscules et - et sans ponct.
+                                          donc Mon &quot;Titre&quot;, 1 ! -> mon-titre-1)
 ![xxx](/chemin/image)      Image (xxx sera affiché comme
                                           légende mais peut être vide)
 ![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
