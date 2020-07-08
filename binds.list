@@ -343,6 +343,7 @@ $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 ^[xxx]                             Note avec explication interne
 &lt;http://lien&gt;                    Lien simple
 [xxx](http://lien)               Lien avec titre
+[xxx](#yyy)                      Lien interne vers un {#id} ou un titre
 ![xxx](/chemin/image)      Image (xxx sera affiché comme
                                           légende mais peut être vide)
 ![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
