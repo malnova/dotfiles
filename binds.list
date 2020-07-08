@@ -319,6 +319,19 @@ separator=Tableaux
                                        gauche / droite / centré) (1 - minimum)
 | xxx |xxx|                        Cellules
 :xxx                                 Légende du tableau
+separator=Images et liens
+&lt;Si une image est en ligne, elle sera automatiquement téléchar-
+gée lors de la conversion du fichier.&gt;
+&lt;http://lien&gt;                    Lien simple
+&lt;nom@domaine.com&gt;    Adresse e-mail
+[xxx](http://lien)               Lien complet
+[xxx](#yyy)                      Lien interne vers un {#id} ou un titre
+                                          (avec - et minusc. sans ponct. donc
+                                          C'éTait &quot;Titre&quot;, 1 ! -> cétait-titre-1)
+![xxx](/chemin/image)      Image (xxx sera affiché comme
+                                          légende mais peut être vide)
+![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
+[![xxx](img)](lien)            Lien sur une image
 separator=Langues
 ---                                    Ces 3 lignes permettent de définir la
 lang: xxx                           langue globale du document (par ex.
@@ -341,19 +354,6 @@ xxx                                     langage est optionnel, par ex.
 $xxx$ / $$xxx$$              Formule mathématique en ligne/en bloc
 [^&lt;#&gt;] ... [^&lt;#&gt;]: xxx  Note avec explication séparée
 ^[xxx]                             Note avec explication interne
-&lt;http://lien&gt;                    Lien simple
-&lt;nom@domaine.com&gt;    Adresse e-mail
-[xxx](http://lien)               Lien complet
-[xxx](#yyy)                      Lien interne vers un {#id} ou un titre
-                                          (avec - et minusc. sans ponct. donc
-                                          C'éTait &quot;Titre&quot;, 1 ! -> cétait-titre-1)
-![xxx](/chemin/image)      Image (xxx sera affiché comme
-                                          légende mais peut être vide)
-![xxx](img)\ ![yyy](img)   Images en ligne sép. par une espace
-separator=Bloc de titre propre à Pandoc (avec l'option -s)
-% Titre                             Titre du diaporama
-% Auteur                          Auteur du diaporama
-% Date                             Date du diaporama
 separator=Rendu en HTML
 ![](img){ xxx }                Ajouter des précisions à une image
    .classe                             Préciser une classe (de la CSS)
@@ -373,6 +373,10 @@ sera intégrée dans le fichier html lors de la conversion.&gt;
 ---                                     Diapo. suivante (3 - minimum, avec
                                           1 ligne blanche avant et après)
 > - xxx / >- xxx                Affichage progressif de la liste
+separator=Bloc de titre propre à Pandoc (avec l'option -s)
+% Titre                             Titre du diaporama
+% Auteur                          Auteur du diaporama
+% Date                             Date du diaporama
 separator:mpv
 suppr                            Barre de contrôles (OSC) auto / tjs / jms
 Espace                          Pause / reprendre
