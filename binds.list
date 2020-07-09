@@ -155,28 +155,30 @@ wc -l                       Afficher le nombre de lignes de la sortie
 separator:Changements de claviers
 Maj gauche-Maj droite           Clavier suivant (config. d'Openbox)
 separator=Clavier API
-&lt;caractère&gt; puis AltGr-*      ~ au-dessus de la lettre
+&lt;caractère&gt; puis AltGr-*      Tilde (ã)
 separator=Clavier français
-AltGr-1-&lt;caractère&gt;             ˇ au-dessus de la lettre
-AltGr-^-&lt;caractère&gt;             ~ au-dessus de la lettre
-AltGr-¨-&lt;caractère&gt;              ° au-dessus de la lettre
-AltGr-ù-&lt;caractère&gt;             ´ au-dessus de la lettre
-AltGr-*-&lt;caractère&gt;              ` au-dessus de la lettre
-AltGr-µ-&lt;caractère&gt;              ¯ au-dessus de la lettre
+AltGr-ù puis &lt;caractère&gt;      Accent aigu (á)
+AltGr-* &lt;caractère&gt;              Accent grave (à)
+AltGr-&amp; &lt;caractère&gt;             Caron / circonflexe inversé (ǎ)
+Maj-AltGr-² &lt;caractère&gt;        Cédille (ç)
+Maj-AltGr-* &lt;caractère&gt;        Macron (barre horizontale) (ā)
+Maj-AltGr-&amp; &lt;caractère&gt;       Ogonek (cédille inversée) (ą)
+AltGr-¨ &lt;caractère&gt;              Rond/anneau en chef (å)
+AltGr-^ &lt;caractère&gt;             Tilde (ã)
 AltGr-&lt; / AltGr-&gt;                    ≤ / ≥
 AltGr-w / AltGr-x                     « / »
 AltGr-, / AltGr-!                       ¿ / ¡
 AltGr-; / AltGr-:                       × / ÷
 AltGr-$ / AltGr-£                     ø / Ø
 separator=Clavier grec
-é-&lt;caractère&gt;                      Accent aigu (ά)
-è-&lt;caractère&gt;                      Accent grave (ὰ)
-(-&lt;caractère&gt;                       Esprit rude (ἁ)
-)-&lt;caractère&gt;                       Esprit doux (ἀ)
-^-&lt;caractère&gt;                     Accent circonflexe (ᾶ)
-$-&lt;caractère&gt;                      Iota souscrit (ᾳ)
-Maj-^-&lt;caractère&gt;               Tréma (ϊ)
-Maj-6‐&lt;caractère&gt;                Macron (ᾱ)
+é puis &lt;caractère&gt;               Accent aigu (ά)
+è &lt;caractère&gt;                      Accent grave (ὰ)
+( &lt;caractère&gt;                       Esprit rude (ἁ)
+) &lt;caractère&gt;                       Esprit doux (ἀ)
+$ &lt;caractère&gt;                      Iota souscrit (ᾳ)
+Maj-6 &lt;caractère&gt;                Macron (ᾱ)
+^ &lt;caractère&gt;                     Tilde (ᾶ)
+Maj-^ &lt;caractère&gt;               Tréma (ϊ)
 separator:Dunst / Dunstify
 C-A-n                     Afficher de nouveau les dernières _notifications
 Esc                        Fermer la notification
