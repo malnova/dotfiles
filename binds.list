@@ -528,7 +528,7 @@ C-k &lt;caractères&gt;              Taper un digraphe
                                             set expandtab ou set noexpandtab
 :syntax on / off                   Coloration syntaxique on / off
 separator=Autocomplétion
-C-p / C-n                            Menu d'autocomplétion
+C-p / C-n                            Menu + élément précédent / suivant
 C-y                                    Accepter l'élément d'autocomplétion
 C-e                                    Annuler l'autocomplétion
 C-x C-f                               Autocompléter un nom de fichier
