@@ -155,3 +155,4 @@ hi Folded ctermfg=black ctermbg=green cterm=bold
 hi ModeMsg ctermfg=white
 hi ColorColumn ctermfg=black
 hi Identifier ctermfg=6 cterm=none
+hi EndOfBuffer ctermfg=darkgrey
