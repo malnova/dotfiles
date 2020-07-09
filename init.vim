@@ -97,6 +97,7 @@ set complete-=i
 " Format de la barre de statut
 set statusline=%F " chemin complet et nom du fichier
 set statusline+=\ [%{strlen(&fenc)?&fenc:'Aucun\ encodage'}] " encodage du fichier
+set statusline+=\ %m " signal (flag) si fichier modifié
 set statusline+=\ %= " aligné à droite
 set statusline+=%l/%L, " ligne X de Y
 set statusline+=%c " colonne actuelle
