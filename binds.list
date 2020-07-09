@@ -284,6 +284,7 @@ les lignes vides surnuméraires ne sont pas prises en compte.&gt;
 ~xxx~                             Texte en indice (espaces à échapper)
 ~~xxx~~                        Texte barré
 \                                       Caractère d'échappement (ex. \*xxx)
+2 espaces en fin de ligne  Forcer un retour à la ligne
 separator=Listes
 &lt;Les listes, ou les § dans une liste, doivent être précédés d'une
 ligne vide, sauf au début du doc. ; la 1re ligne de chaque liste de
