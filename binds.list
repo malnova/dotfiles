@@ -517,9 +517,6 @@ zR / zM                              Ouvrir / fermer tous les replis
                                             digraphe avec les touches xx
 :h digraph-table puis /xxx  Rechercher dans les digraphes
 C-k &lt;caractères&gt;              Taper un digraphe
-C-p / C-n                            Menu d'autocomplétion
-C-y                                    Quitter l'autocomplétion
-C-e                                    Quitter et annuler l'autocomplétion
 :Ex(plore)                          Ouvrir l'explorateur de fichiers
 :Sex / :Vex                         Ouvrir l'explorateur dans une fenêtre
 :set wrap                           Retour si lignes longues (soft wrap)
@@ -530,6 +527,11 @@ C-e                                    Quitter et annuler l'autocomplétion
 :retab!                               Modifie le fichier en fonction de
                                             set expandtab ou set noexpandtab
 :syntax on / off                   Coloration syntaxique on / off
+separator=Autocomplétion
+C-p / C-n                            Menu d'autocomplétion
+C-y                                    Accepter l'élément d'autocomplétion
+C-e                                    Annuler l'autocomplétion
+C-x C-f                               Autocompléter un nom de fichier
 separator=Marques
 m&lt;caractère&gt;                   Mettre une marque
 ' / ` &lt;caractère&gt;                Aller au début de / à la marque
