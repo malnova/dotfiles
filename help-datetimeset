@@ -36,11 +36,11 @@ ATTENTION si Windows et Linux sont en dual boot ! Windows fixe l'heure RTC sur l
        Si un service ntpd.service est actif, il sera désactivé !
        Il est possible de modifier ou ajouter des serveurs de temps dans le fichier /etc/systemd/timesyncd.conf
        Pour arrêter et désactiver le démon : sudo timedatectl set-ntp false (équivaut à la commande "systemctl disable --now systemd-timesyncd.service").
-       Debugging :
+       Debugging (obsolète ; pour mémoire) :
           - il semble nécessaire de supprimer le fichier /etc/systemd/timesyncd.conf pour que ça marche ?
           - un décalage de quelques minutes ne semble pas suffisant pour que la synchronisation se lance (donc on peut faire un sudo timedatectl set-time "hh:mm:ss" en revenant en arrière de plus d'une heure avant de lancer la synchronisation)
           - il peut être nécessaire de réinstaller tzdata (sudo pacman -S tzdata)
-    2. OU installer NTP (Network Time Protocol) (donne de meilleurs résultats que l'option 1) :
+    2. OU installer NTP (Network Time Protocol) :
        sudo pacman -S ntp
        Attention au firewall ! NTP utilise le port 123 ! (sudo ufw allow out 123)
        Le fichier de configuration (liste des serveurs de temps...) est /etc/ntp.conf
