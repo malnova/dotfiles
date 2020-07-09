@@ -170,6 +170,7 @@ AltGr-w / AltGr-x                     « / »
 AltGr-, / AltGr-!                       ¿ / ¡
 AltGr-; / AltGr-:                       × / ÷
 AltGr-$ / AltGr-£                     ø / Ø
+Maj-AltGr-Espace                   Espace insécable
 separator=Clavier grec
 é puis &lt;caractère&gt;               Accent aigu (ά)
 è &lt;caractère&gt;                      Accent grave (ὰ)
