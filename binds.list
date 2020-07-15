@@ -10,8 +10,8 @@ separator=Noms de fichiers et dossiers complexes
 {x,y}                       Liste (ex. f??e{2,3,5}.* ou {*.doc,*.pdf})
 'xxx'                         À utiliser autour des noms pour n'avoir à
                                   échapper que le caractère ' en '\''
---                              Fin des options (par ex. devant un nom
-                                  commençant par -) (ex. rm -- -test.jpg)
+--                              Fin des options (par ex. devant un nom com-
+                                  mençant par -) (rm -- -test OU rm ./-test)
 separator=Calculer
 bc -l                         Faire des calculs en mode interactif (quit
                                   pour quitter ; ex. scale=6;pi=4*a(1);3*pi)
@@ -544,7 +544,7 @@ m&lt;caractère&gt;                   Mettre une marque
 '&quot;                                       Retourner à l'endroit quitté
 :marks                               Liste des marques
 separator=Windows (fenêtres)
-vim -o / -O &lt;fichiers&gt;        Fichiers dans des fenêtres horiz. / vert.
+vim(diff) -o / -O &lt;fichiers&gt; Fichiers dans des fenêtres horiz. / vert.
 :sp / :split / :vs(p) / :vsplit   Diviser la fenêtre horiz. / vert.
   (&lt;fichier&gt;)                         (et y ouvrir le fichier)
 C-w s/C-w - / C-w v/C-w |     Diviser la fenêtre horiz. / vert.
