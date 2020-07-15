@@ -46,3 +46,19 @@ Syntaxe générale et options de pandoc :
     * pandoc -s -t slidy "if" -o "of.html" -> utilise slidy : https://www.w3.org/Talks/Tools/Slidy2/Overview.html
     * pandoc -s -t dzslides "if" -o "of.html" -> utilise dzslides : http://paulrouget.com/dzslides/ (la CSS et le script sont inclus dans le fichier de sortie)
     * pour intégrer les ressources externes (CSS/jscript/polices pour slidy ; polices pour dzslides) au document (et donc éviter de devoir utiliser une connexion lors du visionnage), ajouter l'option --self-contained (par ex. pandoc -s --self-contained...)
+
+4. Autres formats
+- convertir un fichier AbiWord :
+    * en html : abw2html "if" > "of"
+    * en texte brut : abw2text "if" > "of"
+- convertir un fichier CorelDRAW (.cdr, .cdt, .csl) :
+    * en SVG : cdr2xhtml "if" > "of"
+    * en texte brut : crd2text "if" > "of"
+- convertir un fichier Corel (.cmx) :
+    * en SVG : cmx2xhtml "if" > "of"
+    * en texte brut : cmx2text "if" > "of"
+- convertir un fichier FictionBook (.fb2), BBeB (Sony reader -> .lrf, .lrs, .lrx) ou Palm (.pdb) :
+    * en html : ebook2html "if" > "of"
+    * en texte brut : ebook2text "if" > "of"
+- convertir un fichier Microsoft .lit en epub : lit2epub "if" "of"
+- convertir un autre format d'ebook (.mobi, etc.) : installer calibre et utiliser le logiciel inclus ebook-convert
