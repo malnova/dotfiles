@@ -51,6 +51,9 @@ Syntaxe générale et options de pandoc :
 - convertir un fichier AbiWord :
     * en html : abw2html "if" > "of"
     * en texte brut : abw2text "if" > "of"
+- convertir un fichier Apple Pages :
+    * en html : pages2html "if" > "of"
+    * en texte brut : pages2text "if" > "of"
 - convertir un fichier CorelDRAW (.cdr, .cdt, .csl) :
     * en SVG : cdr2xhtml "if" > "of"
     * en texte brut : crd2text "if" > "of"
