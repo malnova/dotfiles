@@ -180,6 +180,9 @@ $ &lt;caractère&gt;                      Iota souscrit (ᾳ)
 Maj-6 &lt;caractère&gt;                Macron (ᾱ)
 ^ &lt;caractère&gt;                     Tilde (ᾶ)
 Maj-^ &lt;caractère&gt;               Tréma (ϊ)
+separator:display
+display                    Afficher l'interface d'ImageMagick
+clic gauche             Afficher le menu pour modifier une image
 separator:Dunst / Dunstify
 C-A-n                     Afficher de nouveau les dernières _notifications
 Esc                        Fermer la notification
