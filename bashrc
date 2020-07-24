@@ -19,7 +19,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 # Éditeur (pour sudo -e)
-export EDITOR=nvim
+export EDITOR=/usr/bin/nvim
 
 # Ne rien faire si le mode n'est pas interactif
 [[ $- != *i* ]] && return
