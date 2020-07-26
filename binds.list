@@ -143,6 +143,7 @@ killall -9 xxx             Terminer tous les processus nommés xxx
 man -k/apropos &quot;x&quot; Rechercher &quot;x&quot; dans les pages man
 progress                 Afficher une barre de progression pour les
                                  commandes en cours (cp, mv, grep...)
+sort                        Trier les résultats (ex. find -name &quot;xxx&quot; | sort)
 stat xxx                  Toutes les dates et heures d'un fichier/dossier
 sudo !!                   Refaire la dernière commande avec sudo
 sudo chmod 600 x Protéger le fichier x en le rendant visible
