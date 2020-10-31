@@ -354,6 +354,7 @@ let g:clipboard = { 'name': 'xsel_override', 'copy': { '+': 'xsel --input --clip
 autocmd BufEnter * set noro " Ne pas avertir que le fichier est en lecture seule
 command! -bang W silent exec 'w !pkexec tee %:p > /dev/null' | e!
 command! -bang Wq silent exec 'w !pkexec tee %:p > /dev/null' | e! | q
+command! -bang Wqa silent exec 'w !pkexec tee %:p > /dev/null' | e! | qa
 
 "------------------------------------------------------------
 " Plugin Vem Tabline
