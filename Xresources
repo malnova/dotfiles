@@ -28,7 +28,7 @@ URxvt.font: xft:DejaVu Sans Mono:Regular:size=12
 URxvt.boldFont: xft:DejaVu Sans Mono:bold:size=12
 URxvt.italicFont: xft:DejaVu Sans Mono:italic:size=12
 URxvt.boldItalicFont: xft:DejaVu Sans Mono:bold:italic:size=12
-URxvt.letterSpace: -1
+URxvt.letterSpace: -2
 ! Add fallback fonts as laid out in `man 1 urxvt` under "font:" in the RESOURCES section
 
 ! Window size and position
