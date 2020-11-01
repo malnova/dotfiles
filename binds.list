@@ -205,6 +205,7 @@ exiftool xxx          Voir toutes les métadonnées du ou des fichiers
 separator:feh
 Espace                         Diaporama en pause / reprendre
 Flèches / h, j, k, l          Déplacement sur l'image
+PgUp / PgDown            Aller avant / après dans la liste (env. 5%)
 suppr                           Supprimer l'image de la liste
 C-suppr                        Supprimer le fichier sans confirmation
 C-c                               Copier l'image dans le presse-papier
@@ -213,7 +214,7 @@ _ / |                              Miroir vert. / horiz. et enregistrer l'image
 *                                  Taille originale
 A                                  Activer / désactiver l'anti-aliasing
 f                                   Plein écran
-g / G                             Aller à la première / dernière image
+g/Home / G/End            Aller à la première / dernière image
 i                                   Afficher / masquer les _infos EXIF
 L / R                             Rotation gauche / droite et enregistrer
 m / clic droit                 Afficher le _menu
@@ -391,8 +392,8 @@ C-&lt; / C-&gt;                       Aller en arrière/en avant (0,2 sec. exact
 Flèches                          Aller en arrière/en avant (env. 5/60 sec.)
 S-Flèches                       Aller en arrière/en avant (1/5 sec. exact.)
 Home / End                   Aller en début / fin de fichier et pause
-PgDown / PgUp              Chapitre précédent / suivant
-S-PgDown / S-PgUp        Aller en arrière / en avant (10 min.)
+PgUp / PgDown              Chapitre précédent / suivant
+S-PgUp / S-PgDown        Aller en arrière / en avant (10 min.)
 F9                                  Afficher les pistes du fichier
 _ / |                                Miroir vertical / horizontal
 + / -                               Zoomer / dézoomer
@@ -719,28 +720,27 @@ separator:Touche Compose
   tm TM                                   ™
   ga / gb / gc...                         Lettres _grecques
 separator:zathura
-Flèches / h, j, k, l                 Déplacement sur la page
-Home / End                         Aller en début / fin de fichier
-+ / -                                    Zoomer / dézoomer
-*                                         Taille originale
-/ / ? &lt;motif&gt;                       Rechercher en avant / en arrière
-  N / P                                 Occurrence suivante / _précédente
-Double clic-sélection           Copier une zone de texte
-Tab                                     Afficher / masquer l'index
-Espace / S-Espace              Écran suivant / précédent
-c                                        _Couleurs en niv. de gris et inversées
-d                                        Afficher une / _deux pages
-f                                         Plein écran
-gg / G / #gg/#G                 Aller à la première / dernière / # page
-i                                         Afficher / masquer la barre d'_infos
-l # / s #                              Afficher / suivre le _lien n°#
-L / R                                   Rotation gauche / droite
-n/PageDown / p/PageUp      Page suivante / _précédente
-o / O                                   _Ouvrir un fichier
-q                                        _Quitter
-r                                         _Recharger le fichier
-W / H                                  Largeur / hauteur en pleine page
+Flèches / h, j, k, l                  Déplacement sur la page
++ / -                                     Zoomer / dézoomer
+*                                          Taille originale
+/ / ? &lt;motif&gt;                        Rechercher en avant / en arrière
+  N / P                                  Occurrence suivante / _précédente
+Double clic-sélection            Copier une zone de texte
+Tab                                      Afficher / masquer l'index
+Espace / S-Espace               Écran suivant / précédent
+c                                         _Couleurs en niv. de gris et inversées
+d                                         Afficher une / _deux pages
+f                                          Plein écran
+gg/Home / G/End / #gg/#G  Aller à la première / dernière / # page
+i                                          Afficher / masquer la barre d'_infos
+l # / s #                               Afficher / suivre le _lien n°#
+L / R                                    Rotation gauche / droite
+n/PgDown / p/PgUp              Page suivante / _précédente
+o / O                                    _Ouvrir un fichier
+q                                         _Quitter
+r                                          _Recharger le fichier
+W / H                                   Largeur / hauteur en pleine page
 separator
-:info                                    Afficher les _infos (auteur...) du fichier
-:open                                  _Ouvrir un fichier
-:print                                  Imprimer le document
+:info                                     Afficher les _infos (auteur...) du fichier
+:open                                   _Ouvrir un fichier
+:print                                   Imprimer le document
