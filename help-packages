@@ -7,7 +7,7 @@ Répertoire du cache de pacman : /var/cache/pacman/pkg/
 Équivalences entre pacman et les autres gestionnaires de paquets (comme apt) : https://wiki.archlinux.org/index.php/Pacman/Rosetta
 
 2. Divers
-Liste des fichiers d'un paquet installé (par exemple pour savoir comment se nomme l'exécutable) : pacman -Ql <paquet>
+Liste des fichiers d'un paquet installé : pacman -Ql <paquet> (par exemple pour savoir comment se nomme l'exécutable en ajoutant " | grep usr/bin")
 Savoir à quel paquet appartient un fichier du système : pacman -Qo <fichier>
 Afficher des informations précises sur un paquet, notamment les dépendances : pacman -Si <paquet>
 Afficher des informations précises sur un paquet installé : pacman -Qi <paquet>
