@@ -15,6 +15,7 @@ export QUOTING_STYLE=literal
 # (https://wiki.archlinux.org/index.php/XDG_Base_Directory_support)
 # (voir aussi ~/.xinitrc)
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
