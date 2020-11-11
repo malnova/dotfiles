@@ -772,13 +772,13 @@ c                                         _Couleurs en niv. de gris et inversée
 d                                         Afficher une / _deux pages
 f                                          Plein écran
 gg/Home / G/End / #gg/#G  Aller à la première / dernière / # page
-i                                          Afficher / masquer la barre d'_infos
 l # / s #                               Afficher / suivre le _lien n°#
 L / R                                    Rotation gauche / droite
 n/PgDown / p/PgUp              Page suivante / _précédente
 o / O                                    _Ouvrir un fichier
 q                                         _Quitter
 r                                          _Recharger le fichier
+t                                          Afficher / masquer la barre de _titre
 W / H                                   Largeur / hauteur en pleine page
 separator
 :info                                     Afficher les _infos (auteur...) du fichier

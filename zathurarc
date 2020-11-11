@@ -25,8 +25,8 @@ map [normal] l display_link
 map [fullscreen] l display_link
 map [normal] s follow
 map [fullscreen] s follow
-map [normal] i toggle_statusbar
-map [fullscreen] i toggle_statusbar
+map [normal] t toggle_statusbar
+map [fullscreen] t toggle_statusbar
 map [normal] n navigate next
 map [fullscreen] n navigate next
 map [normal] p navigate previous
