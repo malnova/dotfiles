@@ -652,6 +652,45 @@ separator=Gestion des bureaux
 A-# (sans Maj)       Aller au bureau n°#
 C-A-# (sans Maj)    Envoyer la fenêtre active sur le bureau n°#
 C-A-b                     Montrer / masquer le _bureau
+separator:sxiv
+Espace                         Image animée en pause / reprendre
+(#)&lt; / &gt;                       (#) image (frame) précédente / suivante
+(#)Flèches / h, j, k, l     Déplacement sur l'image (de # pixels)
+(#)PgUp / PgDown        Aller (#x)10 images avant / après
+suppr                           Supprimer l'image de la liste
+C-suppr                        Supprimer le fichier sans confirmation
+C-c                               Copier l'image dans le presse-papier
+_ / |                              Miroir vert. / horiz. sans enregistrer
+C-_ / C-|                        Miroir vert. / horiz. et enregistrer
++ / -                             Zoomer / dézoomer
+(#)*                             Taille originale / zoom à #%
+a                                  Activer / désactiver l'anti-aliasing
+A                                  Canal alpha (transparence) visible ou non
+f                                   Plein écran
+g/Home / G/End / #G    Aller à la première / dernière / # image
+L / R                             Rotation gauche / droite sans enregistrer
+C-L / C-R                       Rotation gauche / droite et enregistrer
+(#)n / (#)p                   (#) image suivante / précédente
+q                                  _Quitter
+r / C-r                            _Recharger le fichier / tous les fichiers
+t                                   Afficher / masquer la barre de _titre
+w                                  Taille du départ (adaptée ssi &gt; fenêtre)
+W / H                            Largeur / hauteur en pleine page
+separator=Mode miniatures (vignettes)
+Enter                            _Entrer dans / quitter le mode miniatures
++ / -                              Agrandir/diminuer la taille des miniatures
+-t                                  Démarrer en mode miniatures
+separator=Marques
+m                                 _Marquer / ne pas marquer l'image
+C-m                              Inverser les _marques des images
+M                                  Enlever toutes les _marques des images
+(#)N / (#)P                   (#) image marquée suivante / _précédente
+C-t                                Copier les _titres des images marquées
+                                      dans le presse-papier
+separator=Diaporama
+(#)s                              Activer / désactiver le diaporama (durée
+                                      par défaut / # secondes)
+-S #                              Démarrer en diaporama à # secondes
 separator:tmux
 C-a                                   Préfixe
 C-a Esc                             Mode copie (q pour quitter)
