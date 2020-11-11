@@ -658,10 +658,7 @@ Espace                         Image animée en pause / reprendre
 (#)Flèches / h, j, k, l     Déplacement sur l'image (de # pixels)
 (#)PgUp / PgDown        Aller (#x)10 images avant / après
 suppr                           Supprimer l'image de la liste
-C-suppr                        Supprimer le fichier sans confirmation
-C-c                               Copier l'image dans le presse-papier
 _ / |                              Miroir vert. / horiz. sans enregistrer
-C-_ / C-|                        Miroir vert. / horiz. et enregistrer
 + / -                             Zoomer / dézoomer
 (#)*                             Taille originale / zoom à #%
 a                                  Activer / désactiver l'anti-aliasing
@@ -669,7 +666,6 @@ A                                  Canal alpha (transparence) visible ou non
 f                                   Plein écran
 g/Home / G/End / #G    Aller à la première / dernière / # image
 L / R                             Rotation gauche / droite sans enregistrer
-C-L / C-R                       Rotation gauche / droite et enregistrer
 (#)n / (#)p                   (#) image suivante / précédente
 q                                  _Quitter
 r / C-r                            _Recharger le fichier / tous les fichiers
@@ -685,6 +681,11 @@ m                                 _Marquer / ne pas marquer l'image
 C-m                              Inverser les _marques des images
 M                                  Enlever toutes les _marques des images
 (#)N / (#)P                   (#) image marquée suivante / _précédente
+separator=Actions sur l'image active / les fichiers miniatures marqués
+C-suppr                        Supprimer sans confirmation
+C-c                               Copier dans le presse-papier
+C-_ / C-|                        Miroir vert. / horiz. et enregistrer
+C-L / C-R                       Rotation gauche / droite et enregistrer
 C-t                                Copier les _titres des images marquées
                                       dans le presse-papier
 separator=Diaporama
