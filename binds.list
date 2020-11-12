@@ -668,12 +668,13 @@ g/Home / G/End / #G    Aller à la première / dernière / # image
 L / R                             Rotation gauche / droite sans enregistrer
 (#)n / (#)p                   (#) image suivante / précédente
 q                                  _Quitter
-r / C-r                            _Recharger le fichier / tous les fichiers
+r                                   _Recharger le fichier
 t                                   Afficher / masquer la barre de _titre
 w                                  Taille du départ (adaptée ssi &gt; fenêtre)
 W / H                            Largeur / hauteur en pleine page
 separator=Mode vignettes (miniatures)
 Enter                            _Entrer dans / quitter le mode vignettes
+C-r                                _Recharger toutes les vignettes
 + / -                              Agrandir / diminuer la taille des vignettes
 -v                                  Démarrer en mode _vignettes
 separator=Marques
