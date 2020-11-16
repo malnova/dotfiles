@@ -351,13 +351,13 @@
     <!-- Capture d'écran -->
     <keybind key="Print">
       <action name="Execute">
-        <command>&default_path;scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e '&default_path;mv $f &image_folder;; &scripts_path;feh &image_folder;$f'</command>
+        <command>&default_path;scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e '&default_path;mv $f &image_folder;; &scripts_path;sxiv &image_folder;$f'</command>
       </action>
     </keybind>
     <!-- Capture d'écran avec possibilité de sélectionner la zone à capturer -->
     <keybind key="C-A-Print">
       <action name="Execute">
-        <command>&default_path;scrot -s '%Y-%m-%d--%s_$wx$h_scrot.png' -e '&default_path;mv $f &image_folder;; &scripts_path;feh &image_folder;$f'</command>
+        <command>&default_path;scrot -s '%Y-%m-%d--%s_$wx$h_scrot.png' -e '&default_path;mv $f &image_folder;; &scripts_path;sxiv &image_folder;$f'</command>
       </action>
     </keybind>
     <!-- Ctrl-Alt-Suppr -->
@@ -1405,13 +1405,13 @@
     <application class="mpv">
       <decor>no</decor>
     </application>
-    <application name="Navigator">
-      <maximized>true</maximized>
-    </application>
     <application name="kdenlive">
       <maximized>true</maximized>
     </application>
     <application name="lowriter">
+      <maximized>true</maximized>
+    </application>
+    <application name="Navigator">
       <maximized>true</maximized>
     </application>
     <application name="ocrfeeder">
