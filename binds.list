@@ -688,8 +688,7 @@ C-suppr                        Supprimer sans confirmation
 C-c                               Copier dans le presse-papier
 C-_ / C-|                        Miroir vert. / horiz. et enregistrer
 C-L / C-R                       Rotation gauche / droite et enregistrer
-C-t                                Copier les _titres des images marquées
-                                      dans le presse-papier
+C-t                                Copier le(s) _titre(s) dans le presse-papier
 separator=Diaporama
 (#)d                              Activer / désactiver le diaporama (durée
                                       par défaut / # secondes)
