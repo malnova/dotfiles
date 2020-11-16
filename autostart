@@ -1,5 +1,6 @@
 ## Rétablir le fond d'écran
-feh --no-fehbg --bg-scale /usr/share/wallpapers/wallpaper.png &
+# feh --no-fehbg --bg-scale /usr/share/wallpapers/wallpaper.png &
+hsetroot -extend /usr/share/wallpapers/wallpaper.png &
 
 ## Compositeur X
 picom --config ~/.config/picom.conf &
