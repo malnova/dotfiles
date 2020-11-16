@@ -14,7 +14,7 @@ Note sur les formats de fichiers, conteneurs et codecs :
 I. Convertir et modifier des images
 -----------------------------------
 
-Pour afficher des informations sur une ou plusieurs images : feh -l ("if") ou identify "if" (ex. identify *.png) ou identify -verbose "if" (pour des informations détaillées, par ex. le niveau de compression, etc. ; permet aussi de déterminer si un fichier est incomplet ou corrompu)
+Pour afficher des informations sur une ou plusieurs images : identify "if" (ex. identify *.png) ou identify -verbose "if" (pour des informations détaillées, par ex. le niveau de compression, etc. ; permet aussi de déterminer si un fichier est incomplet ou corrompu)
 Pour afficher des informations sur les données exif d'une image : exiftool "if"
 
 Syntaxe générale (avec ImageMagick) :
@@ -25,7 +25,7 @@ Syntaxe générale (avec ImageMagick) :
 1. Convertir
 - en bmp : convert -background white -alpha remove -alpha off "if" BMP3:"of"
 - en ico (les fichiers icônes peuvent être visualisés avec Firefox) : convert -background transparent -resize x64 -gravity center -crop 64x64+0+0 "if" -transparent white -colors 256 "of"
-- en webp : format ouvert développé par Google, très performant même avec réduction de qualité ; vérifier que libwebp est bien installé pour que la conversion soit possible (cependant feh utilise imlib2, et ne pourra afficher les fichiers webp ; utiliser --magick-timeout # pour afficher les formats incompatibles avec imlib2, par ex. feh --magick-timeout 5 of.webp OU installer imlib2-webp disponible dans AUR), puis : convert "if" "of.webp" (par ex. convert "if" -quality 75 "of.webp")
+- en webp : format ouvert développé par Google, très performant même avec réduction de qualité ; vérifier que libwebp est bien installé pour que la conversion soit possible, puis : convert "if" "of.webp" (par ex. convert "if" -quality 75 "of.webp")
 - en un autre format d'image (png, gif, jpg, jpeg, svg, tif, tiff...) : convert "if" "of"
 - en pdf : convert -background white -alpha remove -alpha off -density 300 "if" "of" (ou par ex. convert *.jpg "of" pour créer un pdf à partir de plusieurs images) (si on convertit d'un pdf en image, on peut préciser la qualité de lecture du pdf avec l'option -density placée avant "if", et la qualité de sortie de l'image avec l'option -quality placée avant "of", par ex. convert -density 300 "if" -quality 90 "of") ; en cas d'erreur "attempt to perform an operation not allowed by the security policy `PDF'..." (par exemple pour faire un miroir d'un pdf...), on peut commenter la ligne "<policy domain="coder" rights="none" pattern="{PS,PS2,PS3,EPS,PDF,XPS}" />" en la mettant entre <!-- et --> dans le fichier /etc/ImageMagick-7/policy.xml
 - en txt : img2txt "if" > "of"
@@ -60,7 +60,7 @@ Syntaxe générale (avec ImageMagick) :
    * -auto-orient : corriger l'orientation automatiquement en fonction des données EXIF (ex. convert -auto-orient "if" "of")
 - miroir vertical / horizontal : -flip / -flop ; ces options peuvent se combiner
 - recadrer l'image :
-   * identifier les dimensions de l'image avec feh -l "if" ou identify "if"
+   * identifier les dimensions de l'image avec identify "if"
    * recadrer avec -crop lxh+x+y (ex. pour une image de 1366x768 dont on veut retirer 50 pixels de chaque côté, -crop 1266x668+50+50)
 - brouiller/flouter l'image : -blur #,# (ex. -blur 15,15) ou -resize 10% -resize 1000% (soit deux redimensionnements successifs sans changer la taille au final, ex. convert "if" -resize 10% -resize 1000% "of")
 - éclaircir, assombrir ou colorer : -fill <couleur> -colorize <intensité> (ex. convert "if" -fill white -colorize -10% "of" pour assombrir l'image de 10%, ou -fill blue -colorize 20% pour bleuter l'image...)
