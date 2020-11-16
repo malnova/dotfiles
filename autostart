@@ -28,9 +28,6 @@ udiskie --automount --notify --no-tray --no-file-manager --no-password-cache &
 # en fonction de l'endroit et de l'heure
 redshift &>/dev/null &
 
-## searx
-(sleep 2; searx-run &>/dev/null) &
-
 ## PARAMÈTRES POUR LES SOURIS (ou pointage), CLAVIERS ET TOUCHPADS
 #
 # Pour voir les paramètres actuels : xset q
