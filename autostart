@@ -1,5 +1,5 @@
 ## Rétablir le fond d'écran
-hsetroot -extend /usr/share/wallpapers/wallpaper.png &
+setroot -s /usr/share/wallpapers/wallpaper.png &
 
 ## Compositeur X
 picom --config ~/.config/picom.conf &
