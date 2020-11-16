@@ -43,7 +43,7 @@ set -o vi
 
 # Alias
 # Penser également à vérifier dans /usr/local/bin/ si des wrappers existent
-# pour certains programmes (par ex. feh, tmux...)
+# pour certains programmes (par ex. tmux...)
 alias ls="/usr/bin/ls --color=auto"
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
