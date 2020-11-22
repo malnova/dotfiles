@@ -205,7 +205,7 @@ OU
 - utiliser des filtres vidéos :
    * syntaxe générale : -vf/filter:v <filtre(,filtre...)> (guillemets conseillées ; ex. -vf "scale=300:100,transpose=1")
    * désentrelacer la vidéo (retirer l'effet de "peigne") : -vf yadif
-   * modifier la résolution : -vf "scale=largeur:hauteur" (ex. ffmpeg -i "if" -vf "scale=-2:480" "of" pour redimensionner en 480p) (-1 ou -2 permet de conserver le ratio d'après l'autre dimension spécifiée)
+   * modifier la résolution : -vf "scale=largeur:hauteur" (ex. ffmpeg -i "if" -vf "scale=-2:480" "of" pour redimensionner en 480p) (-1 ou -2 permet de conserver le ratio d'après l'autre dimension spécifiée) ; si on ne veut pas conserver le ratio largeur/hauteur, il faut réinitialiser la valeur du SAR (Sample Aspect Radio) à 1, sinon le SAR de départ sera toujours pris en compte, et le ratio sera donc conservé (ex. -vf "scale=637:720,setsar=1")
    * étendre la vidéo sans la redimensionner (= en ajoutant des bandes sur les côtés ; remplacer les # par les dimensions voulues) : -vf "pad=width=#:height=#:x=#:y=#:color=black" ("width" et "height" sont les dimensions voulues de la vidéo en sortie ; "x" et "y" sont les coordonnées du point supérieur gauche où placer la vidéo d'origine ; "color" est optionnel et détermine la couleur des bandes ; le format "color=0xff00ff" est aussi possible)
    * rotation de la vidéo :
       * ffmpeg opère automatiquement la rotation des vidéos en fonction des métadonnées existantes, donc une simple conversion peut suffire : ffmpeg -i "if" -c:a copy "of" (ce comportement peut être désactivé en ajoutant -noautorotate)
