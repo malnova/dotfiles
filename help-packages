@@ -73,12 +73,12 @@ Le cache se situe dans le répertoire /var/cache/pacman/pkg/
 Pour avoir la liste des versions disponibles du paquet souhaité :
 ls /var/cache/pacman/pkg/<paquet_souhaité>.*
 Pour installer l'ancienne version :
-pacman -U /var/cache/pacman/pkg/<paquet_souhaité_vieille_version>.pkg.tar.xz
+pacman -U /var/cache/pacman/pkg/<paquet_souhaité_vieille_version>.pkg.tar.zst (ou .tar.xz pour les paquets plus anciens)
 b). En utilisant ALA (Arch Linux Archive) (cf. https://wiki.archlinux.org/index.php/Arch_Linux_Archive)
 Les dépôts se trouvent à l'adresse https://archive.archlinux.org
 Rechercher la version du paquet souhaitée dans les sous-dossiers, classés par ordre alphabétique de noms de paquets, du dossier "packages".
 Pour installer l'ancienne version :
-pacman -U https://archive.archlinux.org/packages/<...paquet_souhaité_vieille_version>.pkg.tar.xz
+pacman -U https://archive.archlinux.org/packages/<...paquet_souhaité_vieille_version>.pkg.tar.zst (ou .tar.xz)
 
 11. Erreurs
 Verrouillage de la base de données impossible (unable to lock database) : sudo rm /var/lib/pacman/db.lck
