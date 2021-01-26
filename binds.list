@@ -509,7 +509,7 @@ C-w s/C-w - / C-w v/C-w |     Diviser la fenêtre horiz. / vert.
 C-w o                                 Laisser une seule fenêtre ouverte
 :q / C-w q / :hide                Fermer la fenêtre actuelle
 :only                                 Fermer les autres fenêtres
-C-w r                                 Inverser l'ordre des fenêtres
+C-w r                                 _Rotation de l'ordre des fenêtres
 C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
    ou C-flèches
 &lt;nombre&gt;C-w +/&lt;/&gt;        Redimensionner la fenêtre
