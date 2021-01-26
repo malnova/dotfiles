@@ -511,9 +511,9 @@ C-w o                                 Laisser une seule fenêtre ouverte
 :only                                 Fermer les autres fenêtres
 C-w r                                 Inverser l'ordre des fenêtres
 C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
-   ou S-flèches
+   ou C-flèches
 &lt;nombre&gt;C-w +/&lt;/&gt;        Redimensionner la fenêtre
-   ou C-w S-flèches
+   ou S-flèches
 C-w =                                Tailles de fenêtres identiques
 separator=Tabs (onglets)
 :tabnew                             Ouvrir un nouvel onglet
@@ -652,8 +652,8 @@ C-a Esc                             Mode copie (q pour quitter)
   Espace                           Commencer la sélection pour la copie
   Entrée                            Valider la sélection et copier
 C-a - / C-a |                       Diviser horiz./vert. la fenêtre
-S-flèches                          Sélectionner le panneau
-C-a S-flèches                    Redimensionner le panneau
+C-flèches                          Sélectionner le panneau
+S-flèches                          Redimensionner le panneau
 C-a C-o                             Déplacer (intervertir) les panneaux
 C-a d                                _Détacher le panneau (nouvelle fenêtre)
   C-a flèches                     Sélectionner la fenêtre
