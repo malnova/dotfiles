@@ -346,7 +346,7 @@ augroup diffmode
     autocmd VimEnter * if &diff | syntax off | endif
     autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let b:synstatus = '1' | setlocal syntax=off | else | let b:synstatus = '0' | endif | let b:spellstatus = &spell | setlocal nospell | else | if b:synstatus == "1" | setlocal syntax=on | endif | let &spell = b:spellstatus | endif
 augroup END
-"set diffopt+=algorithm:patience,context:3
+set diffopt+=algorithm:patience,context:3
 
 "------------------------------------------------------------
 " Utiliser xsel pour gérer les registres pour éviter les erreurs
@@ -411,11 +411,6 @@ endif
 " Plugin Vim Tmux Navigator
 if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     let g:tmux_navigator_no_mappings = 1
-    " <C-o> retourne en mode normal pour une commande seulement
-    "inoremap <silent> <C-Left> <C-o>:TmuxNavigateLeft<CR>
-    "inoremap <silent> <C-Down> <C-o>:TmuxNavigateDown<CR>
-    "inoremap <silent> <C-Up> <C-o>:TmuxNavigateUp<CR>
-    "inoremap <silent> <C-Right> <C-o>:TmuxNavigateRight<CR>
     nnoremap <silent> <C-Left> :TmuxNavigateLeft<CR>
     nnoremap <silent> <C-Down> :TmuxNavigateDown<CR>
     nnoremap <silent> <C-Up> :TmuxNavigateUp<CR>
