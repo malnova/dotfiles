@@ -387,6 +387,7 @@ endif
 " Plugin Vim Tmux Navigator
 if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     let g:tmux_navigator_no_mappings = 1
+    let g:tmux_navigator_disable_when_zoomed = 1
     nnoremap <silent> <C-Left> :TmuxNavigateLeft<CR>
     nnoremap <silent> <C-Down> :TmuxNavigateDown<CR>
     nnoremap <silent> <C-Up> :TmuxNavigateUp<CR>
