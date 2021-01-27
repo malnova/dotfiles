@@ -144,8 +144,6 @@ vnoremap <silent> <Up> gk
 " Ctrl-flèche droite|gauche avec b et w au lieu de B et W
 inoremap <silent> <C-Left> <C-o>b
 inoremap <silent> <C-Right> <C-o>w
-nnoremap <silent> <C-Left> b
-nnoremap <silent> <C-Right> w
 nnoremap <silent> <C-h> b
 nnoremap <silent> <C-l> w
 vnoremap <silent> <C-Left> b
@@ -314,19 +312,6 @@ nnoremap <S-Tab> :bprevious<CR>
 " Imite les raccourcis de tmux
 nnoremap <C-w>- <C-w>s
 nnoremap <C-w>\| <C-w>v
-
-"------------------------------------------------------------
-" Redimensionner les fenêtres en continu avec <C-w> puis <S-flèches>
-" Imite les raccourcis de tmux
-nmap <silent> <C-w><S-Up> :resize +1<CR><SID>ws
-nmap <silent> <C-w><S-Down> :resize -1<CR><SID>ws
-nmap <silent> <C-w><S-Left> :vertical resize -1<CR><SID>ws
-nmap <silent> <C-w><S-Right> :vertical resize +1<CR><SID>ws
-nnoremap <script> <SID>ws<S-Up> :resize +1<CR><SID>ws
-nnoremap <script> <SID>ws<S-Down> :resize -1<CR><SID>ws
-nnoremap <script> <SID>ws<S-Left> :vertical resize -1<CR><SID>ws
-nnoremap <script> <SID>ws<S-Right> :vertical resize +1<CR><SID>ws
-nmap <SID>ws <Nop>
 
 "------------------------------------------------------------
 " Mode diff : pas de coloration syntaxique ni de correcteur d'orthographe
