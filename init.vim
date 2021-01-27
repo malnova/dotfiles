@@ -415,6 +415,36 @@ if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     nnoremap <silent> <C-Down> :TmuxNavigateDown<CR>
     nnoremap <silent> <C-Up> :TmuxNavigateUp<CR>
     nnoremap <silent> <C-Right> :TmuxNavigateRight<CR>
+"endif
+
+nnoremap <silent> <C-H> :call Navigate("H")<CR>
+nnoremap <silent> <C-J> :call Navigate("J")<CR>
+nnoremap <silent> <C-K> :call Navigate("K")<CR>
+nnoremap <silent> <C-L> :call Navigate("L")<CR>
+
+function Navigate(direction)
+    if winnr('$') > 1
+        if a:direction == "H"
+            TmuxNavigateLeft
+        elseif a:direction == "J"
+            TmuxNavigateDown
+        elseif a:direction == "K"
+            TmuxNavigateUp
+        elseif a:direction == "L"
+            TmuxNavigateRight
+        endif
+    else
+        if a:direction == "H"
+            call feedkeys("b", 'n')
+        elseif a:direction == "J"
+            call feedkeys("\<C-e>", 'n')
+        elseif a:direction == "K"
+            call feedkeys("\<C-y>", 'n')
+        elseif a:direction == "L"
+            call feedkeys("w", 'n')
+        endif
+    endif
+endfunction
 endif
 
 "------------------------------------------------------------
