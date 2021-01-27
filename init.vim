@@ -158,15 +158,6 @@ vnoremap <silent> <C-l> w
 silent! set whichwrap+=<,>,h,l,[,]
 
 "------------------------------------------------------------
-" Déplacement de l'écran avec Ctrl-flèche haut|bas
-inoremap <silent> <C-Down> <C-o><C-e>
-inoremap <silent> <C-Up> <C-o><C-y>
-nnoremap <silent> <C-Down> <C-e>
-nnoremap <silent> <C-Up> <C-y>
-vnoremap <silent> <C-Down> <C-e>
-vnoremap <silent> <C-Up> <C-y>
-
-"------------------------------------------------------------
 " Touche home pour début du texte OU de la ligne en cas de wrap
 nnoremap <silent> <Home> :call SmartHome("n")<CR>
 inoremap <silent> <Home> <C-r>=SmartHome("i")<CR>
@@ -415,12 +406,16 @@ if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     nnoremap <silent> <C-Down> :TmuxNavigateDown<CR>
     nnoremap <silent> <C-Up> :TmuxNavigateUp<CR>
     nnoremap <silent> <C-Right> :TmuxNavigateRight<CR>
-endif
 
-nnoremap <silent> <expr> <C-H> winnr('$')>1 ? ":TmuxNavigateLeft<CR>" : "<Cmd> call feedkeys('b')<CR>"
-nnoremap <silent> <expr> <C-J> winnr('$')>1 ? ":TmuxNavigateDown<CR>" : "<Cmd> call feedkeys('<C-e>')<CR>"
-nnoremap <silent> <expr> <C-K> winnr('$')>1 ? ":TmuxNavigateUp<CR>" : "<Cmd> call feedkeys('<C-y>')<CR>"
-nnoremap <silent> <expr> <C-L> winnr('$')>1 ? ":TmuxNavigateRight<CR>" : "<Cmd> call feedkeys('w')<CR>"
+    nnoremap <silent> <expr> <C-H> winnr('$')>1 ? ":TmuxNavigateLeft<CR>" : "<Cmd> call feedkeys('b')<CR>"
+    nnoremap <silent> <expr> <C-J> winnr('$')>1 ? ":TmuxNavigateDown<CR>" : "<Cmd> call feedkeys('<C-e>')<CR>"
+    nnoremap <silent> <expr> <C-K> winnr('$')>1 ? ":TmuxNavigateUp<CR>" : "<Cmd> call feedkeys('<C-y>')<CR>"
+    nnoremap <silent> <expr> <C-L> winnr('$')>1 ? ":TmuxNavigateRight<CR>" : "<Cmd> call feedkeys('w')<CR>"
+    inoremap <silent> <C-H> <C-o>b
+    inoremap <silent> <C-J> <C-o><C-e>
+    inoremap <silent> <C-K> <C-o><C-y>
+    inoremap <silent> <C-L> <C-o>w
+endif
 
 "------------------------------------------------------------
 " Plugin (Better) Vim Tmux Resizer
