@@ -131,16 +131,6 @@ noremap Y y$
 nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
 
 "------------------------------------------------------------
-" Comportement normal des touches de direction (ligne par ligne
-" en cas de wrap)
-nnoremap <silent> <Down> gj
-nnoremap <silent> <Up> gk
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up> <C-o>gk
-vnoremap <silent> <Down> gj
-vnoremap <silent> <Up> gk
-
-"------------------------------------------------------------
 " Ligne précédente/suivante pour touches gauches/droites
 silent! set whichwrap+=<,>,h,l,[,]
 
@@ -235,11 +225,33 @@ function! SmartEnd(mode)
 endfunction
 
 "------------------------------------------------------------
-" Fonctionnement normal des touches PageUp et PageDown
+" Comportement normal des touches de direction (ligne par ligne
+" en cas de wrap)
+nnoremap <silent> <Down> gj
+nnoremap <silent> <Up> gk
+inoremap <silent> <Down> <C-o>gj
+inoremap <silent> <Up> <C-o>gk
+vnoremap <silent> <Down> gj
+vnoremap <silent> <Up> gk
+
+"------------------------------------------------------------
+" Déplacement de l'écran avec Ctrl-flèches haut / bas
+nnoremap <silent> <C-Down> <C-e>
+nnoremap <silent> <C-Up> <C-y>
+inoremap <silent> <C-Down> <C-o><C-e>
+inoremap <silent> <C-Up> <C-o><C-y>
+vnoremap <silent> <C-Down> <C-e>
+vnoremap <silent> <C-Up> <C-y>
+
+"------------------------------------------------------------
+" Comportement normal des touches PageUp et PageDown (aller
+" jusqu'au tout début / à la toute fin)
 noremap <silent> <PageUp> 1000<C-U>
 noremap <silent> <PageDown> 1000<C-D>
-inoremap <silent> <PageUp> <C-O>1000<C-U>
-inoremap <silent> <PageDown> <C-O>1000<C-D>
+inoremap <silent> <PageUp> <C-o>1000<C-U>
+inoremap <silent> <PageDown> <C-o>1000<C-D>
+vnoremap <silent> <PageUp> 1000<C-U>
+vnoremap <silent> <PageDown> 1000<C-D>
 
 "------------------------------------------------------------
 " Ctrl-PageUp et Ctrl-PageDown pour paragraphe précédent / suivant
@@ -301,6 +313,8 @@ nnoremap <S-Tab> :bprevious<CR>
 " Imite les raccourcis de tmux
 nnoremap <C-w>- <C-w>s
 nnoremap <C-w>\| <C-w>v
+inoremap <C-w>- <C-o><C-w>s
+inoremap <C-w>\| <C-o><C-w>v
 
 "------------------------------------------------------------
 " Mode diff : pas de coloration syntaxique ni de correcteur d'orthographe
@@ -376,24 +390,14 @@ endif
 " Plugin Vim Tmux Navigator
 if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     let g:tmux_navigator_no_mappings = 1
-    let g:tmux_navigator_disable_when_zoomed = 1
-    nnoremap <silent> <C-Left> :TmuxNavigateLeft<CR>
-    nnoremap <silent> <C-Down> :TmuxNavigateDown<CR>
-    nnoremap <silent> <C-Up> :TmuxNavigateUp<CR>
-    nnoremap <silent> <C-Right> :TmuxNavigateRight<CR>
-
-    nnoremap <silent> <expr> <C-H> winnr('$')>1 ? ":TmuxNavigateLeft<CR>" : "<Cmd> call feedkeys('b')<CR>"
-    nnoremap <silent> <expr> <C-J> winnr('$')>1 ? ":TmuxNavigateDown<CR>" : "<Cmd> call feedkeys('<C-e>')<CR>"
-    nnoremap <silent> <expr> <C-K> winnr('$')>1 ? ":TmuxNavigateUp<CR>" : "<Cmd> call feedkeys('<C-y>')<CR>"
-    nnoremap <silent> <expr> <C-L> winnr('$')>1 ? ":TmuxNavigateRight<CR>" : "<Cmd> call feedkeys('w')<CR>"
-    inoremap <silent> <C-H> <C-o>b
-    inoremap <silent> <C-J> <C-o><C-e>
-    inoremap <silent> <C-K> <C-o><C-y>
-    inoremap <silent> <C-L> <C-o>w
-    vnoremap <silent> <C-H> b
-    vnoremap <silent> <C-J> gj
-    vnoremap <silent> <C-K> gk
-    vnoremap <silent> <C-L> w
+    nnoremap <silent> <S-Left> :TmuxNavigateLeft<CR>
+    nnoremap <silent> <S-Down> :TmuxNavigateDown<CR>
+    nnoremap <silent> <S-Up> :TmuxNavigateUp<CR>
+    nnoremap <silent> <S-Right> :TmuxNavigateRight<CR>
+    inoremap <silent> <S-Left> <C-o>:TmuxNavigateLeft<CR>
+    inoremap <silent> <S-Down> <C-o>:TmuxNavigateDown<CR>
+    inoremap <silent> <S-Up> <C-o>:TmuxNavigateUp<CR>
+    inoremap <silent> <S-Right> <C-o>:TmuxNavigateRight<CR>
 endif
 
 "------------------------------------------------------------
@@ -404,10 +408,14 @@ if !empty(glob("~/.config/nvim/bundle/better-vim-tmux-resizer"))
     let g:tmux_resizer_resize_count = 2
     " Incrémentation verticale
     let g:tmux_resizer_vertical_resize_count = 2
-    nnoremap <silent> <S-Left> :TmuxResizeLeft<CR>
-    nnoremap <silent> <S-Down> :TmuxResizeDown<CR>
-    nnoremap <silent> <S-Up> :TmuxResizeUp<CR>
-    nnoremap <silent> <S-Right> :TmuxResizeRight<CR>
+    nnoremap <silent> <M-Left> :TmuxResizeLeft<CR>
+    nnoremap <silent> <M-Down> :TmuxResizeDown<CR>
+    nnoremap <silent> <M-Up> :TmuxResizeUp<CR>
+    nnoremap <silent> <M-Right> :TmuxResizeRight<CR>
+    inoremap <silent> <M-Left> <C-o>:TmuxResizeLeft<CR>
+    inoremap <silent> <M-Down> <C-o>:TmuxResizeDown<CR>
+    inoremap <silent> <M-Up> <C-o>:TmuxResizeUp<CR>
+    inoremap <silent> <M-Right> <C-o>:TmuxResizeRight<CR>
 endif
 
 "------------------------------------------------------------
