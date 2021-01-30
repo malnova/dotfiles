@@ -133,23 +133,12 @@ nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
 "------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne
 " en cas de wrap)
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up> <C-o>gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
+inoremap <silent> <Down> <C-o>gj
+inoremap <silent> <Up> <C-o>gk
 vnoremap <silent> <Down> gj
 vnoremap <silent> <Up> gk
-
-"------------------------------------------------------------
-" Ctrl-flèche droite|gauche avec b et w au lieu de B et W
-inoremap <silent> <C-Left> <C-o>b
-inoremap <silent> <C-Right> <C-o>w
-nnoremap <silent> <C-h> b
-nnoremap <silent> <C-l> w
-vnoremap <silent> <C-Left> b
-vnoremap <silent> <C-Right> w
-vnoremap <silent> <C-h> b
-vnoremap <silent> <C-l> w
 
 "------------------------------------------------------------
 " Ligne précédente/suivante pour touches gauches/droites
@@ -254,10 +243,10 @@ inoremap <silent> <PageDown> <C-O>1000<C-D>
 
 "------------------------------------------------------------
 " Ctrl-PageUp et Ctrl-PageDown pour paragraphe précédent / suivant
-inoremap <silent> <C-PageUp> <C-o>{
-inoremap <silent> <C-PageDown> <C-o>}
 nnoremap <silent> <C-PageUp> {
 nnoremap <silent> <C-PageDown> }
+inoremap <silent> <C-PageUp> <C-o>{
+inoremap <silent> <C-PageDown> <C-o>}
 vnoremap <silent> <C-PageUp> {
 vnoremap <silent> <C-PageDown> }
 
@@ -401,6 +390,10 @@ if !empty(glob("~/.config/nvim/bundle/vim-tmux-navigator"))
     inoremap <silent> <C-J> <C-o><C-e>
     inoremap <silent> <C-K> <C-o><C-y>
     inoremap <silent> <C-L> <C-o>w
+    vnoremap <silent> <C-H> b
+    vnoremap <silent> <C-J> gj
+    vnoremap <silent> <C-K> gk
+    vnoremap <silent> <C-L> w
 endif
 
 "------------------------------------------------------------
