@@ -445,7 +445,8 @@ ge / e                                  Fin du mot précédent / suivant
 0/^ / $                                Début / fin de la ligne
 gg / G                                 Début / fin du fichier
 ( / )                                     Phrase précédente / suivante
-{ / }                                   Paragraphe précédent / suivant
+{/C-PgUp / }/C-PgDown       Paragraphe précédent / suivant
+PgUp / PgDown                   Page précédente / suivante
 &lt;#&gt;G / :&lt;#&gt;                     Aller à la ligne n°#
 F / f&lt;caractère&gt;                 Occurrence précédente / suivante
 %                                       Déplacement sur ( ) [ ] { }
@@ -459,8 +460,8 @@ O / o                                   Ligne vierge avant/après + insertion
 R                                        _Remplacement de texte
 v                                        Sélectionner (mode _visuel)
 C-q                                     Sélectionner un bloc 
-C-q...Maj-i&lt;caract.&gt;Esc       Ajout avant le curseur à chaque ligne
-C-q...Maj-a&lt;caract.&gt;Esc      Ajout après le curseur à chaque ligne
+C-q...Maj-i&lt;caract.&gt;Esc      Ajout avant le curseur à chaque ligne
+C-q...Maj-a&lt;caract.&gt;Esc     Ajout après le curseur à chaque ligne
 Esc                                    Mode interactif / normal
 separator=Autres
 k / j / l / h                           Haut / bas / droite / gauche 
@@ -517,15 +518,15 @@ C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
 C-w =                                Tailles de fenêtres identiques
 separator=Tabs (onglets)
 :tabnew                             Ouvrir un nouvel onglet
-:tabedit/:tabfind &lt;fichier&gt; Ouvrir un nouvel onglet avec fichier
+:tabe(dit)/:tabfind &lt;fich.&gt; Ouvrir un nouvel onglet avec fichier
 :tabclose (&lt;#&gt;)                 Supprimer l'onglet courant / n°#
 :tabonly                             Supprimer tous les autres onglets
 :tabp/gT / :tabn/gt             Onglet précédent / suivant
 &lt;#&gt;gt                              Aller à l'onglet n°#
 :tabs                                  Liste des onglets
 separator=Buffers (tampons)
-:enew / :ene                      Ouvrir un nouveau buffer
-:edit / :e &lt;fichier&gt;             Ouvrir un nouveau buffer avec fichier
+:ene(w)                             Ouvrir un nouveau buffer
+:e(dit) &lt;fichier&gt;                Ouvrir un nouveau buffer avec fichier
 :bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
 :bp/S-Tab / :bn/Tab             Buffer précédent / suivant
 :b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom

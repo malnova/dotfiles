@@ -131,7 +131,7 @@ noremap Y y$
 nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
 
 "------------------------------------------------------------
-" Ligne précédente/suivante pour touches gauches/droites
+" Ligne précédente / suivante pour touches gauches / droites
 silent! set whichwrap+=<,>,h,l,[,]
 
 "------------------------------------------------------------
@@ -244,8 +244,7 @@ vnoremap <silent> <C-Down> <C-e>
 vnoremap <silent> <C-Up> <C-y>
 
 "------------------------------------------------------------
-" Comportement normal des touches PageUp et PageDown (aller
-" jusqu'au tout début / à la toute fin)
+" Comportement normal des touches PageUp et PageDown
 noremap <silent> <PageUp> 1000<C-U>
 noremap <silent> <PageDown> 1000<C-D>
 inoremap <silent> <PageUp> <C-o>1000<C-U>
@@ -254,7 +253,7 @@ vnoremap <silent> <PageUp> 1000<C-U>
 vnoremap <silent> <PageDown> 1000<C-D>
 
 "------------------------------------------------------------
-" Ctrl-PageUp et Ctrl-PageDown pour paragraphe précédent / suivant
+" Paragraphe précédent / suivant avec Ctrl-PageUp / PageDown
 nnoremap <silent> <C-PageUp> {
 nnoremap <silent> <C-PageDown> }
 inoremap <silent> <C-PageUp> <C-o>{
@@ -304,7 +303,7 @@ inoremap ; ;<C-g>u
 inoremap , ,<C-g>u
 
 "------------------------------------------------------------
-" Naviguer entre les buffers avec la touche <Tab>
+" Buffer précédent / suivant avec Maj-Tab / Tab
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
