@@ -322,7 +322,7 @@ inoremap <C-w>\| <C-o><C-w>v
 augroup diffmode
     autocmd!
     autocmd VimEnter * if &diff | syntax off | endif
-    autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let b:synstatus = '1' | setlocal syntax=off | else | let b:synstatus = '0' | endif | let b:spellstatus = &spell | setlocal nospell | else | if b:synstatus == "1" | setlocal syntax=on | endif | let &spell = b:spellstatus | endif
+    autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let g:synstatus = '1' | setlocal syntax=off | else | if exists("g:synstatus") | unlet g:synstatus | endif | endif | if &spell | let b:spellstatus = &spell | setlocal nospell | else | if exists("b:spellstatus") | unlet b:spellstatus | endif | endif | else | if exists("g:synstatus") | setlocal syntax=on | endif | if exists("b:spellstatus") | let &spell = b:spellstatus | endif | endif
 augroup END
 set diffopt+=algorithm:patience,context:3
 
