@@ -654,6 +654,7 @@ C-a Esc                             Mode copie
   Espace                           Commencer la sélection pour la copie
   Entrée                            Valider la sélection et copier
 C-a - / C-a |                       Diviser horiz./vert. la fenêtre
+C-a Espace                       Choisir une autre disposition (layout)
 S-flèches / C-a flèches      Sélectionner le panneau
 A-flèches                          Redimensionner le panneau
 C-a d                                _Détacher le panneau (nouvelle fenêtre)
