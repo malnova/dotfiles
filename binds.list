@@ -521,14 +521,14 @@ separator=Tabs (onglets)
 :tabe(dit)/:tabfind &lt;fich.&gt; Ouvrir un nouvel onglet avec fichier
 :tabclose (&lt;#&gt;)                 Supprimer l'onglet courant / n°#
 :tabonly                             Supprimer tous les autres onglets
-:tabp/gT / :tabn/gt             Onglet précédent / suivant
+:tabp/gT / :tabn/gt/C-t        Onglet précédent / suivant
 &lt;#&gt;gt                              Aller à l'onglet n°#
 :tabs                                  Liste des onglets
 separator=Buffers (tampons)
 :ene(w)                             Ouvrir un nouveau buffer
 :e(dit) &lt;fichier&gt;                Ouvrir un nouveau buffer avec fichier
 :bd/:bd! (&lt;# / fichier&gt;)     Supprimer le buffer courant / indiqué
-:bp/S-Tab / :bn/Tab             Buffer précédent / suivant
+:bp / :bn/C-b                      Buffer précédent / suivant
 :b&lt;# / nom__partiel&gt;          Afficher un buffer par son n°/nom
 :(vertical )sb &lt;#/fichier&gt;   Nouvelle fenêtre avec buffer existant
 :ls / :buffers / :files             Liste des buffers

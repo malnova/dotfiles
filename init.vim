@@ -303,9 +303,9 @@ inoremap ; ;<C-g>u
 inoremap , ,<C-g>u
 
 "------------------------------------------------------------
-" Buffer précédent / suivant avec Maj-Tab / Tab
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+" Buffer / onglet (tab) suivant avec C-b / C-t
+nnoremap <C-b> :bnext<CR>
+nnoremap <C-t> :tabnext<CR>
 
 "------------------------------------------------------------
 " Diviser les fenêtres horizontalement et verticalement
