@@ -657,9 +657,11 @@ C-a - / C-a |                       Diviser horiz./vert. la fenêtre
 S-flèches / C-a flèches      Sélectionner le panneau
 A-flèches                          Redimensionner le panneau
 C-a d                                _Détacher le panneau (nouvelle fenêtre)
-  C-a flèches                     Sélectionner la fenêtre
+  C-a n / C-a p / C-a #        Panneau précédent / suivant / n°#
 C-a f                                 _Fermer la session
 C-a h / C-a t                      Mode _heure (touche pour quitter)
+C-a q                                Afficher les numéros des panneaux
+  #                                     et sélectionner le panneau n°#
 C-a r                                 _Rotation de l'ordre des panneaux
 C-a :new                           Ouvrir une nouvelle session
 C-a s                                 Choisir une session de façon interactive
