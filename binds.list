@@ -661,14 +661,15 @@ Préfixe-
   Espace                           Choisir une autre disposition (layout)
   c                                    _Créer une nouvelle fenêtre
   d                                    _Détacher le panneau (nouvelle fenêtre)
-  n / p / #                          Fenêtre précédente / suivante / n°#
+  l / n / p / #                      Sélectionner la dernière fenêtre active /
+                                          la fenêtre suivante / précédente / n°#
   f                                     _Fermer la session
   h / t                                Mode _heure (touche pour quitter)
   q                                    Afficher les numéros des panneaux
     #                                    et sélectionner le panneau n°#
   r                                     _Rotation de l'ordre des panneaux
-  x                                    Tuer le processus du panneau actif
-  z                                    Zoomer / dézoomer le panneau actif
+  x                                     Tuer le processus du panneau actif
+  z                                     Zoomer / dézoomer le panneau actif
 separator
 tmux list-keys                    Liste des raccourcis clavier
 tmux list-sessions               Liste des sessions
