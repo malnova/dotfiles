@@ -94,10 +94,6 @@ set noincsearch " Pas de recherche pendant la frappe
 set noerrorbells " Empêche vim de beeper
 
 "------------------------------------------------------------
-" Ne pas rechercher dans tous les fichiers pour l'autocomplétion
-set complete-=i
-
-"------------------------------------------------------------
 " Format de la barre de statut
 set statusline=%F " chemin complet et nom du fichier
 set statusline+=\ [%{strlen(&fenc)?&fenc:'Aucun\ encodage'}] " encodage du fichier
