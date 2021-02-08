@@ -21,9 +21,6 @@ udiskie --automount --notify --no-tray --no-file-manager --no-password-cache &
 #(sleep 2; xdotool behave_screen_edge --delay 1000 bottom-left key Super_L &&
 #xdotool behave_screen_edge --delay 1000 bottom-right key ctrl+alt+Super_L) &
 
-## Daemon / service (optionnel) de l'émulateur de terminal rxvt-unicode
-#urxvtd -q -o -f &
-
 ## Réglage automatique de la couleur de la température de l'écran
 # en fonction de l'endroit et de l'heure
 redshift &>/dev/null &

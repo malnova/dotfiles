@@ -363,7 +363,7 @@
     <!-- Ctrl-Alt-Suppr -->
     <keybind key="C-A-Delete">
       <action name="Execute">
-          <command>&default_path;urxvt -e &default_path;bash -l -c "sleep .05; &default_path;transset-df -a 0.85 > /dev/null 2>&amp;1; &default_path;htop"</command>
+          <command>&scripts_path;st -e &default_path;bash -l -c "sleep .05; &default_path;transset-df -a 0.85 > /dev/null 2>&amp;1; &default_path;htop"</command>
       </action>
     </keybind>
     <!-- Déplacer la fenêtre -->
@@ -419,7 +419,7 @@
       </action>
       <action name="If">
         <query target="focus">
-          <name type="exact">urxvt</name>
+          <name type="exact">st-256color</name>
         </query>
         <then>
           <action name="ResizeRelative">
@@ -466,7 +466,7 @@
       </action>
       <action name="If">
         <query target="focus">
-          <name type="exact">urxvt</name>
+          <name type="exact">st-256color</name>
         </query>
         <then>
           <action name="ResizeRelative">
@@ -575,7 +575,7 @@
     <!-- Ouvrir un terminal -->
     <keybind key="C-A-Return">
       <action name="Execute">
-        <command>&default_path;urxvt</command>
+        <command>&scripts_path;st</command>
       </action>
     </keybind>
     <!-- Changer de bureau -->
@@ -711,7 +711,7 @@
     <keybind key="S-A-n">
       <action name="If">
         <query target="focus">
-          <name type="exact">urxvt</name>
+          <name type="exact">st-256color</name>
         </query>
         <then>
           <action name="Unmaximize"/>
@@ -719,7 +719,7 @@
             <!-- dimensions de la fenêtre normale obtenues par la commande
                  "xdotool getactivewindow getwindowgeometry" -->
             <width>724</width>
-            <height>517</height>
+            <height>479</height>
             <x>center</x>
             <y>center</y>
           </action>
@@ -862,7 +862,7 @@
     <keybind key="S-A-u">
       <action name="If">
         <query target="focus">
-          <name type="exact">urxvt</name>
+          <name type="exact">st-256color</name>
         </query>
         <then>
           <action name="Unmaximize"/>
@@ -870,7 +870,7 @@
             <!-- dimensions de la fenêtre normale obtenues par la commande
                  "xdotool getactivewindow getwindowgeometry" -->
             <width>724</width>
-            <height>517</height>
+            <height>479</height>
             <x>center</x>
             <y>center</y>
           </action>
@@ -891,7 +891,7 @@
         <finalactions>
           <action name="If">
             <query target="default">
-              <name type="exact">urxvt</name>
+              <name type="exact">st-256color</name>
             </query>
             <then>
               <action name="Unmaximize"/>
@@ -899,7 +899,7 @@
                 <!-- dimensions de la fenêtre normale obtenues par la commande
                     "xdotool getactivewindow getwindowgeometry" -->
                 <width>724</width>
-                <height>517</height>
+                <height>479</height>
                 <x>center</x>
                 <y>center</y>
               </action>
@@ -1420,7 +1420,7 @@
     <application name="simple-scan">
       <maximized>true</maximized>
     </application>
-    <application name="urxvt">
+    <application name="st-256color">
       <decor>no</decor>
     </application>
     <application name="xournalpp">

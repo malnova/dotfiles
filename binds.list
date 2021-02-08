@@ -673,7 +673,7 @@ Préfixe-
 separator
 tmux list-keys                    Liste des raccourcis clavier
 tmux list-sessions               Liste des sessions
-urxvt -e tmux attach -t #   Ouvrir un terminal avec la session #
+st -e tmux attach -t #        Ouvrir un terminal avec la session #
 tmux kill-session -t #          Tuer la session #
 tmux kill-session -a             Tuer toutes les autres sessions
 tmux kill-server                  Tuer toutes les sessions et les fenêtres
