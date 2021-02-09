@@ -31,7 +31,6 @@ if [[ $DISPLAY ]]; then
         if [ -z "$TMUX" ]; then
             # Transparence de la fenêtre (uniquement dans une nouvelle
             # fenêtre ; ne pas réactiver la transparence dans un split)
-            sleep .05; transset-df -a 0.85 > /dev/null 2>&1
             exec /usr/local/bin/tmux
         fi
     fi

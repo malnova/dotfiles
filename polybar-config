@@ -42,9 +42,9 @@ font-2 = FontAwesome:size=11;2
 ; police pour les icônes de connexion
 font-3 = MaterialIcons-Regular:size=13;4
 modules-left = ewmh windows
-; ORDIPORTABLE : volume connection-icon wireless-network battery date
-; ORDIBUREAU : volume connection-icon date
-modules-right = volume connection-icon wireless-network battery date
+; ORDIPORTABLE : alsa connection-icon wireless-network battery date
+; ORDIBUREAU : alsa connection-icon date
+modules-right = alsa connection-icon wireless-network battery date
 locale=fr_FR.UTF-8
 click-right = sleep 0.1; xdotool key Super_L
 
@@ -72,8 +72,8 @@ format = <label>
 format-margin = 5
 label = %output%
 
-[module/volume]
-type = internal/volume
+[module/alsa]
+type = internal/alsa
 master-soundcard = default
 speaker-soundcard = default
 headphone-soundcard = default
@@ -85,12 +85,12 @@ master-mixer = Master
 speaker-mixer = Speaker
 headphone-mixer = Headphone
 headphone-id = 18
-format-volume = %{A3:st -e alsamixer &:}<ramp-volume> <label-volume>%{A}
+format-volume = %{A3:/usr/local/bin/st -c "st-no-transparency" -e /usr/bin/alsamixer &:}<ramp-volume> <label-volume>%{A}
 format-muted = <label-muted>
 format-volume-margin = 6
 format-muted-margin = 6
 label-volume = %percentage%%
-label-muted = %{A3:st -e alsamixer &:}%{A}
+label-muted = %{A3:/usr/local/bin/st -c "st-no-transparency" -e /usr/bin/alsamixer &:}%{A}
 label-muted-foreground = ${colors.foreground-alt}
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -103,7 +103,7 @@ type = custom/script
 exec = /usr/local/bin/connection-icon
 tail = true
 format = <label>
-label = %{A1:st -e nmtui connect &:}%{A3:nm-connection-editor &:}%output%%{A}%{A}
+label = %{A1:/usr/local/bin/st -c "st-no-transparency" -e /usr/bin/nmtui connect &:}%{A3:/usr/bin/nm-connection-editor &:}%output%%{A}%{A}
 
 [module/wireless-network]
 type = internal/network
@@ -111,7 +111,7 @@ interface = wlp2s0
 interval = 3.0
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-label-connected = %{A1:st -e nmtui connect &:}%{A3:nm-connection-editor &:} %signal%%%{A}%{A}
+label-connected = %{A1:/usr/local/bin/st -c "st-no-transparency" -e /usr/bin/nmtui connect &:}%{A3:/usr/bin/nm-connection-editor &:} %signal%%%{A}%{A}
 label-disconnected = 
 
 [module/battery]
@@ -146,7 +146,7 @@ time = %H:%M
 time-alt = %H:%M:%S
 format = <label>
 format-margin = 3
-label = %{A3:gsimplecal &:}%date%%time%%{A}
+label = %{A3:/usr/bin/gsimplecal &:}%date%%time%%{A}
 
 [settings]
 screenchange-reload = true

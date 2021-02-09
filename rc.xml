@@ -363,7 +363,7 @@
     <!-- Ctrl-Alt-Suppr -->
     <keybind key="C-A-Delete">
       <action name="Execute">
-          <command>&scripts_path;st -e &default_path;bash -l -c "sleep .05; &default_path;transset-df -a 0.85 > /dev/null 2>&amp;1; &default_path;htop"</command>
+          <command>&scripts_path;st -e &default_path;htop</command>
       </action>
     </keybind>
     <!-- Déplacer la fenêtre -->
@@ -740,19 +740,19 @@
       <!-- Activer / désactiver la transparence -->
       <keybind key="o">
         <action name="Execute">
-          <command>&default_path;transset-df -a -t .85</command>
+          <command>&default_path;picom-trans --toggle</command>
         </action>
       </keybind>
       <!-- Augmenter la transparence -->
       <keybind key="plus">
         <action name="Execute">
-          <command>&default_path;transset-df -a --inc .05</command>
+          <command>&default_path;picom-trans -c +5</command>
         </action>
       </keybind>
       <!-- Diminuer la transparence -->
       <keybind key="minus">
         <action name="Execute">
-          <command>&default_path;transset-df -a --dec .05</command>
+          <command>&default_path;picom-trans -c -5</command>
         </action>
       </keybind>
       <!-- Quitter la keychain -->
