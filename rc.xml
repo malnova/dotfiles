@@ -423,7 +423,7 @@
         </query>
         <then>
           <action name="ResizeRelative">
-            <right>32</right>
+            <right>27</right>
             <bottom>19</bottom>
           </action>
         </then>
@@ -470,7 +470,7 @@
         </query>
         <then>
           <action name="ResizeRelative">
-            <right>-32</right>
+            <right>-27</right>
             <bottom>-19</bottom>
           </action>
         </then>
