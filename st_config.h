@@ -5,7 +5,14 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
+/*
+ * Pour l'affichage de l'ensemble des caractères Unicode, il faut installer
+ * la police ttf-symbola disponible dans AUR (Cf. la page
+ * https://wiki.archlinux.org/index.php/st#Crashes_if_page_contains_emoji_characters
+ * dans le wiki d'Arch).
+ */
 static char *font = "DejaVu Sans Mono:size=12:antialias=true:autohint=true";
+/* Espacement par rapport au bord de la fenêtre */
 static int borderpx = 2;
 
 /*
