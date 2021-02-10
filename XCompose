@@ -4,10 +4,14 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 # /etc/X11/xorg.conf.d/00-keyboard.conf
 
 # !!! L'affichage des combinaisons personnalisées dépend aussi de la police
-# de caractères utilisée ! Celle-ci est définie dans le fichier
-# ~/.Xresources !
+# de caractères utilisée !!!
+
+# Après une modification, il faut recharger le programme de méthode de
+# saisie en relançant l'ordinateur OU en changeant de disposition du
+# clavier (Maj. gauche-Maj. droite) et en relançant le programme utilisé.
 
 # Symboles personnalisés
+<Multi_key> <i> <n> <t> : "∫"
 <Multi_key> <i> <n> <t> : "∫"
 <Multi_key> <asciitilde> <asciitilde> : "≈"
 <Multi_key> <asciitilde> <minus> : "≃"
