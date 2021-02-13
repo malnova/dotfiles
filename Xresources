@@ -4,7 +4,7 @@
 ! Les noms des polices de caractères à utiliser peuvent être
 ! affichés avec la commande : fc-list
 
-! Font settings -----------------------------------
+! Polices de caractères (y compris Thunar, etc.) ------------------------
 
 Xft.autohint: true
 Xft.antialias: true
