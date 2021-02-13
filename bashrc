@@ -39,6 +39,9 @@ set -o vi
 # Alias
 # Penser également à vérifier dans /usr/local/bin/ si des wrappers existent
 # pour certains programmes (par ex. tmux...)
+alias egrep="/usr/bin/egrep --color=auto"
+alias fgrep="/usr/bin/fgrep --color=auto"
+alias grep="/usr/bin/grep --color=auto"
 alias ls="/usr/bin/ls --color=auto"
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
