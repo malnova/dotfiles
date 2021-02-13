@@ -71,6 +71,7 @@ Syntaxe générale (avec ImageMagick) :
    * inverser les couleurs : -negate
    * augmenter le gamma (facteur de contraste) pour un effet de légère surexposition (vieille photo) : -negate -gamma 0.5 -negate (ou 0.7 pour un effet moins marqué, ou 0.3 pour un effet plus marqué) ou -sigmoidal-contrast 7,50%
    * définir la transparence d'une couleur (image GIF, png, etc.) : -transparent <couleur>/"#xxxxxx"/"rgb(#,#,#)" (ex. -transparent white ou -transparent "#FFFFFF" ou -transparent "rgb(255,255,255)")
+   * remplacer une couleur : -fill "couleur_de_fin" -opaque "couleur_de_départ" (ces options peuvent être répétées plusieurs fois pour remplacer plusieurs couleurs en même temps) ; on peut indiquer une tolérance pour remplacer des nuances de couleurs en ajoutant "-fuzz #%" (ex. -fuzz 5% -fill "#ffffff" -opaque black pour remplacer le noir et ses nuances par du blanc)
 - réduire le bruit : utiliser le script /usr/local/bin/noisecleaner (fait partie de la collection des "Fred's ImageMagick Scripts") avec la syntaxe suivante : noisecleaner -n # "if" "of.tif", où # est un chiffre (5 par défaut) indiquant le nombre d'itérations à appliquer (plus d'infos avec noisecleaner -h)
 - ajouter un bord :
    * -bordercolor <couleur>/"#xxxxxx"/"rgb(#,#,#)" -border #x# (ex. -bordercolor white -border 0x10 pour un bord blanc de 10 pixels uniquement en haut et en bas, ou -bordercolor "#DFDFDF" -border 10 pour un bord gris de 10 pixels partout)
