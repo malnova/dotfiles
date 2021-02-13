@@ -1,11 +1,10 @@
 ! Recharger le fichier en cas de modifications avec la commande :
-! xrdb -load .Xresources
+! xrdb -load .Xresources (ou xrdb .Xresources)
 !
 ! Les noms des polices de caractères à utiliser peuvent être
 ! affichés avec la commande : fc-list
 
-! Polices de caractères (y compris Thunar, etc.) ------------------------
-
+! Polices de caractères (y compris pour Thunar, etc.) -----------------
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
