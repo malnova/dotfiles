@@ -26,14 +26,10 @@ export EDITOR=/usr/bin/nvim
 [[ $- != *i* ]] && return
 
 # tmux
-if [[ $DISPLAY ]]; then
-    if /usr/bin/which tmux >/dev/null 2>&1; then
+if command -v tmux >/dev/null 2>&1 && [ "${DISPLAY}" ]; then
         if [ -z "$TMUX" ]; then
-            # Transparence de la fenêtre (uniquement dans une nouvelle
-            # fenêtre ; ne pas réactiver la transparence dans un split)
             exec /usr/local/bin/tmux
         fi
-    fi
 fi
 
 # Reparamétrer C-w pour le même comportement que dans vi (ou Vim) :
