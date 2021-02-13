@@ -778,18 +778,6 @@
         <command>&default_path;xrandr --auto</command>
       </action>
     </keybind>
-    <!-- Activer / désactiver la veille de l'écran (screen) -->
-    <keybind key="C-A-s">
-      <action name="Execute">
-        <command>&scripts_path;toggle-dpms</command>
-      </action>
-    </keybind>
-    <!-- Notification du statut de dpms -->
-    <keybind key="C-A-S-s">
-      <action name="Execute">
-        <command>&scripts_path;toggle-dpms status</command>
-      </action>
-    </keybind>
     <!-- Tiling vertical / horizontal automatique sur les deux dernières fenêtres actives -->
     <keybind key="S-A-t">
       <action name="If">
