@@ -540,17 +540,19 @@ C-r &lt;caractère&gt;                Coller le registre en mode insertion
 :reg                                   Liste des registres
 &quot;+                                     Registre système
 &quot;0                                      Registre du dernier texte copié
-separator=Correcteur d'orthographe
+separator=Correcteur d'orthographe (spellcheck)
 zs                                      Activer / désactiver le correcteur
 z=                                     Afficher les suggestions
-[s / ]s                                Erreur précédente / suivante
+zN/[s / zn/]s                       Erreur précédente / suivante
 [S / ]S                               Précént / suivant : SpellBad seules
 zg / zw                              Ajouter un mot bon / mauvais au dict.
 zug / zuw                          Retirer un mot ajouté au dictionnaire
 zG / zW / zuG / zuW           Ajouter / retirer dans un dict. temp.
 separator=Vimdiff
-dp                                     Mettre le changement dans l'autre
+dN/[c / dn/]c                      _Différence précédente / suivante
 do                                     _Obtenir le changement de l'autre
+dp                                     _Partager le changement dans l'autre
+dO / dP                              _Obtenir/partager seulement sur 1 ligne
 :(windo )diffthis                 Diff (sur toutes les fenêtres visibles)
 :(windo )diffoff(!)               Quitter le mode diff (toutes fenêtres)
 :diffupdate                        Mettre à jour les différences

@@ -123,10 +123,6 @@ autocmd VimResized * wincmd = | exe "normal! \<C-w>="
 noremap Y y$
 
 "------------------------------------------------------------
-" Activer / désactiver le correcteur d'orthographe avec zs
-nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
-
-"------------------------------------------------------------
 " Ligne précédente / suivante pour touches gauches / droites
 silent! set whichwrap+=<,>,h,l,[,]
 
@@ -312,15 +308,30 @@ inoremap <C-w>- <C-o><C-w>s
 inoremap <C-w>\| <C-o><C-w>v
 
 "------------------------------------------------------------
-" Mode diff : pas de coloration syntaxique ni de correcteur d'orthographe
-" + algorithme plus juste + nombre de lignes réduit autour des lignes
-" comportant des différences (par défaut : 6)
+" Correcteur d'orthographe (spellcheck)
+" Activer / désactiver le correcteur
+nnoremap <silent> zs :setlocal spell! spell? spelllang=fr<CR>
+" Erreur précédente / suivante
+nnoremap zN [s
+nnoremap zn ]s
+
+"------------------------------------------------------------
+" Mode diff
+" Pas de coloration syntaxique ni de correcteur d'orthographe
 augroup diffmode
     autocmd!
     autocmd VimEnter * if &diff | syntax off | endif
     autocmd OptionSet diff if &diff | if exists("g:syntax_on") | let g:synstatus = '1' | setlocal syntax=off | else | if exists("g:synstatus") | unlet g:synstatus | endif | endif | if &spell | let b:spellstatus = &spell | setlocal nospell | else | if exists("b:spellstatus") | unlet b:spellstatus | endif | endif | else | if exists("g:synstatus") | setlocal syntax=on | endif | if exists("b:spellstatus") | let &spell = b:spellstatus | endif | endif
 augroup END
+" Algorithme plus juste et nombre de lignes réduit autour des lignes
+" comportant des différences (par défaut : 6)
 set diffopt+=algorithm:patience,context:3
+" Différence précédente / suivante
+nnoremap dN [c
+nnoremap dn ]c
+" Obtenir / partager les changements sur la ligne du curseur seulement
+nnoremap dO V:diffget<CR>
+nnoremap dP V:diffput<CR>
 
 "------------------------------------------------------------
 " Utiliser xsel pour gérer les registres pour éviter les erreurs
