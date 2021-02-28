@@ -1,0 +1,39 @@
+/* Pour toutes les pages
+ * Ex. :
+ * body { margin: 10px; border: 1px solid red !important; }
+ *
+ * * Ou pour certains domaines seulement
+ * Ex. :
+ * @-moz-document domain(google.com) {
+ *     body { margin: 10px; border: 1px solid red !important; }
+ * }
+ *
+ * Indiquer un nom de domaine (ex. : domaine.com) vaut aussi pour les
+ * sous-domaines (ex. : www.domaine.com, sous.domaine.com, etc.)
+ *
+ * Un redémarrage de Firefox est nécessaire après chaque modification ! */
+
+@-moz-document domain(superuser.com) {
+    .js-consent-banner { display: none !important; }
+    .js-dismissable-hero { display: none !important; }
+    .site-header { display: none !important; }
+}
+
+@-moz-document domain(stackexchange.com) {
+    .js-dismissable-hero { display: none !important; }
+    .site-header { display: none !important; }
+}
+
+@-moz-document domain(stackoverflow.com) {
+    .js-dismissable-hero { display: none !important; }
+}
+
+@-moz-document domain(askubuntu.com) {
+    .js-consent-banner { display: none !important; }
+    .js-dismissable-hero { display: none !important; }
+    .site-header { display: none !important; }
+}
+
+@-moz-document domain(amazon.fr) {
+    #sp-cc { display: none !important; }
+}
