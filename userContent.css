@@ -1,9 +1,9 @@
-/* Pour toutes les pages
- * Ex. :
+/* Cf. https://wiki.archlinux.org/index.php/Firefox/Tweaks#General_user_interface_CSS_settings
+ *
+ * Ex. de règle pour toutes les pages :
  * body { margin: 10px; border: 1px solid red !important; }
  *
- * * Ou pour certains domaines seulement
- * Ex. :
+ * Ex. de règle pour certains domaines seulement :
  * @-moz-document domain(google.com) {
  *     body { margin: 10px; border: 1px solid red !important; }
  * }
