@@ -5,6 +5,9 @@
 # Ne pas activer le gel de OUTPUT avec Ctrl-S (sortie possible avec Ctrl-Q)
 stty -ixon
 
+# Utiliser Ctrl-Backspace au lieu de Ctrl-W pour supprimer le mot précédent
+stty werase 
+
 # Ne pas conserver d'historique pour la fonction less (~/.lesshst)
 export LESSHISTFILE=-
 

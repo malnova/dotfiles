@@ -283,7 +283,9 @@ augroup smartundo
     autocmd InsertCharPre * call s:check_undo_break(v:char)
 augroup END
 inoremap <expr> <BS> <SID>start_delete("\<BS>")
+inoremap <expr>  <SID>start_delete("\<C-o>db")
 inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
+inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>dw")
 inoremap <expr> <C-w> <SID>start_delete("\<C-w>")
 inoremap <expr> <C-u> <SID>start_delete("\<C-u>")
 inoremap <CR> <C-g>u<CR>
@@ -293,7 +295,6 @@ inoremap ? ?<C-g>u
 inoremap : :<C-g>u
 inoremap ; ;<C-g>u
 inoremap , ,<C-g>u
-
 "------------------------------------------------------------
 " Buffer / onglet (tab) suivant avec C-b / C-t
 nnoremap <C-b> :bnext<CR>
@@ -304,8 +305,6 @@ nnoremap <C-t> :tabnext<CR>
 " Imite les raccourcis de tmux
 nnoremap <C-w>- <C-w>s
 nnoremap <C-w>\| <C-w>v
-inoremap <C-w>- <C-o><C-w>s
-inoremap <C-w>\| <C-o><C-w>v
 
 "------------------------------------------------------------
 " Correcteur d'orthographe (spellcheck)
