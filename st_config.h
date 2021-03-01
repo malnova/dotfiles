@@ -104,6 +104,9 @@ unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
+	/* Att. ! Si le patch "bold is not bright" n'est pas appliqué à st,
+     * les caractères en gras sont affichés avec la variante claire
+     * ("bright") de la couleur ! */
 	"#363946", /* *color0 : noir */
 	"#F5958B", /* *color1 : rouge */
 	"#B7E48C", /* *color2 : vert */
@@ -116,11 +119,11 @@ static const char *colorname[] = {
 	/* 8 bright colors */
 	"#474747", /* *color8 : noir */
 	"#FF8D80", /* *color9 : rouge */
-	"#C2EE95", /* *color10 : vert #DBFFB3 pour urxvt */
-	"#FFFFB9", /* *color11 : jaune ; #FFBE64 pour urxvt */
-	"#97C3FA", /* *color12 : bleu ; #A8CEEA pour urxvt */
+	"#DBFFB3", /* *color10 : vert */
+	"#FFBE64", /* *color11 : jaune */
+	"#A8CEEA", /* *color12 : bleu */
 	"#E296FF", /* *color13 : magenta */
-	"#DAF6FE", /* *color14 : cyan #9CE9FF pour urxvt */
+	"#9CE9FF", /* *color14 : cyan */
 	"#DDDDDD", /* *color15 : blanc */
 
 	[255] = 0,
