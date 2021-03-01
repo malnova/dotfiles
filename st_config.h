@@ -104,31 +104,31 @@ unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"#363946",
-	"#F5958B",
-	"#B7E48C",
-	"#FFFFB9",
-	"#7EB6FF",
-	"#C5C8C6",
-	"#C2EFFF",
-	"#DDDDDD",
+	"#363946", /* *color0 : noir */
+	"#F5958B", /* *color1 : rouge */
+	"#B7E48C", /* *color2 : vert */
+	"#FFFFB9", /* *color3 : jaune */
+	"#7EB6FF", /* *color4 : bleu */
+	"#C5C8C6", /* *color5 : magenta */
+	"#C2EFFF", /* *color6 : cyan */
+	"#DDDDDD", /* *color7 : blanc */
 
 	/* 8 bright colors */
-	"#474747",
-	"#FF8D80",
-	"#DBFFB3",
-	"#FFBE64",
-	"#A8CEEA",
-	"#E296FF",
-	"#9CE9FF",
-	"#DDDDDD",
+	"#474747", /* *color8 : noir */
+	"#FF8D80", /* *color9 : rouge */
+	"#DBFFB3", /* *color10 : vert */
+	"#FFFFB9", /* *color11 : jaune ; #FFBE64 pour urxvt */
+	"#7EB6FF", /* *color12 : bleu ; #A8CEEA pour urxvt */
+	"#E296FF", /* *color13 : magenta */
+	"#9CE9FF", /* *color14 : cyan */
+	"#DDDDDD", /* *color15 : blanc */
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#D5D8D6",
-	"#555555",
-    "#1D1F21",
+	"#D5D8D6", /* couleur 256 */
+	"#555555", /* couleur 257 */
+    "#1D1F21", /* couleur 258 */
 };
 
 
