@@ -285,8 +285,7 @@ augroup END
 inoremap <expr> <BS> <SID>start_delete("\<BS>")
 inoremap <expr>  <SID>start_delete("\<C-o>db")
 inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
-inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>dw")
-inoremap <expr> <C-w> <SID>start_delete("\<C-w>")
+inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>de")
 inoremap <expr> <C-u> <SID>start_delete("\<C-u>")
 inoremap <CR> <C-g>u<CR>
 inoremap . .<C-g>u
