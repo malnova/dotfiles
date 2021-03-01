@@ -283,10 +283,11 @@ augroup smartundo
     autocmd InsertCharPre * call s:check_undo_break(v:char)
 augroup END
 inoremap <expr> <BS> <SID>start_delete("\<BS>")
-inoremap <expr>  <SID>start_delete("\<C-o>db")
 inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
+" Ctrl-Backspace pour supprimer le mot précédent
+inoremap <expr>  <SID>start_delete("\<C-o>db")
+" Ctrl-Suppr pour supprimer le mot suivant
 inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>de")
-inoremap <expr> <C-u> <SID>start_delete("\<C-u>")
 inoremap <CR> <C-g>u<CR>
 inoremap . .<C-g>u
 inoremap ! !<C-g>u
@@ -294,6 +295,7 @@ inoremap ? ?<C-g>u
 inoremap : :<C-g>u
 inoremap ; ;<C-g>u
 inoremap , ,<C-g>u
+
 "------------------------------------------------------------
 " Buffer / onglet (tab) suivant avec C-b / C-t
 nnoremap <C-b> :bnext<CR>
