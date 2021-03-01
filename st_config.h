@@ -116,11 +116,11 @@ static const char *colorname[] = {
 	/* 8 bright colors */
 	"#474747", /* *color8 : noir */
 	"#FF8D80", /* *color9 : rouge */
-	"#DBFFB3", /* *color10 : vert */
+	"#C2EE95", /* *color10 : vert #DBFFB3 pour urxvt */
 	"#FFFFB9", /* *color11 : jaune ; #FFBE64 pour urxvt */
-	"#7EB6FF", /* *color12 : bleu ; #A8CEEA pour urxvt */
+	"#97C3FA", /* *color12 : bleu ; #A8CEEA pour urxvt */
 	"#E296FF", /* *color13 : magenta */
-	"#9CE9FF", /* *color14 : cyan */
+	"#DAF6FE", /* *color14 : cyan #9CE9FF pour urxvt */
 	"#DDDDDD", /* *color15 : blanc */
 
 	[255] = 0,
