@@ -2,6 +2,9 @@
 # ~/.bashrc
 #
 
+# Ne rien faire si le mode n'est pas interactif
+[[ $- != *i* ]] && return
+
 # Ne pas activer le gel de OUTPUT avec Ctrl-S (sortie possible avec Ctrl-Q)
 stty -ixon
 
@@ -24,9 +27,6 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 # Éditeur (pour sudo -e)
 export EDITOR=/usr/bin/nvim
-
-# Ne rien faire si le mode n'est pas interactif
-[[ $- != *i* ]] && return
 
 # tmux
 if command -v tmux >/dev/null 2>&1 && [ "${DISPLAY}" ]; then
