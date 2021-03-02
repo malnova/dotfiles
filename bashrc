@@ -11,6 +11,9 @@ stty -ixon
 # Utiliser Ctrl-Backspace au lieu de Ctrl-W pour supprimer le mot précédent
 stty werase 
 
+# Utiliser Ctrl-L au lieu de Ctrl-V pour afficher les caractères de contrôle
+stty lnext 
+
 # Ne pas conserver d'historique pour la fonction less (~/.lesshst)
 export LESSHISTFILE=-
 
