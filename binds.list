@@ -473,8 +473,6 @@ k / j / l / h                           Haut / bas / droite / gauche
 :!                                       Exécuter une commande
 (#)u / (#)C-r                      Annuler / rétablir (# fois)
 C-g                                    Afficher la position du curseur
-za / zo / zc                         Ouvrir / fermer le repli
-zR / zM                              Ouvrir / fermer tous les replis
 :dig[raphs]                        Afficher la liste des digraphes
 :dig[raphs] xx #                Ajouter le caractère Unicode # comme
                                             digraphe avec les touches xx
@@ -490,6 +488,13 @@ C-k &lt;caractères&gt;              Taper un digraphe
 :retab!                               Modifie le fichier en fonction de
                                             set expandtab ou set noexpandtab
 :syntax on / off                   Coloration syntaxique on / off
+separator=Folds (replis)
+zf                                      Créer un repli des lignes sélectionnées
+zd                                     Supprimer le repli sous le curseur
+zk / zj                                Repli précédent / suivant
+za / zo / zc                         Ouvrir / fermer le repli
+ZO / ZC                             Ouv./fer. tous les replis sous le curseur
+zR / zM                              Ouvrir / fermer tous les replis
 separator=Autocomplétion
 C-p / C-n                            Menu + élément précédent / suivant
 C-y                                    Accepter l'élément d'autocomplétion
