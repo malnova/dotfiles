@@ -204,6 +204,8 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+	/* Appliquer le patch "anysize" à st pour que la taille de la fenêtre
+     * ne soit pas modifiée lors d'un zoom / dézoom */
 	{ TERMMOD,              XK_plus,        zoom,           {.f = +1} },
 	{ ControlMask,          XK_equal,       zoom,           {.f = +1} },
 	{ ControlMask,          XK_KP_Add,      zoom,           {.f = +1} },
@@ -212,8 +214,6 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_asterisk,    zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_KP_Multiply, zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_v,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 };
 
