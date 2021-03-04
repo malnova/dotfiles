@@ -618,7 +618,7 @@ separator:sxiv
 Espace                         Image animée en pause / reprendre
 (#)&lt; / &gt;                       (#) image (frame) précédente / suivante
 (#)Flèches / h, j, k, l     Déplacement sur l'image (de # pixels)
-(#)PgUp / PgDown        Aller (#x)10 images avant / après
+(#)PgUp / PgDown       Aller (#x)10 images avant / après
 suppr                           Supprimer l'image de la liste
 _ / |                              Miroir vert. / horiz. sans enregistrer
 + / -                             Zoomer / dézoomer
@@ -644,6 +644,7 @@ m                                 _Marquer / ne pas marquer l'image
 C-m                              Inverser les _marques des images
 M                                  Enlever toutes les _marques des images
 (#)N / (#)P                   (#) image marquée suivante / _précédente
+-o                                 Lister les images marquées en quittant
 separator=Actions sur l'image active / les fichiers vignettes marqués
 i                                   Afficher les _infos EXIF
 C-suppr                        Supprimer sans confirmation
@@ -655,6 +656,7 @@ separator=Diaporama
 (#)d                              Activer / désactiver le diaporama (durée
                                       par défaut / # secondes)
 -d #                              Démarrer en diaporama à # secondes
+-R                                  Ordre aléatoire des images
 separator:tmux
 F1                                     Liste des raccourcis clavier
 S-flèches / Préfixe-flèches  Sélectionner le panneau
