@@ -51,3 +51,7 @@ map [normal] <F1> focus_inputbar ":info"
 map [fullscreen] <F1> focus_inputbar ":info"
 map [normal] i feedkeys "<F1><Return>"
 map [fullscreen] i feedkeys "<F1><Return>"
+map [normal] <Space> scroll half-down
+map [fullscreen] <Space> scroll half-down
+map [normal] <S-Space> scroll half-up
+map [fullscreen] <S-Space> scroll half-up

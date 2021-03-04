@@ -740,7 +740,7 @@ Flèches / h, j, k, l                  Déplacement sur la page
   N / P                                  Occurrence suivante / _précédente
 Double clic-sélection            Copier une zone de texte
 Tab                                      Afficher / masquer l'index
-Espace / S-Espace               Écran suivant / précédent
+S-Espace / Espace               Aller en arrière / en avant (1/2 page)
 c                                         _Couleurs en niv. de gris et inversées
 d                                         Afficher une / _deux pages
 f                                          Plein écran
@@ -748,7 +748,7 @@ gg/Home / G/End / #gg/#G  Aller à la première / dernière / # page
 i                                          Afficher les _infos sur le fichier
 l # / s #                               Afficher / suivre le _lien n°#
 L / R                                    Rotation gauche / droite
-n/PgDown / p/PgUp              Page suivante / _précédente
+(#) n/PgDown / p/PgUp        (#) _page suivante / précédente
 o / O                                    _Ouvrir un fichier
 q                                         _Quitter
 r                                          _Recharger le fichier
