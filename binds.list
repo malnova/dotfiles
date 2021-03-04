@@ -745,6 +745,7 @@ c                                         _Couleurs en niv. de gris et inversée
 d                                         Afficher une / _deux pages
 f                                          Plein écran
 gg/Home / G/End / #gg/#G  Aller à la première / dernière / # page
+i                                          Afficher les _infos sur le fichier
 l # / s #                               Afficher / suivre le _lien n°#
 L / R                                    Rotation gauche / droite
 n/PgDown / p/PgUp              Page suivante / _précédente
@@ -754,6 +755,5 @@ r                                          _Recharger le fichier
 t                                          Afficher / masquer la barre de _titre
 W / H                                   Largeur / hauteur en pleine page
 separator
-:info                                     Afficher les _infos (auteur...) du fichier
 :open                                   _Ouvrir un fichier
 :print                                   Imprimer le document

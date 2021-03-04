@@ -47,3 +47,7 @@ map [normal] H adjust_window best-fit
 map [fullscreen] H adjust_window best-fit
 map [normal] W adjust_window width
 map [fullscreen] W adjust_window width
+map [normal] <F1> focus_inputbar ":info"
+map [fullscreen] <F1> focus_inputbar ":info"
+map [normal] i feedkeys "<F1><Return>"
+map [fullscreen] i feedkeys "<F1><Return>"
