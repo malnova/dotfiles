@@ -12,3 +12,8 @@ Xft.hintstyle: hintslight
 Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
+
+! Police et couleurs pour sxiv
+Sxiv.font: xft:DejaVu Sans Mono:Regular:size=8
+Sxiv.foreground: #DDDDDD
+Sxiv.background: #3E3E3E
