@@ -49,6 +49,9 @@ alias egrep="/usr/bin/egrep --color=auto"
 alias fgrep="/usr/bin/fgrep --color=auto"
 alias grep="/usr/bin/grep --color=auto"
 alias ls="/usr/bin/ls --color=auto"
+# sxiv : afficher les images du dossier actif quand aucun paramètre
+# n'est spécifié
+alias sxiv='[ -z $1 ] && set -- "." "${@:2}";/usr/local/bin/sxiv "$@"'
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
 alias vim="/usr/bin/nvim"
