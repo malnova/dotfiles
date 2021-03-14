@@ -306,6 +306,8 @@ nnoremap <C-t> :tabnext<CR>
 " Imite les raccourcis de tmux
 nnoremap <C-w>- <C-w>s
 nnoremap <C-w>\| <C-w>v
+nnoremap <C-w>_ :botright split<CR>
+nnoremap <C-w>\ :botright vsplit<CR>
 
 "------------------------------------------------------------
 " Correcteur d'orthographe (spellcheck)

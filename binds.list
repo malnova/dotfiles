@@ -509,12 +509,13 @@ m&lt;caractère&gt;                   Mettre une marque
 :marks                               Liste des marques
 separator=Windows (fenêtres)
 vim(diff) -o / -O &lt;fichiers&gt; Fichiers dans des fenêtres horiz. / vert.
-:sp / :split / :vs(p) / :vsplit   Diviser la fenêtre horiz. / vert.
+:sp(lit) / :vs(plit)                 Diviser la fenêtre horiz. / vert.
   (&lt;fichier&gt;)                         (et y ouvrir le fichier)
 C-w s/C-w - / C-w v/C-w |     Diviser la fenêtre horiz. / vert.
+C-w _ / C-w \                       Diviser sur toute la largeur / hauteur
 C-w o                                 Laisser une seule fenêtre ouverte
 :q / C-w q / :hide                Fermer la fenêtre actuelle
-:only                                 Fermer les autres fenêtres
+:only                                  Fermer les autres fenêtres
 C-w r                                 _Rotation de l'ordre des fenêtres
 C-w (C-)w/h/j/k/l/flèches     Sélectionner la fenêtre
    ou S-flèches
@@ -668,6 +669,7 @@ Préfixe-
     Espace                           Commencer la sélection pour la copie
     Entrée                            Valider la sélection et copier
   - / |                                 Diviser horiz./vert. la fenêtre
+  _ / \                                 Diviser sur toute la largeur / hauteur
   Espace                           Choisir une autre disposition (layout)
   c                                    _Créer une nouvelle fenêtre
   d                                    _Détacher le panneau (nouvelle fenêtre)
