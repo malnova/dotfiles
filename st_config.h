@@ -103,28 +103,28 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
 	/* Att. ! Si le patch "bold is not bright" n'est pas appliqué à st,
      * les caractères en gras sont affichés avec la variante claire
      * ("bright") de la couleur ! */
-	"#363946", /* *color0 : noir */
-	"#F5958B", /* *color1 : rouge */
-	"#B7E48C", /* *color2 : vert */
-	"#FFFFB9", /* *color3 : jaune */
-	"#7EB6FF", /* *color4 : bleu */
-	"#C5C8C6", /* *color5 : magenta */
-	"#C2EFFF", /* *color6 : cyan */
-	"#DDDDDD", /* *color7 : blanc */
+	/* 8 normal colors */
+	"#363946", /* *color0 : noir (Black) */
+	"#F5958B", /* *color1 : rouge (DarkRed) */
+	"#B7E48C", /* *color2 : vert (DarkGreen) */
+	"#FFFFB9", /* *color3 : jaune (Brown / DarkYellow)*/
+	"#7EB6FF", /* *color4 : bleu (DarkBlue)*/
+	"#C5C8C6", /* *color5 : magenta (DarkMagenta) */
+	"#C2EFFF", /* *color6 : cyan (DarkCyan) */
+	"#DDDDDD", /* *color7 : blanc (LightGray / LightGrey / Gray / Grey) */
 
 	/* 8 bright colors */
-	"#474747", /* *color8 : noir */
-	"#FF8D80", /* *color9 : rouge */
-	"#DBFFB3", /* *color10 : vert */
-	"#FFBE64", /* *color11 : jaune */
-	"#A8CEEA", /* *color12 : bleu */
-	"#E296FF", /* *color13 : magenta */
-	"#9CE9FF", /* *color14 : cyan */
-	"#DDDDDD", /* *color15 : blanc */
+	"#474747", /* *color8 : noir (DarkGray / DarkGrey) */
+	"#FF8D80", /* *color9 : rouge (Red / LightRed) */
+	"#DBFFB3", /* *color10 : vert (Green / LightGreen) */
+	"#FFBE64", /* *color11 : jaune (Yellow / LightYellow) */
+	"#A8CEEA", /* *color12 : bleu (Blue / LightBlue) */
+	"#E296FF", /* *color13 : magenta (Magenta / LightMagenta) */
+	"#9CE9FF", /* *color14 : cyan (Cyan / LightCyan) */
+	"#DDDDDD", /* *color15 : blanc (White) */
 
 	[255] = 0,
 
@@ -133,7 +133,6 @@ static const char *colorname[] = {
 	"#555555", /* couleur 257 */
     "#1D1F21", /* couleur 258 */
 };
-
 
 /*
  * Default colors (colorname index)
@@ -156,7 +155,6 @@ static unsigned int cursorshape = 2;
 /*
  * Default columns and rows numbers
  */
-
 static unsigned int cols = 80;
 static unsigned int rows = 25;
 
