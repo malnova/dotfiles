@@ -1400,6 +1400,7 @@
       <maximized>true</maximized>
     </application>
     <application name="Navigator">
+      <decor>no</decor>
       <maximized>true</maximized>
     </application>
     <application name="ocrfeeder">
