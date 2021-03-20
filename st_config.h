@@ -208,7 +208,9 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_KP_Subtract, zoom,           {.f = -1} },
 	{ ControlMask,          XK_asterisk,    zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_KP_Multiply, zoomreset,      {.f =  0} },
-	{ ControlMask,          XK_0,           zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_0,           zoomreset,      {.f =  0} },
+	{ ControlMask,          XK_parenright,  zoomreset,      {.f =  0} },
+	{ ControlMask,          XK_KP_0,        zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_v,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 };
