@@ -199,9 +199,6 @@ static MouseShortcut mshortcuts[] = {
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	/* Appliquer le patch "anysize" à st pour que la taille de la fenêtre
      * ne soit pas modifiée lors d'un zoom / dézoom */
 	{ TERMMOD,              XK_plus,        zoom,           {.f = +1} },
@@ -211,6 +208,7 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_KP_Subtract, zoom,           {.f = -1} },
 	{ ControlMask,          XK_asterisk,    zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_KP_Multiply, zoomreset,      {.f =  0} },
+	{ ControlMask,          XK_0,           zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_v,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 };
