@@ -5,15 +5,6 @@
 # Ne rien faire si le mode n'est pas interactif
 [[ $- != *i* ]] && return
 
-# Ne pas activer le gel de OUTPUT avec Ctrl-S (sortie possible avec Ctrl-Q)
-stty -ixon
-
-# Utiliser Ctrl-Backspace au lieu de Ctrl-W pour supprimer le mot précédent
-stty werase 
-
-# Utiliser Ctrl-L au lieu de Ctrl-V pour afficher les caractères de contrôle
-stty lnext 
-
 # Ne pas conserver d'historique pour la fonction less (~/.lesshst)
 export LESSHISTFILE=-
 
@@ -33,9 +24,9 @@ export EDITOR=/usr/bin/nvim
 
 # tmux
 if command -v tmux >/dev/null 2>&1 && [ "${DISPLAY}" ]; then
-        if [ -z "$TMUX" ]; then
-            exec /usr/local/bin/tmux
-        fi
+    if [ -z "$TMUX" ]; then
+        exec /usr/local/bin/tmux
+    fi
 fi
 
 # Reparamétrer C-w pour le même comportement que dans vi (ou Vim) :
@@ -55,8 +46,24 @@ alias sxiv='[ -z $1 ] && set -- "." "${@:2}";/usr/local/bin/sxiv "$@"'
 alias thunderbird="/usr/bin/firejail --profile=/etc/firejail/my_thunderbird.profile /usr/bin/thunderbird"
 alias units="/usr/bin/units --history $HOME/.cache/.units_history"
 alias vim="/usr/bin/nvim"
-alias vimdiff="/usr/bin/nvim -d"
+function __vimdiff {
+    if [ -d "$1" ] && [ -d "$2" ] && [ -z "$3" ]; then
+        /usr/bin/nvim -c "DirDiff $1 $2"
+    else
+        /usr/bin/nvim -d "$@"
+    fi
+}
+alias vimdiff="__vimdiff"
 alias wget="/usr/bin/wget --hsts-file=$HOME/.cache/.wget-hsts"
 
 # Prompt bash
 PS1='[\u@\h \W]\$ '
+
+# Ne pas activer le gel de OUTPUT avec Ctrl-S (sortie possible avec Ctrl-Q)
+stty -ixon
+
+# Utiliser Ctrl-L au lieu de Ctrl-V pour afficher les caractères de contrôle
+stty lnext 
+
+# Utiliser Ctrl-Backspace pour supprimer le mot précédent
+bind '"": backward-kill-word'
