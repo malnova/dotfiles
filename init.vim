@@ -41,6 +41,9 @@ call plug#begin('~/.config/nvim/bundle')
     " Plugin (Better) Vim Tmux Resizer, pour pouvoir utiliser les mêmes
     " raccourcis pour redimensionner un panneau dans vim et dans Tmux
     Plug 'https://github.com/RyanMillerC/better-vim-tmux-resizer'
+
+    " Plugin DirDiff pour pouvoir utiliser vimdiff sur des répertoires
+    Plug 'https://github.com/will133/vim-dirdiff', { 'on': 'DirDiff' }
 call plug#end()
 
 "------------------------------------------------------------
