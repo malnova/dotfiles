@@ -261,6 +261,10 @@ vnoremap <silent> <C-PageDown> }
 nnoremap <Space> i<Space><Right><ESC>
 
 "------------------------------------------------------------
+" Caractères de contrôle avec Ctrl-l comme dans bash
+inoremap <C-l> <C-v>
+
+"------------------------------------------------------------
 " Remplacer le délimiteur de fenêtre (split) verticale par une espace
 set fillchars+=vert:\ 
 
