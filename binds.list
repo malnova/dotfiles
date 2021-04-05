@@ -408,9 +408,9 @@ C-T / C-t                         Diminuer / augmenter la _taille
 v                                   Afficher / masquer les sous-titres
 V                                   Modifier le style des sous-titres
 separator=Retoucher, réencoder
-g                     Recadrer la vidéo (annuler : G)
-y                     Début / fin pour couper et réencoder (reenc.conf)
-Y                     Début / fin pour couper sans réencoder (slice.conf)
+g                   Recadrer la vidéo (annuler : G)
+y                   Début / fin pour couper et réencoder (reenc.conf)
+Y                   Début / fin approximatifs sans réencoder (slice.conf)
 separator:nvim / vim / vimdiff
 Syntaxe générale        Opérateur [Quantificateur] [mouvement]
 separator=Opérateurs et commandes
