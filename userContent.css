@@ -20,12 +20,15 @@
 }
 
 @-moz-document domain(stackexchange.com) {
+    .js-consent-banner { display: none !important; }
     .js-dismissable-hero { display: none !important; }
     .site-header { display: none !important; }
 }
 
 @-moz-document domain(stackoverflow.com) {
+    .js-consent-banner { display: none !important; }
     .js-dismissable-hero { display: none !important; }
+    .site-header { display: none !important; }
 }
 
 @-moz-document domain(askubuntu.com) {
