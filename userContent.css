@@ -13,30 +13,36 @@
  *
  * Un redémarrage de Firefox est nécessaire après chaque modification ! */
 
-@-moz-document domain(superuser.com) {
-    .js-consent-banner { display: none !important; }
-    .js-dismissable-hero { display: none !important; }
-    .site-header { display: none !important; }
-}
-
-@-moz-document domain(stackexchange.com) {
-    .js-consent-banner { display: none !important; }
-    .js-dismissable-hero { display: none !important; }
-    .site-header { display: none !important; }
-}
-
-@-moz-document domain(stackoverflow.com) {
-    .js-consent-banner { display: none !important; }
-    .js-dismissable-hero { display: none !important; }
-    .site-header { display: none !important; }
-}
-
-@-moz-document domain(askubuntu.com) {
-    .js-consent-banner { display: none !important; }
-    .js-dismissable-hero { display: none !important; }
-    .site-header { display: none !important; }
+@-moz-document domain(superuser.com), domain(stackexchange.com), domain(stackoverflow.com), domain(askubuntu.com) {
+    .js-consent-banner, .js-dismissable-hero, .site-header { display: none !important; }
 }
 
 @-moz-document domain(amazon.fr) {
     #sp-cc { display: none !important; }
+    #nav-search * { font-size: 9pt !important; }
+    .nav-search-dropdown { width: 150px !important; }
+}
+
+@-moz-document domain(movieparadise.org) {
+    .textwidget, .module_home_ads { display: none !important; }
+}
+
+@-moz-document domain(programme-tv.net) {
+    .containerAds, .grid-sidebar-wrapper, .bouquet-sidebar { display: none !important; }
+}
+
+@-moz-document domain(yggtorrent.li) {
+    .ad-alert-wrapper { display: none !important; }
+}
+
+@-moz-document domain(allocine.fr) {
+    .main-banner, .sticky-ad-holder { display: none !important; }
+}
+
+@-moz-document domain(ghacks.net) {
+    .ghacks_ad_code, .post-list-sponsored, .category-sponsored { display: none !important; }
+}
+
+@-moz-document domain(tripadvisor.fr) {
+    .ad { display: none !important; }
 }
