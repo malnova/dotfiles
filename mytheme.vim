@@ -100,9 +100,10 @@ if has('spell')
 endif
 " Couleurs différentes pour la recherche
 hi Search ctermfg=black ctermbg=3
-if !empty(glob("~/.config/nvim/bundle/vim-searchant"))
-    hi SearchCurrent ctermfg=black ctermbg=red cterm=bold
+if !empty(glob("~/.config/nvim/bundle/vim-searchhi"))
+    highlight CurrentSearch ctermfg=red ctermbg=black cterm=reverse,bold
 endif
+"hi SearchCurrent ctermfg=black ctermbg=red cterm=bold
 " Couleurs de la tabline
 hi TabLine ctermfg=5 ctermbg=black cterm=none
 hi TabLineSel ctermfg=white ctermbg=black cterm=underline,bold
@@ -115,13 +116,13 @@ endif
 hi StatusLineNC ctermfg=5 ctermbg=black cterm=none
 function! SetWindowFocused()
     if !exists('#goyo')
-        hi clear StatusLine
+"        hi clear StatusLine
         hi StatusLine ctermfg=black ctermbg=5 cterm=bold
     endif
 endfunction
 function! SetWindowUnfocused()
     if !exists('#goyo')
-        hi clear StatusLine
+"        hi clear StatusLine
         hi StatusLine ctermfg=5 ctermbg=black cterm=none
     endif
 endfunction

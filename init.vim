@@ -19,12 +19,11 @@ call plug#begin('~/.config/nvim/bundle')
     " dans la tabline :
     Plug 'https://github.com/pacha/vem-tabline'
 
-    " Plugin Searchant, pour mettre en surbrillance de couleur différente
+    " Plugin vim-searchhi, pour mettre en surbrillance de couleur différente
     " le résultat de recherche actif/sous lequel se trouve le curseur
     " (par défaut, tous les résultats de recherche sont surlignés de la
-    " même couleur) (la couleur du paramètre SearchCurrent est définie
-    " plus bas) :
-    Plug 'https://github.com/timakro/vim-searchant'
+    " même couleur) (les couleurs sont définies dans le thème) :
+    Plug 'https://github.com/qxxxb/vim-searchhi'
 
     " Plugin Goyo, pour écrire sans distraction (en masquant les différentes
     " barres, horizontales et verticales, de vim et de tmux) :
@@ -356,8 +355,21 @@ command! -bang Wqa silent exec 'w !pkexec tee %:p > /dev/null' | e! | qa
 
 "------------------------------------------------------------
 " Plugin Vem Tabline
-let g:vem_tabline_show = 2
-let g:vem_unnamed_buffer_label = '[Aucun nom]'
+if !empty(glob("~/.config/nvim/bundle/vem-tabline"))
+    let g:vem_tabline_show = 2
+    let g:vem_unnamed_buffer_label = '[Aucun nom]'
+endif
+
+"------------------------------------------------------------
+" Plugin vim-searchhi
+if !empty(glob("~/.config/nvim/bundle/vim-searchhi"))
+    nmap n <Plug>(searchhi-n)
+    nmap N <Plug>(searchhi-N)
+    vmap n <Plug>(searchhi-v-n)
+    vmap N <Plug>(searchhi-v-N)
+    nmap <silent> <C-c> <Plug>(searchhi-clear-all)
+    vmap <silent> <C-c> <Plug>(searchhi-v-clear-all)
+endif
 
 "------------------------------------------------------------
 " Plugin Goyo
