@@ -13,7 +13,7 @@
  *
  * Un redémarrage de Firefox est nécessaire après chaque modification ! */
 
-@-moz-document domain(superuser.com), domain(stackexchange.com), domain(stackoverflow.com), domain(askubuntu.com) {
+@-moz-document domain(superuser.com), domain(stackexchange.com), domain(stackoverflow.com), domain(askubuntu.com), domain(serverfault.com) {
     .js-consent-banner, .js-dismissable-hero, .site-header { display: none !important; }
 }
 
@@ -25,6 +25,7 @@
 
 @-moz-document domain(movieparadise.org) {
     .textwidget, .module_home_ads { display: none !important; }
+    body, quote, .texto { color: rgba(255, 255, 255, 0.8) !important;}
 }
 
 @-moz-document domain(programme-tv.net) {
