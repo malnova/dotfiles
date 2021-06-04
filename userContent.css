@@ -24,7 +24,7 @@
 }
 
 @-moz-document domain(movieparadise.org) {
-    .textwidget, .module_home_ads { display: none !important; }
+    .textwidget, .module_home_ads, .module_single_ads { display: none !important; }
     body, quote, .texto { color: rgba(255, 255, 255, 0.8) !important;}
 }
 

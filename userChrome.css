@@ -1,0 +1,6 @@
+/* Cf. https://wiki.archlinux.org/index.php/Firefox/Tweaks#General_user_interface_CSS_settings
+ *
+ * Un redémarrage de Firefox est nécessaire après chaque modification ! */
+
+/* Icône des marques-pages à droite de la barre d'adresse */
+#star-button-box { display: none !important; }
