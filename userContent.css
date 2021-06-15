@@ -14,7 +14,8 @@
  * Un redémarrage de Firefox est nécessaire après chaque modification ! */
 
 @-moz-document domain(superuser.com), domain(stackexchange.com), domain(stackoverflow.com), domain(askubuntu.com), domain(serverfault.com) {
-    .js-consent-banner, .js-dismissable-hero, .site-header { display: none !important; }
+    .js-consent-banner, .js-dismissable-hero, .site-header, #noscript-warning { display: none !important; }
+    body, .top-bar { margin-top: 0 !important; }
 }
 
 @-moz-document domain(amazon.fr) {
