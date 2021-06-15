@@ -2,5 +2,5 @@
  *
  * Un redémarrage de Firefox est nécessaire après chaque modification ! */
 
-/* Icône des marques-pages à droite de la barre d'adresse */
+/* Masquer l'icône des marques-pages à droite de la barre d'adresse */
 #star-button-box { display: none !important; }
