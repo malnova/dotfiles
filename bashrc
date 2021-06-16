@@ -29,8 +29,9 @@ if command -v tmux >/dev/null 2>&1 && [ "${DISPLAY}" ]; then
     fi
 fi
 
-# Reparamétrer C-w pour le même comportement que dans vi (ou Vim) :
-# les caractères spéciaux servent de séparateur en plus de l'espace
+# Ensemble de paramètres proches du comportement de vi (ou Vim) ;
+# par ex. avec C-w les caractères spéciaux servent de séparateurs
+# en plus de l'espace, comme dans vim
 set -o vi
 
 # Alias
