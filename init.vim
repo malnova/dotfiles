@@ -238,6 +238,14 @@ vnoremap <silent> <C-Down> <C-e>
 vnoremap <silent> <C-Up> <C-y>
 
 "------------------------------------------------------------
+" Déplacement avec Ctrl-flèches gauche / droite identiques à ceux
+" du mode insertion (arrêt sur les caractères spéciaux)
+nnoremap <silent> <C-Left> b
+nnoremap <silent> <C-Right> w
+vnoremap <silent> <C-Left> b
+vnoremap <silent> <C-Right> w
+
+"------------------------------------------------------------
 " Comportement normal des touches PageUp et PageDown
 noremap <silent> <PageUp> 1000<C-U>
 noremap <silent> <PageDown> 1000<C-D>
@@ -293,7 +301,7 @@ inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
 " Ctrl-Backspace pour supprimer le mot précédent
 inoremap <expr>  <SID>start_delete("\<C-\><C-o>db")
 " Ctrl-Suppr pour supprimer le mot suivant
-inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>de")
+inoremap <expr> <C-DEL> <SID>start_delete("\<C-\><C-o>de")
 inoremap <CR> <C-g>u<CR>
 inoremap . .<C-g>u
 inoremap ! !<C-g>u
