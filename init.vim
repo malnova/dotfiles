@@ -395,7 +395,7 @@ if !empty(glob("~/.config/nvim/bundle/goyo.vim"))
         set showcmd
         set scrolloff=3
         let g:vem_tabline_show = 2
-        let &foldcolumn = b:fcstatus
+        if exists("b:fcstatus") | let &foldcolumn = b:fcstatus | endif
     endfunction
     augroup goyo-resize
         autocmd!
