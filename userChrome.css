@@ -8,6 +8,18 @@
 /* Décaler la barre d'onglets vers la droite */
 #tabbrowser-tabs { margin-left: 10px; }
 
+/* Désactiver l'expansion de la taille de la barre d'adresse */
+#urlbar[breakout][breakout-extend] {
+    top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+    left: 0 !important;
+    width: 100% !important;
+}
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+    height: var(--urlbar-height) !important;
+    padding-block: 0 !important;
+    padding-inline: 0 !important;
+}
+
 /* Forme des onglets et ligne de séparation entre onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
 @media (-moz-proton) {
