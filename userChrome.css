@@ -5,6 +5,10 @@
 /* Masquer l'icône des marques-pages à droite de la barre d'adresse */
 #star-button-box { display: none !important; }
 
+/* Supprimer l'espace à gauche de la barre d'onglets quand la fenêtre
+ * n'est pas maximisée */
+.titlebar-spacer[type="pre-tabs"] { width: 0 !important; }
+
 /* Décaler la barre d'onglets vers la droite */
 #tabbrowser-tabs { margin-left: 10px; }
 
