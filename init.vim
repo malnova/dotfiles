@@ -291,7 +291,7 @@ augroup END
 inoremap <expr> <BS> <SID>start_delete("\<BS>")
 inoremap <expr> <DEL> <SID>start_delete("\<DEL>")
 " Ctrl-Backspace pour supprimer le mot précédent
-inoremap <expr>  <SID>start_delete("\<C-o>db")
+inoremap <expr>  <SID>start_delete("\<C-\><C-o>db")
 " Ctrl-Suppr pour supprimer le mot suivant
 inoremap <expr> <C-DEL> <SID>start_delete("\<C-o>de")
 inoremap <CR> <C-g>u<CR>
