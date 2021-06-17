@@ -12,19 +12,6 @@
 /* Décaler la barre d'onglets vers la droite */
 #tabbrowser-tabs { margin-left: 10px; }
 
-/* Désactiver l'expansion de la taille de la barre d'adresse
- * Cf. https://github.com/WesleyBranton/Remove-Firefox-Megabar */
-#urlbar[breakout][breakout-extend] {
-    top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
-    left: 0 !important;
-    width: 100% !important;
-}
-#urlbar[breakout][breakout-extend] > #urlbar-input-container {
-    height: var(--urlbar-height) !important;
-    padding-block: 0 !important;
-    padding-inline: 0 !important;
-}
-
 /* Rétablir la forme des onglets et la ligne de séparation entre onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
 /* Tab Bar - Connect to window */
@@ -56,6 +43,21 @@
     transform: translateX(.5px) translateY(calc(-50% + 1px)) !important;
 }
 .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) + .tabbrowser-tab:not([visuallyselected]) .tab-background::before, .tabbrowser-tab[first-visible-unpinned-tab]:is([visuallyselected], [multiselected], :hover) .tab-background::before, #tabbrowser-arrowscrollbox[overflowing] tab.tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before { opacity: 0 !important; }
+
+/* Désactiver l'expansion de la taille de la barre d'adresse
+ * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html */
+#urlbar[breakout][breakout-extend] {
+    top: 4px !important;
+    left: 1px !important;
+    width: calc(100% - 2px) !important;
+    padding: 0 !important;
+}
+[uidensity="compact"] #urlbar[breakout][breakout-extend] { top: 4px !important; }
+[uidensity="touch"] #urlbar[breakout][breakout-extend] { top: 5px !important; }
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+    height: var(--urlbar-height) !important;
+    padding: 1px 0 !important;
+}
 
 /* Rendre scrollable la liste de la barre d'adresse
  * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html
