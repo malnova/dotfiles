@@ -56,3 +56,33 @@
     transform: translateX(.5px) translateY(calc(-50% + 1px)) !important;
 }
 .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) + .tabbrowser-tab:not([visuallyselected]) .tab-background::before, .tabbrowser-tab[first-visible-unpinned-tab]:is([visuallyselected], [multiselected], :hover) .tab-background::before, #tabbrowser-arrowscrollbox[overflowing] tab.tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before { opacity: 0 !important; }
+
+/* Rendre scrollable la liste de la barre d'adresse
+ * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html
+ * Dépend de la valeur de browser.urlbar.maxRichResults (10 par
+ * défaut, ou définie dans /usr/lib/firefox/mozilla.cfg) */
+#PopupAutoCompleteRichResult .autocomplete-richlistbox, #urlbarView-results, #urlbar-results {
+    height: unset !important;
+    max-height: calc(30.5px * 7.5) !important; /* Nombre de lignes à afficher */
+}
+#PopupAutoCompleteRichResult .autocomplete-richlistbox > scrollbox, #urlbarView-results, #urlbar-results {
+    overflow-y: auto !important;
+    padding-right: 3px !important;
+}
+#PopupAutoCompleteRichResult .autocomplete-richlistbox { padding-right: 0 !important; }
+.urlbarView-no-wrap {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+    position: relative;
+}
+
+/* Afficher la liste des adresses sur deux lignes
+ * Cf. https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/urlbar_results_in_two_rows.css */
+.urlbarView-row-inner{ flex-wrap: wrap !important; }
+.urlbarView-no-wrap {
+  max-width: 100% !important;
+  flex-basis: 100%;
+}
+.urlbarView-row[has-url]:not([type="switchtab"]) .urlbarView-title-separator{ display: none }
+.urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(ltr) { padding-left: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
+.urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(rtl) { padding-right: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
