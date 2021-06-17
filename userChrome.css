@@ -48,15 +48,25 @@
  * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html */
 #urlbar[breakout][breakout-extend] {
     top: 4px !important;
-    left: 1px !important;
-    width: calc(100% - 2px) !important;
-    padding: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 0 1px !important;
 }
 [uidensity="touch"] #urlbar[breakout][breakout-extend] { top: 5px !important; }
 #urlbar[breakout][breakout-extend] > #urlbar-input-container {
     height: var(--urlbar-height) !important;
-    padding: 1px 0 !important;
+    padding: 0 !important;
 }
+#urlbar[breakout][breakout-extend] > #urlbar-background { animation: none !important; }
+
+/* Supprimer les ombres et réduire le bord bleu de la barre d'adresse */
+#urlbar-background {
+    box-shadow: none !important;
+    border-width: 1px !important;
+}
+
+/* Bord bleu pour la barre d'adresse lors de la frappe aussi */
+#urlbar[breakout][breakout-extend] > #urlbar-background { border-color: #9ACAF1 !important; }
 
 /* Rendre scrollable la liste de la barre d'adresse
  * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html
