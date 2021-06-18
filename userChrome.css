@@ -65,8 +65,9 @@
     border-width: 1px !important;
 }
 
-/* Bord bleu pour la barre d'adresse lors de la frappe aussi */
-#urlbar[breakout][breakout-extend] > #urlbar-background { border-color: #9ACAF1 !important; }
+/* Uniformiser le bord bleu de la barre d'adresse lors du focus ET de la
+ * frappe */
+#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background { border-color: #3584E4 !important; }
 
 /* Rendre scrollable la liste de la barre d'adresse
  * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html
