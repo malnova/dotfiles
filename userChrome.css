@@ -67,25 +67,25 @@
 
 /* Uniformiser le bord bleu de la barre d'adresse lors du focus ET de la
  * frappe */
-#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background { border-color: #3584E4 !important; }
+#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background { border-color: Highlight !important; }
 
 /* Rendre scrollable la liste de la barre d'adresse
- * Cf. https://www.userchrome.org/megabar-styling-firefox-address-bar.html
+ * Cf. https://www.reddit.com/r/FirefoxCSS/comments/fwugp4/megabar_userchrome_snippets/
  * Dépend de la valeur de browser.urlbar.maxRichResults (10 par
  * défaut, ou définie dans /usr/lib/firefox/mozilla.cfg) */
-#PopupAutoCompleteRichResult .autocomplete-richlistbox, #urlbarView-results, #urlbar-results {
+#urlbar-results {
     height: unset !important;
     max-height: calc(30.5px * 7.5) !important; /* Nombre de lignes à afficher */
-}
-#PopupAutoCompleteRichResult .autocomplete-richlistbox > scrollbox, #urlbarView-results, #urlbar-results {
     overflow-y: auto !important;
-    padding-right: 3px !important;
+    padding-right: 8px !important;
 }
-#PopupAutoCompleteRichResult .autocomplete-richlistbox { padding-right: 0 !important; }
-.urlbarView-no-wrap {
-    max-width: 100% !important;
-    flex-basis: 100% !important;
-    position: relative;
+.urlbarView-body-outer {
+    padding-bottom: 1px !important;
+}
+.urlbarView .urlbarView-type-icon {
+    position: relative !important;
+    left: -24px;
+    margin-right: -20px;
 }
 
 /* Afficher la liste des adresses sur deux lignes
