@@ -12,9 +12,8 @@
 /* Décaler la barre d'onglets vers la droite */
 #tabbrowser-tabs { margin-left: 10px; }
 
-/* Rétablir la forme des onglets et la ligne de séparation entre onglets
+/* Rétablir la forme des onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
-/* Tab Bar - Connect to window */
 .tab-background {
     border-radius: var(--tab-border-radius) var(--tab-border-radius) 0px 0px !important;
     margin-bottom: 0px !important;
@@ -24,7 +23,9 @@
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
-/* Unselected Tab - Divide line */
+
+/* Rétablir la ligne de séparation entre onglets
+ * Cf. https://github.com/black7375/Firefox-UI-Fix */
 #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before, .tabbrowser-tab:not([visuallyselected], [multiselected], :hover, :first-child) .tab-background::before, #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab:not([visuallyselected], [multiselected], :hover)[last-visible-tab] .tab-background::after {
     content: "";
     display: block;
@@ -98,3 +99,11 @@
 .urlbarView-row[has-url]:not([type="switchtab"]) .urlbarView-title-separator{ display: none }
 .urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(ltr) { padding-left: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
 .urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(rtl) { padding-right: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
+
+/* Montrer le bouton pour fermer l'onglet lors du survol
+ * Cf. https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/tab_close_button_always_on_hover.css */
+.tabbrowser-tab .tab-close-button { display: none; }
+.tabbrowser-tab:not([pinned]):hover .tab-close-button { display:-moz-box !important; }
+
+/* Masquer la favicon pour les nouveaux onglets */
+.tabbrowser-tab[label="New Tab"]:not([pinned]) .tab-icon-image { display: none !important; }
