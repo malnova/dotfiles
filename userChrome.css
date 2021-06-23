@@ -60,15 +60,18 @@
 }
 #urlbar[breakout][breakout-extend] > #urlbar-background { animation: none !important; }
 
-/* Supprimer les ombres et réduire le bord bleu de la barre d'adresse */
-#urlbar-background {
+/* Supprimer les ombres et réduire le bord bleu de la barre d'adresse
+ * et de la barre de recherche */
+#urlbar-background, #searchbar {
     box-shadow: none !important;
     border-width: 1px !important;
 }
 
-/* Uniformiser le bord bleu de la barre d'adresse lors du focus ET de la
- * frappe */
-#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background { border-color: Highlight !important; }
+/* Uniformiser le bord bleu de la barre d'adresse, de la barre de
+ * recherche et de la findbar lors du focus ET de la frappe */
+#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background, #searchbar:focus-within { border-color: Highlight !important; }
+.findbar-textbox:focus { outline: 1px solid Highlight !important; }
+.findbar-textbox[status="notfound"] { outline: 2px solid var(--input-error-border-color, #E22850) !important; }
 
 /* Rendre scrollable la liste de la barre d'adresse
  * Cf. https://www.reddit.com/r/FirefoxCSS/comments/fwugp4/megabar_userchrome_snippets/
@@ -108,5 +111,6 @@
 /* Masquer la favicon pour les nouveaux onglets */
 .tabbrowser-tab[label="New Tab"]:not([pinned]) .tab-icon-image { display: none !important; }
 
-/* Éclaircir le texte par défaut de la barre d'adresse */
-#urlbar-input::placeholder { color: #555 !important; }
+/* Éclaircir le texte par défaut de la barre d'adresse, de la barre de
+ * recherche et de la findbar */
+#urlbar-input::placeholder, .searchbar-textbox::placeholder, .findbar-textbox::placeholder { color: #555 !important; }
