@@ -60,10 +60,10 @@
 }
 #urlbar[breakout][breakout-extend] > #urlbar-background { animation: none !important; }
 
-/* Supprimer les ombres de la barre d'adresse et de la barre de recherche */
-#urlbar-background, #searchbar {
-    box-shadow: none !important;
-}
+/* Supprimer les ombres de la barre d'adresse et de la barre de
+ * recherche et des menus */
+#urlbar-background, #searchbar { box-shadow: none !important; }
+.panel-arrowcontent{ box-shadow: none !important }
 
 /* Uniformiser le bord bleu de la barre d'adresse, de la barre de
  * recherche et de la findbar lors du focus ET de la frappe */
@@ -81,9 +81,7 @@
     overflow-y: auto !important;
     padding-right: 4px !important;
 }
-.urlbarView-body-outer {
-    padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au bord de #urlbar-background, #searchbar et .findbar-textbox */
-}
+.urlbarView-body-outer { padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au bord de #urlbar-background, #searchbar et .findbar-textbox */ }
 .urlbarView .urlbarView-type-icon {
     position: relative !important;
     left: -24px;
