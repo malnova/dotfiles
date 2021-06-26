@@ -60,16 +60,14 @@
 }
 #urlbar[breakout][breakout-extend] > #urlbar-background { animation: none !important; }
 
-/* Supprimer les ombres et réduire le bord bleu de la barre d'adresse
- * et de la barre de recherche */
+/* Supprimer les ombres de la barre d'adresse et de la barre de recherche */
 #urlbar-background, #searchbar {
     box-shadow: none !important;
-    border-width: 1px !important;
 }
 
 /* Uniformiser le bord bleu de la barre d'adresse, de la barre de
  * recherche et de la findbar lors du focus ET de la frappe */
-#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background, #searchbar:focus-within { border-color: Highlight !important; }
+#urlbar:not(.hidden-focus)[focused="true"] > #urlbar-background, #urlbar[breakout][breakout-extend] > #urlbar-background, #searchbar:focus-within { border: 1px solid Highlight !important; }
 .findbar-textbox:focus { outline: 1px solid Highlight !important; }
 .findbar-textbox[status="notfound"] { outline: 2px solid var(--input-error-border-color, #E22850) !important; }
 
@@ -84,7 +82,7 @@
     padding-right: 4px !important;
 }
 .urlbarView-body-outer {
-    padding-bottom: 1px !important;
+    padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au bord de #urlbar-background, #searchbar et .findbar-textbox */
 }
 .urlbarView .urlbarView-type-icon {
     position: relative !important;
