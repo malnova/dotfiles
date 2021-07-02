@@ -15,13 +15,17 @@
 /* Rétablir la forme des onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
 .tab-background {
-    border-radius: var(--tab-border-radius) var(--tab-border-radius) 0px 0px !important;
-    margin-bottom: 0px !important;
+    border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0 !important;
+    margin-bottom: 0 !important;
 }
 .tab-content { margin-top: var(--proton-tab-block-margin); }
 .tab-stack {
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+#scrollbutton-up, #scrollbutton-down {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* Rétablir la ligne de séparation entre onglets
@@ -63,7 +67,7 @@
 /* Supprimer les ombres de la barre d'adresse et de la barre de
  * recherche et des menus */
 #urlbar-background, #searchbar { box-shadow: none !important; }
-.panel-arrowcontent{ box-shadow: none !important }
+.panel-arrowcontent { box-shadow: none !important; }
 
 /* Uniformiser le bord bleu de la barre d'adresse, de la barre de
  * recherche et de la findbar lors du focus ET de la frappe */
@@ -90,12 +94,12 @@
 
 /* Afficher la liste des adresses sur deux lignes
  * Cf. https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/urlbar_results_in_two_rows.css */
-.urlbarView-row-inner{ flex-wrap: wrap !important; }
+.urlbarView-row-inner { flex-wrap: wrap !important; }
 .urlbarView-no-wrap {
   max-width: 100% !important;
   flex-basis: 100%;
 }
-.urlbarView-row[has-url]:not([type="switchtab"]) .urlbarView-title-separator{ display: none }
+.urlbarView-row[has-url]:not([type="switchtab"]) .urlbarView-title-separator { display: none; }
 .urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(ltr) { padding-left: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
 .urlbarView-row[has-url] > .urlbarView-row-inner > .urlbarView-url:-moz-locale-dir(rtl) { padding-right: calc(var(--urlbarView-item-inline-padding) + var(--identity-box-margin-inline) + 16px); }
 
@@ -110,3 +114,23 @@
 /* Éclaircir le texte par défaut de la barre d'adresse, de la barre de
  * recherche et de la findbar */
 #urlbar-input::placeholder, .searchbar-textbox::placeholder, .findbar-textbox::placeholder { color: #555 !important; }
+
+/* Supprimer les flèches et le bouton "List all tabs" lorsqu'il y a
+ * beaucoup d'onglets
+ * Cf. https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/hide_tabs_scrollbuttons.css */
+#tabbrowser-tabs:not([movingtab]) { --uc-scroll-visibility: hidden; }
+#tabbrowser-tabs[overflow] { --uc-scrollbox-margin: -28px; }
+#scrollbutton-up {
+    position: relative;
+    z-index: 1;
+}
+#scrollbutton-up, #scrollbutton-down, #scrollbutton-up ~ spacer {
+    visibility: var(--uc-scroll-visibility, visible);
+    opacity: 0 !important;
+}
+.scrollbox-clip { margin-inline: var(--uc-scrollbox-margin, 0); }
+#tabbrowser-tabs[overflow][positionpinnedtabs] .tabbrowser-tab[pinned] {
+    border-left: 28px solid transparent !important;
+    clip-path: padding-box;
+}
+#alltabs-button { display: none !important; }
