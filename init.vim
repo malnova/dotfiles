@@ -94,6 +94,7 @@ set linebreak " Ne pas revenir à la ligne au milieu d'un mot
 set scrolloff=3 " Minimum de 3 lignes autour du curseur en cas de scroll
 set noincsearch " Pas de recherche pendant la frappe
 set noerrorbells " Empêche vim de beeper
+set foldcolumn=auto " Afficher / masquer automatiquement la barre pour les folds (replis)
 
 "------------------------------------------------------------
 " Format de la barre de statut
