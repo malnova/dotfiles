@@ -12,6 +12,15 @@
 /* Décaler la barre d'onglets vers la droite */
 #tabbrowser-tabs { margin-left: 10px; }
 
+/* Uniformiser les arrondis sur tous les éléments */
+:root {
+    --arrowpanel-border-radius: 4px !important;
+    --tab-border-radius: 4px !important;
+    --toolbarbutton-border-radius: 4px !important;
+    --arrowpanel-menuitem-border-radius: 4px !important;
+}
+.menupopup-arrowscrollbox { border-radius: 4px !important; }
+
 /* Rétablir la forme des onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
 .tab-background {
