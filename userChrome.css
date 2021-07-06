@@ -19,7 +19,7 @@
     --toolbarbutton-border-radius: 4px !important;
     --arrowpanel-menuitem-border-radius: 4px !important;
 }
-.menupopup-arrowscrollbox { border-radius: 4px !important; }
+menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
 
 /* Rétablir la forme des onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
@@ -157,3 +157,12 @@
     clip-path: padding-box;
 }
 #alltabs-button { display: none !important; }
+
+/* Ne pas déplacer les boutons de fenêtre ("Minimize", "Maximize" et
+ * "Close") et centrer verticalement la barre de menu en cas d'appui sur
+ * la touche Alt */
+#toolbar-menubar {
+    padding-top: 4px !important;
+    padding-bottom: 0 !important;
+}
+#menubar-items { padding-top: 1px !important; }
