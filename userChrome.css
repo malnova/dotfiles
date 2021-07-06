@@ -44,6 +44,13 @@
     padding: 8px !important;
 }
 
+/* Remplacer l'ombre par un bord pour les onglets sélectionnés */
+.tab-background[selected], .tab-background[multiselected] {
+    box-shadow: none !important;
+    border: 1px solid var(--tabs-border-color) !important;
+    border-bottom: 0 !important;
+}
+
 /* Rétablir la ligne de séparation entre onglets
  * Cf. https://github.com/black7375/Firefox-UI-Fix */
 #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before, .tabbrowser-tab:not([visuallyselected], [multiselected], :hover, :first-child) .tab-background::before, #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab:not([visuallyselected], [multiselected], :hover)[last-visible-tab] .tab-background::after {
