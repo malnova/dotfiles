@@ -152,10 +152,6 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
     opacity: 0 !important;
 }
 .scrollbox-clip { margin-inline: var(--uc-scrollbox-margin, 0); }
-#tabbrowser-tabs[overflow][positionpinnedtabs] .tabbrowser-tab[pinned] {
-    border-left: 28px solid transparent !important;
-    clip-path: padding-box;
-}
 #alltabs-button { display: none !important; }
 
 /* Positionner correctement les boutons de fenêtre ("Minimize", "Maximize"
