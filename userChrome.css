@@ -158,11 +158,14 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
 }
 #alltabs-button { display: none !important; }
 
-/* Ne pas déplacer les boutons de fenêtre ("Minimize", "Maximize" et
- * "Close") et centrer verticalement la barre de menu en cas d'appui sur
- * la touche Alt */
-#toolbar-menubar {
+/* Positionner correctement les boutons de fenêtre ("Minimize", "Maximize"
+ * et "Close") quand la barre de menu est affichée */
+#toolbar-menubar[autohide="true"] {
     padding-top: 4px !important;
     padding-bottom: 0 !important;
 }
-#menubar-items { padding-top: 1px !important; }
+#toolbar-menubar[autohide="false"] {
+    padding-top: 6px !important;
+    padding-bottom: 0 !important;
+}
+#toolbar-menubar[autohide="true"] #menubar-items { padding-top: 2px !important; }
