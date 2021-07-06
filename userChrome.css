@@ -38,7 +38,7 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
 }
 
 /* Réduire la taille du bouton "Open a new tab" en conséquence */
-#tabs-newtab-button .toolbarbutton-icon {
+#tabs-newtab-button .toolbarbutton-icon, #new-tab-button .toolbarbutton-icon {
     height: 32px !important;
     width: 32px !important;
     padding: 8px !important;
@@ -165,3 +165,4 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
     padding-bottom: 0 !important;
 }
 #toolbar-menubar[autohide="true"] #menubar-items { padding-top: 2px !important; }
+#toolbar-menubar[autohide="true"]:not([inactive]) ~ #TabsToolbar { margin-top: -2px !important; }
