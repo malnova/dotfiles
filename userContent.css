@@ -42,7 +42,8 @@
 }
 
 @-moz-document domain(ghacks.net) {
-    .ghacks_ad_code, .post-list-sponsored, .category-sponsored { display: none !important; }
+    .wide-ad, .ghacks_ad_code, [id*="-gpt-ad-"] { display: none !important; }
+
 }
 
 @-moz-document domain(tripadvisor.fr) {
