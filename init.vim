@@ -220,6 +220,11 @@ function! SmartEnd(mode)
 endfunction
 
 "------------------------------------------------------------
+" Ctrl-Home doit aussi déplacer le curseur en début de ligne
+nnoremap <silent> <C-Home> <C-Home>0
+vnoremap <silent> <C-Home> <C-Home>0
+
+"------------------------------------------------------------
 " Comportement normal des touches de direction (ligne par ligne
 " en cas de wrap)
 nnoremap <silent> <Down> gj
