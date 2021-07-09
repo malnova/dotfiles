@@ -110,10 +110,10 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
  * Dépend de la valeur de browser.urlbar.maxRichResults (10 par
  * défaut, ou définie dans /usr/lib/firefox/mozilla.cfg) */
 #urlbar-results {
-    height: unset !important;
-    max-height: 225px !important;
-    overflow-y: auto !important;
+    max-height: 226px;
+    overflow-y: auto;
     padding-right: 4px !important;
+    scrollbar-color: #D4D4D4 transparent;
     scrollbar-width: thin;
 }
 .urlbarView-body-outer { padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au border de #urlbar-background, #searchbar et .findbar-textbox */ }
