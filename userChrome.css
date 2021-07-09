@@ -111,11 +111,12 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
  * défaut, ou définie dans /usr/lib/firefox/mozilla.cfg) */
 #urlbar-results {
     height: unset !important;
-    max-height: calc(30.5px * 7.5) !important; /* Nombre de lignes à afficher */
+    max-height: 225px !important;
     overflow-y: auto !important;
     padding-right: 4px !important;
+    scrollbar-width: thin;
 }
-.urlbarView-body-outer { padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au bord de #urlbar-background, #searchbar et .findbar-textbox */ }
+.urlbarView-body-outer { padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au border de #urlbar-background, #searchbar et .findbar-textbox */ }
 .urlbarView .urlbarView-type-icon {
     position: relative !important;
     left: -24px;
