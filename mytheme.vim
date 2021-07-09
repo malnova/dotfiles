@@ -84,9 +84,9 @@ hi Todo term=standout ctermfg=0 ctermbg=3
 
 " Couleurs différentes pour vimdiff
 hi DiffChange ctermfg=white ctermbg=black
-hi DiffText ctermfg=darkblue ctermbg=black cterm=underline,bold
+hi DiffText ctermfg=black ctermbg=darkgreen cterm=bold
 hi DiffAdd ctermfg=darkgreen ctermbg=black cterm=bold
-hi DiffDelete ctermfg=red ctermbg=black
+hi DiffDelete ctermfg=darkgreen ctermbg=black cterm=bold
 " Couleurs différentes pour le correcteur d'orthographe
 if has('spell')
     hi clear SpellBad
