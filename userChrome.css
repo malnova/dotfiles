@@ -38,10 +38,9 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
 }
 
 /* Réduire la taille du bouton "Open a new tab" en conséquence */
-#tabs-newtab-button .toolbarbutton-icon, #new-tab-button .toolbarbutton-icon {
-    height: 32px !important;
-    width: 32px !important;
-    padding: 8px !important;
+:root #TabsToolbar {
+    --toolbarbutton-inner-padding: calc((var(--tab-min-height) - 20px) / 2) !important;
+    --toolbarbutton-outer-padding: 0 !important;
 }
 
 /* Remplacer l'ombre par un bord pour les onglets sélectionnés */
@@ -113,7 +112,7 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
     max-height: 226px;
     overflow-y: auto;
     padding-right: 4px !important;
-    scrollbar-color: #D4D4D4 transparent;
+    scrollbar-color: color-mix(in srgb, currentColor 12%, transparent) transparent;
     scrollbar-width: thin;
 }
 .urlbarView-body-outer { padding-bottom: 1px !important; /* padding de la scrollbar : doit être identique au border de #urlbar-background, #searchbar et .findbar-textbox */ }
@@ -150,7 +149,9 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
  * beaucoup d'onglets
  * Cf. https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/hide_tabs_scrollbuttons.css */
 #tabbrowser-tabs:not([movingtab]) { --uc-scroll-visibility: hidden; }
-#tabbrowser-tabs[overflow] { --uc-scrollbox-margin: -28px; }
+#tabbrowser-tabs[overflow] { --uc-scrollbox-margin: -27px; }
+:root[uidensity="compact"]  #tabbrowser-tabs[overflow] { --uc-scrollbox-margin: -23px; }
+:root[uidensity="touch"] #tabbrowser-tabs[overflow] { --uc-scrollbox-margin: -32px; }
 #scrollbutton-up {
     position: relative;
     z-index: 1;
@@ -162,15 +163,9 @@ menupopup, .menupopup-arrowscrollbox { border-radius: 4px !important; }
 .scrollbox-clip { margin-inline: var(--uc-scrollbox-margin, 0); }
 #alltabs-button { display: none !important; }
 
-/* Positionner correctement les boutons de fenêtre ("Minimize", "Maximize"
- * et "Close") quand la barre de menu est affichée */
-#toolbar-menubar[autohide="true"] {
-    padding-top: 4px !important;
-    padding-bottom: 0 !important;
-}
-#toolbar-menubar[autohide="false"] {
-    padding-top: 6px !important;
-    padding-bottom: 0 !important;
-}
-#toolbar-menubar[autohide="true"] #menubar-items { padding-top: 2px !important; }
-#toolbar-menubar[autohide="true"]:not([inactive]) ~ #TabsToolbar { margin-top: -2px !important; }
+/* Hauteur de la barre de menu identique à celle de la barre d'onglets pour
+ * ne pas déplacer les boutons min/max/close quand la barre de menu est
+ * affichée */
+.browser-toolbar { padding: 0 !important; }
+#toolbar-menubar:not([inactive]) { height: calc(var(--tab-min-height) + var(--proton-tab-block-margin)) !important; }
+#toolbar-menubar:not([inactive]) #menubar-items { padding-top: var(--toolbarbutton-inner-padding); }
